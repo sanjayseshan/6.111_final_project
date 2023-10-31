@@ -1,2 +1,0 @@
-adder.v,verilog,xil_defaultlib,../../../../project_2.gen/sources_1/ip/adder/sim/adder.v,
-glbl.v,Verilog,xil_defaultlib,glbl.v
