@@ -15,6 +15,16 @@ int main(int argc, char *argv[]) {
   int dim = 100; // vector dimension
   if (argc > 2) dim = atoi(argv[2]);
   auto inputs = generate_embeddings(g.V(), dim);
+
+    //   for(Embedding i:inputs) {
+    //     printf("embedding found size %d\n",(i).size());
+    //   // std::cout << "here\n";
+    //   for (float j:i) {
+    //     printf("point found %f\n",j);
+    //     // std::cout << "P: " << j;
+    //   }
+    // }
+  
   auto query = generate_query(dim);
   ANN(g, inputs, query);
   return 0;
