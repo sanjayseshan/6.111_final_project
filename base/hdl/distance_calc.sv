@@ -16,7 +16,10 @@ module distance #(parameter DIM = 2)(
   logic point_mul_tvalid, query_mul_tvalid;
 
 
-  output logic valid_subs_out [DIM-1:0];
+  logic valid_subs_out [DIM-1:0];
+  logic valid_mults_out [DIM-1:0];
+  logic [31:0] intermediate_subs_out [DIM-1:0];
+  logic [31:0] intermediate_mults_out [DIM-1:0];
 
 
   for (i=0; i < DIM; i=i+1) begin
@@ -30,42 +33,29 @@ module distance #(parameter DIM = 2)(
       .s_axis_b_tvalid(1), 
       .s_axis_b_tdata({1,query_pos_in[i][30:23],~query_pos_in[i][30:23]}), 
 
-      .m_axis_result_tvalid(valid_data_out), 
+      .m_axis_result_tvalid(valid_subs_out[i]), 
       .m_axis_result_tready(1'b1), 
-      .m_axis_result_tdata(distance_out)
+      .m_axis_result_tdata(intermediate_subs_out[i])
+    );
+
+      multiplier mult(
+        .aclk(clk_in), 
+
+        .s_axis_a_tvalid(valid_subs_out[i]),
+        .s_axis_a_tdata(intermediate_subs_out[i]),
+
+        .s_axis_b_tvalid(valid_subs_out[i]),
+        .s_axis_b_tdata(intermediate_subs_out[i]), 
+
+        .m_axis_result_tready(1'b1), 
+        .m_axis_result_tvalid(valid_mults_out[i]), 
+        .m_axis_result_tdata(intermediate_mults_out[i])
       );
 
   end
 
-  multiplier mult1(
-    .aclk(clk_in), 
-
-    .s_axis_a_tvalid(data_valid_in),
-    .s_axis_a_tdata(vertex_in),
-
-    .s_axis_b_tvalid(data_valid_in),
-    .s_axis_b_tdata(vertex_in), 
-
-    .m_axis_result_tready(1'b1), 
-    .m_axis_result_tvalid(point_mul_tvalid), 
-    .m_axis_result_tdata(point_mul_tdata)
-    );
-
-
-
-  multiplier mult2(
-    .aclk(clk_in), 
-    
-    .s_axis_a_tvalid(data_valid_in),
-    .s_axis_a_tdata(query_in), 
-
-    .s_axis_b_tvalid(data_valid_in),  
-    .s_axis_b_tdata(query_in), 
-
-    .m_axis_result_tready(1'b1), 
-    .m_axis_result_tvalid(query_mul_tvalid), 
-    .m_axis_result_tdata(query_mul_tdata)
-    );
+  for (i=0; i < $clog2(DIM); i=i+1) begin
+    for (j=0; j < DIM; j=j+1-+) begin
 
 
 
