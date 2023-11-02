@@ -9,7 +9,6 @@
 # <compiled_library_location>[./ip/multiplier]
 # launch_simulation -noclean_dir -of_objects [get_files multiplier.xci]
 
-
 open_vcd
 log_vcd  *
 run all
