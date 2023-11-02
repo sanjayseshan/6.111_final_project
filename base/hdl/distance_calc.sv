@@ -17,20 +17,24 @@ module distance #(parameter DIM = 2)(
   logic [31:0] intermediate_mults_out [DIM-1:0];
   logic valid_subs_out [DIM-1:0], valid_mults_out [DIM-1:0];
 
-  logic recursive_add_valid_out;
-  logic [31:0] distance;
+  // logic recursive_add_valid_out;
+  // logic [31:0] distance;
 
 
   logic [0:$clog2(DIM)-1] i;
   
   always_ff @ (posedge clk_in) begin
+    // distance_sq_out <= state;
     if (rst_in) begin
-        distance_sq_out <= 0;
-        data_valid_out <= 1'b0;
+        // distance_sq_out <= 0;
+        // data_valid_out <= 1'b0;
+        state <= 0;
+        i <= 0;
     end
     else if (state==3'b0) begin
         if (data_valid_in[i]) begin
-            intermediate_subs_out[i] = (vertex_pos_in[i] < query_pos_in[i]) ? query_pos_in[i] + ~(vertex_pos_in[i]) + 1 : vertex_pos_in[i] + ~(query_pos_in[i]) + 1;
+            // distance_sq_out <= i;
+            intermediate_subs_out[i] = query_pos_in[i] - vertex_pos_in[i]; //(vertex_pos_in[i] < query_pos_in[i]) ? query_pos_in[i] + ~(vertex_pos_in[i]) + 1 : vertex_pos_in[i] + ~(query_pos_in[i]) + 1;
             valid_subs_out[i] <= 1'b1;
             
             if (i>=(DIM-1)) begin
@@ -38,11 +42,13 @@ module distance #(parameter DIM = 2)(
             end
             else i <= i + 1;
             
-            if (valid_subs_out[DIM-1]==1'b1) begin
-                state <= 3'b1;
-            end
-            data_valid_out <= 1'b0;
+
+            // data_valid_out <= 1'b0;
         end
+          if (valid_subs_out[DIM-1]==1'b1) begin
+              state <= 3'b1;
+              valid_subs_out[DIM-1] <= 0;
+          end
     end
     else if (state==3'b1) begin
         if (intermediate_subs_out[i]) begin
@@ -58,15 +64,18 @@ module distance #(parameter DIM = 2)(
                 state <= 3'b10;
             end
 
-            data_valid_out <= 1'b0;
+            // data_valid_out <= 1'b0;
         end
         // state <= 3'b10;
     end
     else if (state==3'b10) begin
-        if (recursive_add_valid_out) begin
-            distance_sq_out <= distance;
-            data_valid_out <= 1'b1;
-            state <= 3'b0;
+        // if (recursive_add_valid_out) begin
+        //     distance_sq_out <= distance;
+        //     data_valid_out <= 1'b1;
+        //     state <= 3'b0;
+        // end
+        if (data_valid_out) begin
+          state <= 0;
         end
     end
 
@@ -79,8 +88,8 @@ module distance #(parameter DIM = 2)(
         .rst_in(rst_in),
         .data_valid_in((state==3'b10)),
         .intermediate_mults_in(intermediate_mults_out),
-        .distance_sq_out(distance),
-        .data_valid_out(recursive_add_valid_out)
+        .distance_sq_out(distance_sq_out),
+        .data_valid_out(data_valid_out)
     );
  
 //  calculate_sub #(.DIM(DIM)) sub (
@@ -107,6 +116,8 @@ module recursive_add_n_dim # (parameter DIM = 1)(
   output logic data_valid_out
 );
 
+
+
   generate 
     if (DIM==1) begin
       always_ff @ (posedge clk_in) begin
@@ -114,7 +125,12 @@ module recursive_add_n_dim # (parameter DIM = 1)(
             distance_sq_out <= 0;
             data_valid_out <= 1'b0;
         end
-        else if (data_valid_in) distance_sq_out <= intermediate_mults_in[0];
+        else if (data_valid_in) begin
+          distance_sq_out <= intermediate_mults_in[0];
+          data_valid_out <= 1;
+
+        end else data_valid_out <= 0;
+
       end
     end
     else if (DIM==2) begin
@@ -123,7 +139,10 @@ module recursive_add_n_dim # (parameter DIM = 1)(
             distance_sq_out <= 0;
             data_valid_out <= 1'b0;
         end
-        if (data_valid_in) distance_sq_out = intermediate_mults_in[1] + intermediate_mults_in[0];
+        if (data_valid_in) begin
+          distance_sq_out = intermediate_mults_in[1] + intermediate_mults_in[0];
+          data_valid_out <= 1;
+        end else data_valid_out <= 0;
       end
     end
     else begin
@@ -153,6 +172,7 @@ module recursive_add_n_dim # (parameter DIM = 1)(
       );
 
       always_ff @ (posedge clk_in) begin
+
         if (rst_in) begin
             total_distance <= 0;
             distance_sq_out <= 0;
