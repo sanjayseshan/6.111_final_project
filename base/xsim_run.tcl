@@ -1,8 +1,8 @@
-read_ip ./ip/multiplier/multiplier.xci
-read_ip ./ip/adder/adder.xci
-read_ip ./ip/adder/addsub.xci
-generate_target all [get_ips]
-synth_ip [get_ips]
+# read_ip ./ip/multiplier/multiplier.xci
+# read_ip ./ip/adder/adder.xci
+# read_ip ./ip/adder/addsub.xci
+# generate_target all [get_ips]
+# synth_ip [get_ips]
 
 # set_property target_simulator VCS [./ip/multiplier]
 # set_property compxlib.vcs_compiled_library_dir 

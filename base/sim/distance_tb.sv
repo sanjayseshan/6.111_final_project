@@ -5,22 +5,28 @@ module distance_tb();
 
   logic clk_in;
   logic rst_in;
-  logic data_valid_in [1:0];
-  logic [31:0] vertex_pos_in [1:0];
-  logic [31:0] query_pos_in [1:0];
+  logic data_valid_in [3:0];
+  logic [31:0] vertex_pos_in [3:0];
+  logic [31:0] query_pos_in [3:0];
   logic [31:0] distance_sq_out;
   logic data_valid_out;
 
   logic [31:0] vertex_pos_in0;
   logic [31:0] vertex_pos_in1;
+  logic [31:0] vertex_pos_in2;
+  logic [31:0] vertex_pos_in3;
   logic [31:0] query_pos_in0;
   logic [31:0] query_pos_in1;
+  logic [31:0] query_pos_in2;
+  logic [31:0] query_pos_in3;
   logic data_valid_in0;
   logic data_valid_in1;
+  logic data_valid_in2;
+  logic data_valid_in3;
 
 //   logic [31:0] intermediate_subs_out;
 
-  distance #(.DIM(2)) distance_calculator(
+  distance #(.DIM(4)) distance_calculator(
     .clk_in(clk_in),
     .rst_in(rst_in),
     .data_valid_in(data_valid_in),
@@ -36,11 +42,16 @@ module distance_tb();
       clk_in = !clk_in;
       vertex_pos_in0 = vertex_pos_in[0];
       vertex_pos_in1 = vertex_pos_in[1];
+      vertex_pos_in2 = vertex_pos_in[2];
+      vertex_pos_in3 = vertex_pos_in[3];
       query_pos_in0 = query_pos_in[0];
       query_pos_in1 = query_pos_in[1];
+      query_pos_in2 = query_pos_in[2];
+      query_pos_in3 = query_pos_in[3];
       data_valid_in0 = data_valid_in[0];
       data_valid_in1 = data_valid_in[1];
-
+      data_valid_in2 = data_valid_in[2];
+      data_valid_in3 = data_valid_in[3];
 
   end
   //initial block...this is our test simulation
@@ -50,7 +61,7 @@ module distance_tb();
     $display("Starting Sim"); //print nice message at start
     clk_in = 0;
     rst_in = 0;
-    for (int i=0;i<2;i=i+1) begin
+    for (int i=0;i<4;i=i+1) begin
         data_valid_in[i] = 0;
         vertex_pos_in[i] = 0;
         query_pos_in[i] = 0;
@@ -60,17 +71,27 @@ module distance_tb();
     rst_in = 1;
     #10;
     rst_in = 0;
-    query_pos_in[0] = 32'd18;
-    query_pos_in[1] = 32'd23090;
+    query_pos_in[0] = 5;
+    query_pos_in[1] = 7;
+    query_pos_in[2] = 10;
+    query_pos_in[3] = 50;
     #20;
     data_valid_in[0] = 1;
-    vertex_pos_in[0] = 32'd2938;
+    vertex_pos_in[0] = 8;
     #10;
     data_valid_in[0] = 0;
     data_valid_in[1] = 1;
-    vertex_pos_in[1] = 32'd223;
+    vertex_pos_in[1] = 2;
     #10;
     data_valid_in[1] = 0;
+    data_valid_in[2] = 1;
+    vertex_pos_in[2] = 15;
+    #10;
+    data_valid_in[2] = 0;
+    data_valid_in[3] = 1;
+    vertex_pos_in[3] = 80;
+    #10;
+    data_valid_in[3] = 0;
 
     // for (int i = 0; i<10000; i=i+1)begin
     //   audio_in = i;
@@ -80,7 +101,7 @@ module distance_tb();
     // #1;
     // data_valid_in[1] = 0;
     // data_valid_in[0] = 0;
-
+// result should be 959 or 0x3bf
     #500;
     $display("Simulation finished");
     $finish;

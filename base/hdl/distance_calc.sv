@@ -129,7 +129,8 @@ module recursive_add_n_dim # (parameter DIM = 1)(
           distance_sq_out <= intermediate_mults_in[0];
           data_valid_out <= 1;
 
-        end else data_valid_out <= 0;
+        end 
+        else data_valid_out <= 0;
 
       end
     end
@@ -142,61 +143,72 @@ module recursive_add_n_dim # (parameter DIM = 1)(
         if (data_valid_in) begin
           distance_sq_out = intermediate_mults_in[1] + intermediate_mults_in[0];
           data_valid_out <= 1;
-        end else data_valid_out <= 0;
+        end
+         else data_valid_out <= 0;
       end
     end
     else begin
       logic [31:0] distance1, distance2, total_distance;
       logic add_valid1, add_valid2, added_dist1, added_dist2;
       
-      add_n_dimensions # (
-        .DIM(DIM >> 1)
+      recursive_add_n_dim # (
+        .DIM(DIM/2)
       ) adder1 (
         .clk_in(clk_in),
         .rst_in(rst_in),
         .data_valid_in(data_valid_in),
-        .intermediate_muls_in(intermediate_mults_in[0:(DIM>>2)]),
+        .intermediate_mults_in(intermediate_mults_in[(DIM/2)-1:0]),
         .distance_sq_out(distance1),
         .data_valid_out(add_valid1)
       );
 
-      add_n_dimensions # (
-        .DIM(DIM >> 1)
+      recursive_add_n_dim # (
+        .DIM(DIM/2)
       ) adder2 (
         .clk_in(clk_in),
         .rst_in(rst_in),
         .data_valid_in(data_valid_in),
-        .intermediate_muls_in(intermediate_mults_in[(DIM>>2)+1:DIM-1]),
+        .intermediate_mults_in(intermediate_mults_in[DIM-1:(DIM/2)]),
         .distance_sq_out(distance2),
         .data_valid_out(add_valid2)
       );
 
-      always_ff @ (posedge clk_in) begin
-
-        if (rst_in) begin
-            total_distance <= 0;
-            distance_sq_out <= 0;
-            distance_valid_out <= 1'b0;
-        end
-        else begin
-            if (add_valid1) begin
-                total_distance <= total_distance + distance1;
-                added_dist1 <= 1'b1;
-            end
-            if (add_valid2) begin
-                total_distance <= total_distance + distance2;
-                added_dist2 <= 1'b1;
-            end
-
-            if (added_dist1 && added_dist2) begin
-                data_valid_out <= 1'b1;
-                distance_sq_out <= total_distance;
-
-                added_dist1 <= 1'b0;
-                added_dist2 <= 1'b0;
-            end
+      always_comb begin
+        if (add_valid1 && add_valid2) begin
+          distance_sq_out = distance1+distance2;
+          data_valid_out = 1;      
+        end else begin
+          distance_sq_out = 0;
+          data_valid_out = 0;      
         end
       end
+
+      // always_ff @ (posedge clk_in) begin
+
+      //   if (rst_in) begin
+      //       total_distance <= 0;
+      //       distance_sq_out <= 0;
+      //       data_valid_out <= 1'b0;
+      //   end
+      //   else begin
+      //       if (add_valid1) begin
+      //           total_distance <= total_distance + distance1;
+      //           added_dist1 <= 1'b1;
+      //       end
+      //       if (add_valid2) begin
+      //           total_distance <= total_distance + distance2;
+      //           added_dist2 <= 1'b1;
+      //       end
+
+      //       if (added_dist1 && added_dist2) begin
+      //           data_valid_out <= 1'b1;
+      //           distance_sq_out <= total_distance;
+
+      //           added_dist1 <= 1'b0;
+      //           added_dist2 <= 1'b0;
+      //       end
+      //   end
+      // end
     end
   endgenerate
 endmodule
