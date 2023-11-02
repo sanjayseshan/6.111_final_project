@@ -20,13 +20,13 @@ while True:
 	else: print(str(line.rstrip(), encoding='ascii'))
 
 
-proc = subprocess.Popen(f"{xvlog} --sv ./sim_scripts/multiplier/xsim/glbl.v",
-	shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+# proc = subprocess.Popen(f"{xvlog} --sv ./sim_scripts/multiplier/xsim/glbl.v",
+# 	shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 
-while True:
-	line = proc.stdout.readline()
-	if not line: break
-	else: print(str(line.rstrip(), encoding='ascii'))
+# while True:
+# 	line = proc.stdout.readline()
+# 	if not line: break
+# 	else: print(str(line.rstrip(), encoding='ascii'))
 
 
 proc.wait()
@@ -38,7 +38,7 @@ else:
   pass
   #save("vivado.log")
 
-proc = subprocess.Popen(f"{xelab} -svlog ./sim/distance_tb.sv --debug wave",
+proc = subprocess.Popen(f"{xelab} -svlog ./sim/distance_float_tb.sv --debug wave",
 	shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 
 while True:
@@ -56,7 +56,7 @@ else:
   #save("vivado.log")
 
 
-proc = subprocess.Popen(f"{xsim} distance_tb -t xsim_run.tcl",
+proc = subprocess.Popen(f"{xsim} distance_float_tb -t xsim_run.tcl",
 	shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 
 while True:
@@ -84,7 +84,7 @@ while True:
 proc.wait()
 
 #files to look for:
-files = [ "distance.tar.gz","distance.vcd"
+files = [ "distance_float.tar.gz","distance_float.vcd"
 ]
 
 for file in files:

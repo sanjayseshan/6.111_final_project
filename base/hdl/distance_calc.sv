@@ -11,159 +11,88 @@ module distance #(parameter DIM = 2)(
   output logic data_valid_out
   );
 
+  logic [2:0] state;
 
-  logic [31:0] point_mul_tdata, query_mul_tdata;
-  logic point_mul_tvalid, query_mul_tvalid;
-
-
-  logic valid_subs_out [DIM-1:0];
-  logic valid_mults_out [DIM-1:0];
   logic [31:0] intermediate_subs_out [DIM-1:0];
-  logic [31:0] intermediate_mults_out [DIM-1:0];
+  logic valid_subs_out [DIM-1:0];
 
-  generate 
-    genvar i;
-    for (i=0; i < DIM; i=i+1) begin
 
-      addsub sub(
-        .aclk(clk_in), 
+  logic [0:$clog2(DIM)-1] i;
 
-        .s_axis_a_tvalid(data_valid_in[i]), 
-        .s_axis_a_tdata(vertex_pos_in[i]), 
-
-        .s_axis_b_tvalid(1), 
-        .s_axis_b_tdata(query_pos_in[i]), 
-
-        .s_axis_operation_tvalid(1),
-        .s_axis_operation_tdata(1),
-
-  // {1,query_pos_in[i][30:23],~query_pos_in[i][30:23]}
-        .m_axis_result_tvalid(valid_subs_out[i]), 
-        .m_axis_result_tready(1'b1), 
-        .m_axis_result_tdata(intermediate_subs_out[i])
-      );
-
-        multiplier mult(
-          .aclk(clk_in), 
-
-          .s_axis_a_tvalid(valid_subs_out[i]),
-          .s_axis_a_tdata(intermediate_subs_out[i]),
-
-          .s_axis_b_tvalid(valid_subs_out[i]),
-          .s_axis_b_tdata(intermediate_subs_out[i]), 
-
-          .m_axis_result_tready(1'b1), 
-          .m_axis_result_tvalid(valid_mults_out[i]), 
-          .m_axis_result_tdata(intermediate_mults_out[i])
-        );
-
-        recursive_add_n_dim  #(
-          .DIM(DIM)
-          ) add_distances(
-            .clk_in(clk_in),
-            .rst_in(rst_in),
-            .data_valid_in(valid_mults_out[DIM-1]),
-            .intermediate_mults_in(intermediate_mults_out),
-            .distance_sq_out(distance_sq_out),
-            .data_valid_out(data_valid_out)
-        );
-
+  
+  always_ff @ (posedge clk_in) begin
+    if (rst_in) begin
+        distance_sq_out <= 0;
+        data_valid_out <= 1'b0;
     end
-  endgenerate
+    else if (state==3'b0) begin
+        if (data_valid_in[i]) begin
+            intermediate_subs_out[i] = (vertex_pos_in[i] < query_pos_in[i]) ? query_pos_in[i] + ~(vertex_pos_in[i]) + 1 : vertex_pos_in[i] + ~(query_pos_in[i]) + 1;
+            valid_subs_out[i] <= 1'b1;
+            
+            if (i>=(DIM-1)) begin
+                i <= 0;
+            end
+            else i <= i + 1;
+            
+            if (valid_subs_out[DIM-1]==1'b1) begin
+                state <= 3'b1;
+            end
+            data_valid_out <= 1'b0;
+        end
+    end
+    else if (state==3'b1) begin
+        state <= 3'b1;
+    end
 
-  // for (i=0; i < $clog2(DIM); i=i+1) begin
-  //   for (j=0; j < DIM; j=j+1-+) begin
-
-
-//   adder add(
-//     .aclk(clk_in), 
-
-//     .s_axis_a_tvalid(point_mul_tvalid), 
-//     .s_axis_a_tdata(point_mul_tdata), 
-
-//     .s_axis_b_tvalid(query_mul_tvalid), 
-//     .s_axis_b_tdata(query_mul_tdata), 
-
-//     .m_axis_result_tvalid(data_valid_out), 
-//     .m_axis_result_tready(1'b1), 
-//     .m_axis_result_tdata(distance_out)
+ end
+ 
+//  calculate_sub #(.DIM(DIM)) sub (
+//     .clk_in(clk_in),
+//     .rst_in(rst_in),
+//     .data_valid_in(data_valid_in[i]),
+//     .state(state),
+//     .vertex_pos_in(vertex_pos_in[i]),
+//     .query_pos_in(query_pos_in[i]),
+//     .intermediate_subs_out(intermediate_subs_out[i]),
+//     .data_valid_out(valid_subs_out[i])
 //     );
 
-endmodule 
 
-
-module recursive_add_n_dim # (parameter DIM = 1)(
-  input wire clk_in,
-  input wire rst_in,
-  input wire data_valid_in,
-  input wire [31:0] intermediate_mults_in [DIM-1:0],
-  output logic [31:0] distance_sq_out,
-  output logic data_valid_out
-);
-
-  generate 
-    if (DIM==1) begin
-      always_ff @ (posedge clk_in) begin
-        if (rst) distance_sq_out <= 0;
-        else distance_sq_out <= intermediate_mults_in[0];
-      end
-    end
-    else if (DIM==2) begin
-      adder add(
-        .aclk(clk_in), 
-
-        .s_axis_a_tvalid(data_valid_in), 
-        .s_axis_a_tdata(intermediate_mults_in[0]), 
-
-        .s_axis_b_tvalid(data_valid_in), 
-        .s_axis_b_tdata(intermediate_mults_in[1]), 
-
-        .m_axis_result_tvalid(data_valid_out), 
-        .m_axis_result_tready(1'b1), 
-        .m_axis_result_tdata(distance_out)
-        );
-    end
-    else begin
-      logic [31:0] distance1, distance2;
-      logic add_valid1, add_valid2;
-      add_n_dimensions # (
-        .DIM(DIM >> 1)
-      ) adder1 (
-        .clk_in(clk_in),
-        .rst_in(rst_in),
-        .data_valid_in(data_valid_in),
-        .intermediate_muls_in(intermediate_mults_in[0:(DIM>>2)]),
-        .distance_sq_out(distance1),
-        .data_valid_out(add_valid1)
-      );
-
-      add_n_dimensions # (
-        .DIM(DIM >> 1)
-      ) adder2 (
-        .clk_in(clk_in),
-        .rst_in(rst_in),
-        .data_valid_in(data_valid_in),
-        .intermediate_muls_in(intermediate_mults_in[(DIM>>2)+1:DIM-1]),
-        .distance_sq_out(distance2),
-        .data_valid_out(add_valid2)
-      );
-
-      adder add(
-        .aclk(clk_in), 
-
-        .s_axis_a_tvalid(add_valid1), 
-        .s_axis_a_tdata(distance1), 
-
-        .s_axis_b_tvalid(add_valid2), 
-        .s_axis_b_tdata(distance2), 
-
-        .m_axis_result_tvalid(data_valid_out), 
-        .m_axis_result_tready(1'b1), 
-        .m_axis_result_tdata(distance_sq_out)
-        );
-
-      end
-  endgenerate
 endmodule
+
+
+
+// module calculate_sub #(parameter DIM=2) (
+//   input wire clk_in,
+//   input wire rst_in,
+//   input wire data_valid_in,
+//   input wire [2:0] state,
+//   input wire [31:0] vertex_pos_in,
+//   input wire [31:0] query_pos_in,
+//   output logic [31:0] intermediate_subs_out,
+//   output logic data_valid_out
+//   );
+
+// //   logic [0:$clog2(DIM)-1] i;
+ 
+//   always_ff @ (posedge clk_in) begin
+//     if (rst_in) begin
+//         intermediate_subs_out <= 0;
+//         data_valid_out <= 1'b0;
+//     end
+//     if (data_valid_in && state==3'b0) begin
+//         intermediate_subs_out = (vertex_pos_in < query_pos_in) ? query_pos_in + ~(vertex_pos_in) + 1 : vertex_pos_in + ~(query_pos_in) + 1;
+    
+//         // if (i>=(DIM-1)) begin
+//         //     i <= 0;
+//         // end
+//         // else i <= i + 1;
+
+//         data_valid_out <= 1'b1;
+//     end
+//   end
+
+// endmodule
 
 `default_nettype wire
