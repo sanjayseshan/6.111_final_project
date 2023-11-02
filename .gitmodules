@@ -2,5 +2,5 @@
 	path = base/remote
 	url = git@github.com:jaytlang/remote.git
 [submodule "GraphAIBench"]
-	path = GraphAIBench
-	url = ./GraphAIBench/
+	path = base/remote
+	url = git@github.com:chenxuhao/GraphAIBench.git
