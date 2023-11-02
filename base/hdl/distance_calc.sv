@@ -83,7 +83,7 @@ module distance #(parameter DIM = 2)(
 //     .m_axis_result_tdata(distance_out)
 //     );
 
-// endmodule // top_level
+endmodule 
 
 
 module recursive_add_n_dim # (parameter DIM = 1)(
