@@ -1,0 +1,6 @@
+[submodule "base/remote"]
+	path = base/remote
+	url = git@github.com:jaytlang/remote.git
+[submodule "base/base/remote"]
+	path = base/base/remote
+	url = git@github.com:jaytlang/remote.git
