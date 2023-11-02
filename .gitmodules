@@ -4,4 +4,4 @@
 
 [submodule "GraphAIBench"]
 	path = GraphAIBench
-	url = ./GraphAIBench/
+	url = git@github.com:chenxuhao/GraphAIBench.git
