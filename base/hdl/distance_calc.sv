@@ -17,6 +17,9 @@ module distance #(parameter DIM = 2)(
   logic [31:0] intermediate_mults_out [DIM-1:0];
   logic valid_subs_out [DIM-1:0], valid_mults_out [DIM-1:0];
 
+  logic recursive_add_valid_out;
+  logic [31:0] distance;
+
 
   logic [0:$clog2(DIM)-1] i;
   
@@ -57,13 +60,28 @@ module distance #(parameter DIM = 2)(
 
             data_valid_out <= 1'b0;
         end
-        state <= 3'b10;
+        // state <= 3'b10;
     end
     else if (state==3'b10) begin
-        state <= 3'b10;
+        if (recursive_add_valid_out) begin
+            distance_sq_out <= distance;
+            data_valid_out <= 1'b1;
+            state <= 3'b0;
+        end
     end
 
  end
+
+ recursive_add_n_dim  #(
+    .DIM(DIM)
+    ) add_distances(
+        .clk_in(clk_in),
+        .rst_in(rst_in),
+        .data_valid_in((state==3'b10)),
+        .intermediate_mults_in(intermediate_mults_out),
+        .distance_sq_out(distance),
+        .data_valid_out(recursive_add_valid_out)
+    );
  
 //  calculate_sub #(.DIM(DIM)) sub (
 //     .clk_in(clk_in),
