@@ -9,7 +9,7 @@ int main(int argc, char *argv[]) {
     exit(1);
   }
 
-  std::cout << "Graph-based Nearest Neighbor Search.\n";
+  std::cout << "Graph-based parse.\n";
   Graph g(argv[1]);
   g.print_meta_data();
   int dim = 100; // vector dimension

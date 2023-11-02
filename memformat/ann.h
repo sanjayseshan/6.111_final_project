@@ -3,7 +3,7 @@
 #include "graph.h"
 
 typedef std::vector<float> Embedding;
-void ANN(Graph &g, std::vector<Embedding> points, Embedding query);
+void parse(Graph &g, std::vector<Embedding> points);
 
 #pragma once
 #include <vector>
