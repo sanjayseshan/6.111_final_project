@@ -24,15 +24,19 @@ module distance #(parameter DIM = 2)(
 
   for (i=0; i < DIM; i=i+1) begin
 
-    adder sub(
+    addsub sub(
       .aclk(clk_in), 
 
       .s_axis_a_tvalid(data_valid_in[i]), 
-      .s_axis_a_tdata(query_pos_in[i]), 
+      .s_axis_a_tdata(vertex_pos_in[i]), 
 
       .s_axis_b_tvalid(1), 
-      .s_axis_b_tdata({1,query_pos_in[i][30:23],~query_pos_in[i][30:23]}), 
+      .s_axis_b_tdata(query_pos_in[i]), 
 
+      .s_axis_operation_tvalid(1),
+      .s_axis_operation_tdata(1),
+
+// {1,query_pos_in[i][30:23],~query_pos_in[i][30:23]}
       .m_axis_result_tvalid(valid_subs_out[i]), 
       .m_axis_result_tready(1'b1), 
       .m_axis_result_tdata(intermediate_subs_out[i])
@@ -103,7 +107,7 @@ module recursive_add_n_dim # (parameter DIM = 1)(
       end
     end
     else if (DIM==2) begin
-      adder add(
+      addsub add(
         .aclk(clk_in), 
 
         .s_axis_a_tvalid(data_valid_in), 
@@ -111,6 +115,9 @@ module recursive_add_n_dim # (parameter DIM = 1)(
 
         .s_axis_b_tvalid(data_valid_in), 
         .s_axis_b_tdata(intermediate_muls_in[1]), 
+
+        .s_axis_operation_tvalid(1),
+        .s_axis_operation_tdata(0),
 
         .m_axis_result_tvalid(data_valid_out), 
         .m_axis_result_tready(1'b1), 
