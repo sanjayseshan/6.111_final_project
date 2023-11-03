@@ -11,102 +11,82 @@ module distance #(parameter DIM = 2)(
   output logic data_valid_out
   );
 
-  logic [2:0] state;
+  logic [2:0] state; // for distance calc FSM, 3 states
 
-  logic [31:0] intermediate_subs_out [DIM-1:0];
-  logic [31:0] intermediate_mults_out [DIM-1:0];
+  logic [31:0] intermediate_subs_out [DIM-1:0], intermediate_mults_out [DIM-1:0];
   logic valid_subs_out [DIM-1:0], valid_mults_out [DIM-1:0];
 
-  // logic recursive_add_valid_out;
-  // logic [31:0] distance;
+  logic [0:$clog2(DIM)-1] i; // index into array
 
 
-  logic [0:$clog2(DIM)-1] i;
-  
+  // state machine for distance calc
   always_ff @ (posedge clk_in) begin
-    // distance_sq_out <= state;
     if (rst_in) begin
-        // distance_sq_out <= 0;
-        // data_valid_out <= 1'b0;
         state <= 0;
         i <= 0;
     end
-    else if (state==3'b0) begin
+    else if (state==2'b0) begin
+        // subtraction (q_i - p_i) one substraction per cycle
         if (data_valid_in[i]) begin
-            // distance_sq_out <= i;
-            intermediate_subs_out[i] = query_pos_in[i] - vertex_pos_in[i]; //(vertex_pos_in[i] < query_pos_in[i]) ? query_pos_in[i] + ~(vertex_pos_in[i]) + 1 : vertex_pos_in[i] + ~(query_pos_in[i]) + 1;
+            intermediate_subs_out[i] = query_pos_in[i] - vertex_pos_in[i]; 
             valid_subs_out[i] <= 1'b1;
             
-            if (i>=(DIM-1)) begin
-                i <= 0;
-            end
+            // increment indexing counter
+            if (i>=(DIM-1)) i <= 0;
             else i <= i + 1;
             
-
-            // data_valid_out <= 1'b0;
         end
-          if (valid_subs_out[DIM-1]==1'b1) begin
-              state <= 3'b1;
-              valid_subs_out[DIM-1] <= 0;
-          end
+
+        // if last subtraction is complete, move to next state
+        if (valid_subs_out[DIM-1]==1'b1) begin
+            state <= 2'b1;
+            valid_subs_out[DIM-1] <= 0;
+        end
     end
-    else if (state==3'b1) begin
+
+    // multiplication (square difference), one multiplication per cycle
+    else if (state==2'b1) begin
         if (intermediate_subs_out[i]) begin
             intermediate_mults_out[i] = intermediate_subs_out[i]*intermediate_subs_out[i];
             valid_mults_out[i] <= 1'b1;
             
-            if (i>=(DIM-1)) begin
-                i <= 0;
-            end
+            // increment indexing counter
+            if (i>=(DIM-1)) i <= 0;
             else i <= i + 1;
             
-            if (valid_mults_out[DIM-1]==1'b1) begin
-                state <= 3'b10;
-            end
+            if (valid_mults_out[DIM-1]==1'b1) state <= 2'b10;
 
-            // data_valid_out <= 1'b0;
         end
-        // state <= 3'b10;
     end
-    else if (state==3'b10) begin
+
+    // recursively add squares of differences
+    else if (state==2'b10) begin
         // if (recursive_add_valid_out) begin
         //     distance_sq_out <= distance;
         //     data_valid_out <= 1'b1;
         //     state <= 3'b0;
         // end
-        if (data_valid_out) begin
-          state <= 0;
-        end
+        if (data_valid_out) state <= 2'b0; 
     end
 
  end
 
+ // use recursive addition module
  recursive_add_n_dim  #(
     .DIM(DIM)
     ) add_distances(
         .clk_in(clk_in),
         .rst_in(rst_in),
-        .data_valid_in((state==3'b10)),
+        .data_valid_in((state==2'b10)),
         .intermediate_mults_in(intermediate_mults_out),
         .distance_sq_out(distance_sq_out),
         .data_valid_out(data_valid_out)
     );
  
-//  calculate_sub #(.DIM(DIM)) sub (
-//     .clk_in(clk_in),
-//     .rst_in(rst_in),
-//     .data_valid_in(data_valid_in[i]),
-//     .state(state),
-//     .vertex_pos_in(vertex_pos_in[i]),
-//     .query_pos_in(query_pos_in[i]),
-//     .intermediate_subs_out(intermediate_subs_out[i]),
-//     .data_valid_out(valid_subs_out[i])
-//     );
-
-
 endmodule
 
 
+// recursive addition module 
 module recursive_add_n_dim # (parameter DIM = 1)(
   input wire clk_in,
   input wire rst_in,
@@ -116,9 +96,8 @@ module recursive_add_n_dim # (parameter DIM = 1)(
   output logic data_valid_out
 );
 
-
-
   generate 
+    // base case 1 (DIM=1): return square of difference
     if (DIM==1) begin
       always_ff @ (posedge clk_in) begin
         if (rst_in) begin
@@ -134,6 +113,8 @@ module recursive_add_n_dim # (parameter DIM = 1)(
 
       end
     end
+
+    // base case 2 (DIM=2): return sum of squares of differences
     else if (DIM==2) begin
       always_ff @ (posedge clk_in) begin
         if (rst_in) begin
@@ -147,32 +128,37 @@ module recursive_add_n_dim # (parameter DIM = 1)(
          else data_valid_out <= 0;
       end
     end
+
+    // otherwise, recursively add values
     else begin
       logic [31:0] distance1, distance2, total_distance;
-      logic add_valid1, add_valid2, added_dist1, added_dist2;
+      logic add_valid1, add_valid2;
       
+      // recursively add first half of values
       recursive_add_n_dim # (
         .DIM(DIM/2)
       ) adder1 (
         .clk_in(clk_in),
         .rst_in(rst_in),
         .data_valid_in(data_valid_in),
-        .intermediate_mults_in(intermediate_mults_in[(DIM/2)-1:0]),
+        .intermediate_mults_in(intermediate_mults_in[DIM/2-1:0]),
         .distance_sq_out(distance1),
         .data_valid_out(add_valid1)
       );
 
+      // recursively second half of values
       recursive_add_n_dim # (
-        .DIM(DIM/2)
+        .DIM(DIM-(DIM/2))
       ) adder2 (
         .clk_in(clk_in),
         .rst_in(rst_in),
         .data_valid_in(data_valid_in),
-        .intermediate_mults_in(intermediate_mults_in[DIM-1:(DIM/2)]),
+        .intermediate_mults_in(intermediate_mults_in[DIM-1:DIM/2]),
         .distance_sq_out(distance2),
         .data_valid_out(add_valid2)
       );
 
+      // add outputs of recursive modules
       always_comb begin
         if (add_valid1 && add_valid2) begin
           distance_sq_out = distance1+distance2;
@@ -182,33 +168,6 @@ module recursive_add_n_dim # (parameter DIM = 1)(
           data_valid_out = 0;      
         end
       end
-
-      // always_ff @ (posedge clk_in) begin
-
-      //   if (rst_in) begin
-      //       total_distance <= 0;
-      //       distance_sq_out <= 0;
-      //       data_valid_out <= 1'b0;
-      //   end
-      //   else begin
-      //       if (add_valid1) begin
-      //           total_distance <= total_distance + distance1;
-      //           added_dist1 <= 1'b1;
-      //       end
-      //       if (add_valid2) begin
-      //           total_distance <= total_distance + distance2;
-      //           added_dist2 <= 1'b1;
-      //       end
-
-      //       if (added_dist1 && added_dist2) begin
-      //           data_valid_out <= 1'b1;
-      //           distance_sq_out <= total_distance;
-
-      //           added_dist1 <= 1'b0;
-      //           added_dist2 <= 1'b0;
-      //       end
-      //   end
-      // end
     end
   endgenerate
 endmodule
