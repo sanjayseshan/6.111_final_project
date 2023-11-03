@@ -16,7 +16,8 @@ module distance #(parameter DIM = 2)(
   logic [31:0] intermediate_subs_out [DIM-1:0], intermediate_mults_out [DIM-1:0];
   logic valid_subs_out [DIM-1:0], valid_mults_out [DIM-1:0];
 
-  logic [0:$clog2(DIM)-1] i; // index into array
+  logic [0:$clog2(DIM)-1] i; // index into array for subtraction
+  logic [0:$clog2(DIM)-1] j; // index into array for multiplication
 
 
   // state machine for distance calc
@@ -34,33 +35,52 @@ module distance #(parameter DIM = 2)(
             // increment indexing counter
             if (i>=(DIM-1)) i <= 0;
             else i <= i + 1;
+
+            j <= i; // update mul indexing counter
             
         end
 
         // if last subtraction is complete, move to next state
-        if (valid_subs_out[DIM-1]==1'b1) begin
+        // if (valid_subs_out[DIM-1]==1'b1) begin
+        //     state <= 2'b1;
+        //     valid_subs_out[DIM-1] <= 0;
+        // end
+
+        // find square of difference if subtraction complete
+        if (valid_subs_out[j]) begin
+            intermediate_mults_out[j] = intermediate_subs_out[j]*intermediate_subs_out[j];
+            valid_mults_out[j] <= 1'b1;
+
+            // reset valid bit when complete
+            valid_subs_out[j] <= 1'b0;
+
+            if (j>=(DIM-1)) j <= 0;
+        end
+            
+        // move to next state if all multiplications are complete
+        if (valid_mults_out[DIM-1]==1'b1) begin
             state <= 2'b1;
-            valid_subs_out[DIM-1] <= 0;
+            valid_mults_out[DIM-1] <= 1'b0;
         end
     end
 
     // multiplication (square difference), one multiplication per cycle
-    else if (state==2'b1) begin
-        if (intermediate_subs_out[i]) begin
-            intermediate_mults_out[i] = intermediate_subs_out[i]*intermediate_subs_out[i];
-            valid_mults_out[i] <= 1'b1;
+    // else if (state==2'b1) begin
+    //     if (intermediate_subs_out[i]) begin
+    //         intermediate_mults_out[i] = intermediate_subs_out[i]*intermediate_subs_out[i];
+    //         valid_mults_out[i] <= 1'b1;
             
-            // increment indexing counter
-            if (i>=(DIM-1)) i <= 0;
-            else i <= i + 1;
+    //         // increment indexing counter
+    //         if (i>=(DIM-1)) i <= 0;
+    //         else i <= i + 1;
             
-            if (valid_mults_out[DIM-1]==1'b1) state <= 2'b10;
+    //         if (valid_mults_out[DIM-1]==1'b1) state <= 2'b10;
 
-        end
-    end
+    //     end
+    // end
 
     // recursively add squares of differences
-    else if (state==2'b10) begin
+    else if (state==2'b1) begin
         // if (recursive_add_valid_out) begin
         //     distance_sq_out <= distance;
         //     data_valid_out <= 1'b1;
@@ -77,7 +97,7 @@ module distance #(parameter DIM = 2)(
     ) add_distances(
         .clk_in(clk_in),
         .rst_in(rst_in),
-        .data_valid_in((state==2'b10)),
+        .data_valid_in((state==2'b1)),
         .intermediate_mults_in(intermediate_mults_out),
         .distance_sq_out(distance_sq_out),
         .data_valid_out(data_valid_out)
