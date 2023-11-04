@@ -1,0 +1,197 @@
+\documentclass{article}
+
+\usepackage{amssymb,amsmath,multicol,enumerate,amsthm,graphicx}
+
+\usepackage{enumerate}
+\usepackage{color}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{mathtools}
+\usepackage{graphicx}
+\graphicspath{ {./} }
+\usepackage{pgfplots}
+% \usepackage{./bluespec}
+\usepackage{svg}
+\usepackage[ddMMyyyy]{datetime}
+\usepackage{graphicx} % Required for inserting images
+\usepackage[margin=1in]{geometry}   % Marges
+\usepackage{latexsym}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{verbatim}
+% \usepackage{listings}
+\DeclareSymbolFont{largesymbols}{OMX}{cmex}{m}{n} % However for large sigmas we want the Computer Modern symbol
+\renewcommand{\ttdefault}{cmtt}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{color}
+\usepackage{xspace} % xspace takes care of the \@ after a capitalized word before a period.
+\usepackage{multicol}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+
+\setlength{\oddsidemargin}{0pt}
+\setlength{\evensidemargin}{0pt}
+\setlength{\textwidth}{6.5in}
+% \setlength{\topmargin}{-1in}
+% \setlength{\bottommargin}{-1in}
+% \setlength{\textheight}{8.5in}
+% \usepackage[margin=1in]{geometry}
+\setlength{\parskip}{1pc}
+\setlength{\parindent}{0pt}
+
+\lstdefinelanguage{RSVAssembler}
+{
+  alsoletter={.}, % allow dots in keywords
+  alsodigit={0x}, % hex numbers are numbers too!
+  morekeywords=[1]{ % instructions
+    lb, lh, lw, lbu, lhu,
+    sb, sh, sw,
+    sll, slli, srl, srli, sra, srai,
+    add, addi, sub, lui, auipc,
+    xor, xori, or, ori, and, andi,
+    slt, slti, sltu, sltiu,
+    beq, bne, blt, bge, bltu, bgeu,
+    j, jr, jal, jalr, ret,
+    scall, break, nop
+  },
+  morekeywords=[2]{ % sections of our code and other directives
+    .align, .ascii, .asciiz, .byte, .data, .double, .extern,
+    .float, .globl, .half, .kdata, .ktext, .set, .space, .text, .word
+  },
+  morekeywords=[3]{ % registers
+    zero, ra, sp, gp, tp, s0, fp,
+    t0, t1, t2, t3, t4, t5, t6,
+    s1, s2, s3, s4, s5, s6, s7, s8, s9, s10, s11,
+    a0, a1, a2, a3, a4, a5, a6, a7,
+    ft0, ft1, ft2, ft3, ft4, ft5, ft6, ft7,
+    fs0, fs1, fs2, fs3, fs4, fs5, fs6, fs7, fs8, fs9, fs10, fs11,
+    fa0, fa1, fa2, fa3, fa4, fa5, fa6, fa7
+  },
+  morecomment=[l]{;},   % mark ; as line comment start
+  morecomment=[l]{\#},  % as well as # (even though it is unconventional)
+  morestring=[b]",      % mark " as string start/end
+  morestring=[b]'       % also mark ' as string start/end
+}
+
+
+\lstset{language=Verilog,keywordstyle={\bfseries \color{blue}}}
+
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82} 
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+
+\lstset{ %
+  backgroundcolor=\color{white},   % choose the background color
+  basicstyle=\footnotesize,        % size of fonts used for the code
+  breaklines=true,                 % automatic line breaking only at whitespace
+  captionpos=b,                    % sets the caption-position to bottom
+  commentstyle=\color{mygreen},    % comment style
+  escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+  % morekeywords=[1]{arg,pos},
+  keywordstyle=\color{blue},       % keyword style
+  stringstyle=\color{mymauve},     % string literal style
+  backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                     
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    % keywordstyle=\color{weborange},
+    showtabs=false,                  
+    tabsize=2
+}
+
+
+
+
+\title{6.111 Final Project Abstract: \\ FPGA-based Accelerator for Vector Search}
+\author{Lasya Balachandran, Sanjay Seshan\\lasyab@mit.edu, seshan@mit.edu}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+
+    % A high level (no need to dig too deep yet) specification of what your project should do. This can absolutely be tweaked and tuned over the course of the next couple of days.
+    % A discussion what the system's use cases are, how it should behave, and what its desired properties are (i.e., how does this system benefit from being run on an FPGA?)
+    % Design goals for your project - what properties are you prioritizing for? What components do you need to build in order to bring together a minimal viable product?
+    % How work will be broken up to ensure everyone can always be working efficiently.
+
+\section*{Abstract}
+With the application of graphs in large-scale modeling, such as social network analysis and image and video segmentation, among other applications, graphs are increasingly being used to encode and find complex relationships between data for machine learning models, leading to an increased need for optimization of these models. As a result, in order to better support model-specific algorithm efficiency, there has been work to create specialized hardware accelerators focusing on aspects such as memory accessing, latency, and resource allocation. However, current accelerators for graph problems are not scalable and can only be optimized for a single algorithm, such as graph random walks or matrix multiplication. 
+
+The goal of this project is to implement an accelerator for a general-use search algorithm. One of the main problems when working with large graphs is the large amount of computations, which is a reason why current accelerators have focused on optimizing only a single algorithm. One way we can reduce these computations is by running the calculations on only a subset of the graph. For example, the novel graph-based vector search algorithm iQAN uses a priority queue of certain length to approximate the most similar points and avoid brute-force-checking all of the points [1]. Graph sampling, where we select a random subset of vertices representative of the entire graph, can also be used to reduce a graph.
+
+% One way to reduce computation is by graph sampling, where we select a random subset of vertices representative of the entire graph, when traversing the graph from a starting set of nodes, but sampling graphs, or reducing them, is hard to perform efficiently. 
+
+Due to the reprogrammability of FPGAs and following from previous work on hardware and software co-design for an inverted file index (IVF)-product quantization (PQ)-based vector search algorithm on FPGAs, we propose an FPGA-based accelerator that builds off of the iQAN and graph sampling framework to provide an interface to efficiency search graphs [2]. 
+% This system will work to provide a general interface for graph sampling and pattern search problems. 
+Some applications of this system include graph-based vector search (e.g. iQAN) for machine learning applications and graph pattern mining on the sampled graphs.
+
+% Due to the reprogrammability of FPGAs and following from previous work on hardware and software co-design for an inverted file index (IVF)-product quantization (PQ)-based vector search algorithm on FPGAs, we propose an FPGA-based accelerator to efficiently sample graphs [1]. This system will work to provide a general interface for graph sampling and pattern search problems. Some applications of this system include graph-based vector search (e.g. iQAN) for machine learning applications and graph pattern mining on the sampled graphs.
+
+This project will build on the work of iQAN (graph-based vector search) and NextDoor (efficient graph sampling on GPUs) [1, 3]. It is also part of our UROP with Arvind and Xuhao Chen in the Computation Structures Group at CSAIL.
+
+\section*{Design Goals}
+To produce a minimal viable product, we will first implement iQAN on an FPGA. We will then create an accelerator for iQAN on simple graphs that can fit in BRAM. After that, we will extend the minimal viable product to make a modular, variable-sized accelerator that can read large graphs from DRAM and SD cards.
+
+We currently see our project requiring modules to perform the following:
+\begin{enumerate}
+    \item Graph fetcher and cache
+    % \item Graph walker
+    \item Distance calculation for n-dimensional vectors
+    \item Graph updater
+    \item Graph vector search (iQAN) and graph pattern mining
+    \item Random graph point sampler to determine starting point (not necessary for minimal viable product)
+\end{enumerate}
+
+We expect these modules to change as we work more on the design phase of our accelerator. However, these modules, at a high level, are needed to build our system.
+
+
+% To produce a minimal viable product, we will create an accelerator for simple graphs that can fit in BRAM and fixed size sampling. We will also attempt to replicate iQAN (according to the paper) and implement the algorithm on an FPGA. We will then merge everything together. After that, we will make a modular, variable sized accelerator that can read large graphs from dram and sdcard.
+
+\section*{Plan}
+
+Our project will be divided as follows:
+\begin{enumerate}
+    \item Create CPU implementations of iQAN and graph sampling algorithms (already in progress)
+    \item Implement random sampler and distance calculation (Lasya)
+    \item Implement graph fetcher and cache and graph updater (Sanjay) 
+    \item Convert CPU implementation of iQAN to Verilog/SystemVerilog 
+    \item  Program sample use cases for testing performance and create reference implementations on CPU to evaluate performance on FPGA compared to CPU 
+    \item Create a modular implementation of our system
+\end{enumerate}
+
+We have specified how we tentatively expect to split components 2 and 3. We expect to have a better idea on how to split the work, including components 4, 5 and 6, in the next week or two after creating a block diagram of the modules and starting to build the system. 
+
+
+
+\section*{Relevant Papers}
+
+[1] iQAN: Fast and Accurate Vector Search with Efficient Intra-Query Parallelism on Multi-Core Architectures, 2023. \href{https://johnpzh.github.io/assets/papers/PPoPP-2023\_iQAN\_Zhen.CameraReady.pdf}{https://johnpzh.github.io/assets/papers/PPoPP-2023\_iQAN\_Zhen.CameraReady.pdf }
+
+[2] Co-design Hardware and Algorithm for Vector Search, 2023. \href{https://arxiv.org/pdf/2306.11182.pdf} {https://arxiv.org/pdf/2306.11182.pdf }
+
+[3] NextDoor: Accelerating Graph Sampling for Graph Machine Learning Using GPUs, 2021. 
+\newline \href{https://github.com/chenxuhao/ReadingList/blob/master/sampling/NextDoor.pdf}{https://github.com/chenxuhao/ReadingList/blob/master/sampling/NextDoor.pdf }
+
+
+
+\end{document}

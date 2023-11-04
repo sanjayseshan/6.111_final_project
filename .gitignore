@@ -4,3 +4,7 @@
 *.pb
 .Xil
 .vscode
+*.aux
+*.fls
+*.fdb_latexmk
+*.synctex.gz
