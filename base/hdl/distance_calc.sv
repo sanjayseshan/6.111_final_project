@@ -13,8 +13,8 @@ module distance #(parameter DIM = 2)(
 
   logic [2:0] state; // for distance calc FSM, 3 states
 
-  logic [31:0] intermediate_subs_out [DIM-1:0], intermediate_mults_out [DIM-1:0];
-  logic valid_subs_out [DIM-1:0], valid_mults_out [DIM-1:0];
+  logic [31:0] intermediate_subs_out [DIM-1:0], intermediate_mults_out [DIM-1:0], distance;
+  logic valid_subs_out [DIM-1:0], valid_mults_out [DIM-1:0], valid_add_out;
 
   logic [0:$clog2(DIM)-1] i; // index into array for subtraction
   logic [0:$clog2(DIM)-1] j; // index into array for multiplication
@@ -27,6 +27,9 @@ module distance #(parameter DIM = 2)(
         i <= 0;
     end
     else if (state==2'b0) begin
+        // data_valid_out <= 1'b0;
+        // distance_sq_out <= 0;
+
         // subtraction (q_i - p_i) one substraction per cycle
         if (data_valid_in[i]) begin
             intermediate_subs_out[i] = query_pos_in[i] - vertex_pos_in[i]; 
@@ -81,12 +84,12 @@ module distance #(parameter DIM = 2)(
 
     // recursively add squares of differences
     else if (state==2'b1) begin
-        // if (recursive_add_valid_out) begin
-        //     distance_sq_out <= distance;
-        //     data_valid_out <= 1'b1;
-        //     state <= 3'b0;
-        // end
         if (data_valid_out) state <= 2'b0; 
+        // if(valid_add_out) begin
+        //     data_valid_out <= 1'b1;
+        //     distance_sq_out <= distance;
+        //     state <= 2'b0;
+        // end
     end
 
  end
@@ -129,7 +132,7 @@ module recursive_add_n_dim # (parameter DIM = 1)(
           data_valid_out <= 1;
 
         end 
-        else data_valid_out <= 0;
+        else data_valid_out <= 1'b0;
 
       end
     end
@@ -145,7 +148,7 @@ module recursive_add_n_dim # (parameter DIM = 1)(
           distance_sq_out = intermediate_mults_in[1] + intermediate_mults_in[0];
           data_valid_out <= 1;
         end
-         else data_valid_out <= 0;
+         else data_valid_out <= 1'b0;
       end
     end
 
@@ -179,13 +182,13 @@ module recursive_add_n_dim # (parameter DIM = 1)(
       );
 
       // add outputs of recursive modules
-      always_comb begin
+      always_ff @ (posedge clk_in) begin
         if (add_valid1 && add_valid2) begin
           distance_sq_out = distance1+distance2;
-          data_valid_out = 1;      
+          data_valid_out = 1'b1;      
         end else begin
           distance_sq_out = 0;
-          data_valid_out = 0;      
+          data_valid_out = 1'b0;      
         end
       end
     end
