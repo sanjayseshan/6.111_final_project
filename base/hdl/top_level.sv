@@ -21,6 +21,49 @@ module top_level(
 
 
 
+graph_memory #( DIM = 2,  PROC_BITS = 4) storage (
+  .clk_in,
+  .rst_in,
+  .idx_addr,
+  .idx_validin,
+  .data_addra,
+  .data_addrb,
+  .data_validina,
+  .data_validinb,
+  .rowidx_out,
+  .data_outa,
+  .data_outb,
+  .data_outc,
+  .data_valid_outa,
+  .data_valid_outb,
+  .rowidx_valid_out
+  ); 
+
+  graph_fetch #(parameter DIM = 2) fetcher(
+  .clk_in,
+  .rst_in,
+  .v_addr,
+  .ready,
+  .neigh_out_fifo,
+  .data_out,
+  .data_valid_out,
+  .neigh_deq,
+  .neigh_valid_out,
+
+  .neigh_full,
+  .neigh_empty,
+
+  .mem_valid_in,
+  .mem_data_in,
+  .mem_valid_out,
+  .mem_req_out,
+
+  .mem_valid_in2,
+  .mem_data_in2,
+  .mem_valid_out2,
+  .mem_req_out2
+  );
+
 
   logic clk_in;
   logic rst_in;
