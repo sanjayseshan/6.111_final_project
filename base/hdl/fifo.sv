@@ -24,7 +24,7 @@ module FIFO #(parameter DATA_WIDTH = 32, parameter DEPTH = 8)(
 
     always_ff @( posedge clk_in ) begin
         if (rst_in) begin
-            for (i=0; i<DEPTH; i=i+1) begin
+            for (int i=0; i<DEPTH; i=i+1) begin
                 Q[i] <= 0;
                 valid[i] <= 0;
             end
