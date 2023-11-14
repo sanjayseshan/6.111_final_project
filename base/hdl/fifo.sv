@@ -8,7 +8,7 @@ module FIFO #(parameter DATA_WIDTH = 32, parameter DEPTH = 8)(
   input wire [DATA_WIDTH-1:0] enq_data,
   input wire enq,
   output logic full,
-  output logic [31:0] data_out,
+  output logic [DATA_WIDTH-1:0] data_out,
   output logic empty,
   output logic valid_out
 );
