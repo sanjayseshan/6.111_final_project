@@ -42,32 +42,86 @@ FIFO #(.DATA_WIDTH(32), .DEPTH(8))Q(
     $display("Starting Sim"); //print nice message at start
     clk_in = 0;
     rst_in = 0;
+    deq = 0;
+    enq=0;
+    enq_data=0;
+
 
     #10;
     rst_in = 1;
     #10;
     rst_in = 0;
 
+  for (int i=0;i<10;i=i+1) begin
 
-    #20;
-    enq = 1;
-    enq_data = 64;
-    #10;
-    enq = 0;
-    #20;
-    enq = 1;
-    enq_data = 16;
-    #10;
-    enq = 0;
-    #10;
-    deq = 1;
-    #10;
-    deq = 0;
-    #10;
-    deq = 1;
-    #10;
-    deq = 0;
+      #20;
+      enq = 1;
+      enq_data = 64;
+      #10;
+      enq = 0;
+      #20;
+      enq = 1;
+      enq_data = 16;
+      #10;
+      enq = 0;
+      #10;
+      deq = 1;
+      #10;
+      deq = 0;
+      #10;
+      deq = 1;
+      #10;
+      deq = 0;
+      
+    end
 
+
+  for (int i=0;i<10;i=i+1) begin
+    if (!full) begin
+
+      #20;
+      enq = 1;
+      enq_data = i;
+      #10;
+      enq = 0;
+    end      
+  end
+
+
+  for (int i=0;i<10;i=i+1) begin
+    if (!empty) begin
+      #10;
+      deq = 1;
+      #10;
+      deq = 0;
+    end
+      
+  end
+
+
+
+
+  for (int i=0;i<10;i=i+1) begin
+    if (!full) begin
+
+      #20;
+      enq = 1;
+      enq_data = i<<2;
+      #10;
+      enq = 0;
+    end      
+  end
+
+
+  for (int i=0;i<10;i=i+1) begin
+    if (!empty) begin
+      #10;
+      deq = 1;
+      #10;
+      deq = 0;
+    end
+      
+  end
 // result should be 959 or 0x3bf
     #500;
     $display("Simulation finished");

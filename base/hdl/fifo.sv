@@ -27,7 +27,12 @@ module FIFO #(parameter DATA_WIDTH = 32, parameter DEPTH = 8)(
             for (int i=0; i<DEPTH; i=i+1) begin
                 Q[i] <= 0;
                 valid[i] <= 0;
+
             end
+            data_out <= 0;
+            full <= 0;
+            empty <= 0;
+            // valid_out <= 0;
             read_ptr <= 0;
             write_ptr <= 0;
             valid_out <= 0;
@@ -36,12 +41,12 @@ module FIFO #(parameter DATA_WIDTH = 32, parameter DEPTH = 8)(
                 data_out <= Q[read_ptr];
                 valid_out <= 1;
                 valid[read_ptr] <= 0;
-                read_ptr <= (read_ptr < DEPTH) ? read_ptr +1 : 0;
+                read_ptr <= (read_ptr < DEPTH-1) ? read_ptr +1 : 0;
             end else valid_out <= 0;
             if (enq && !full && valid[write_ptr] == 0) begin
                 Q[write_ptr] <= enq_data;
                 valid[write_ptr] <= 1;
-                write_ptr <= (write_ptr < DEPTH) ? write_ptr +1 : 0;
+                write_ptr <= (write_ptr < DEPTH-1) ? write_ptr +1 : 0;
             end
 
         end
