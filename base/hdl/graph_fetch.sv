@@ -4,16 +4,16 @@
 module graph_fetch #(parameter DIM = 2)(
   input wire clk_in,
   input wire rst_in,
-  input wire [31:0] v_addr,
-  output wire ready,
-  output logic [31:0] neigh_out_fifo,
+  input wire [31:0] v_addr_in,
+  output wire ready_out,
+  output logic [31:0] neigh_fifo_out,
   output logic [31:0] data_out [DIM:0],
   output logic data_valid_out [DIM:0],
-  input wire neigh_deq,
+  input wire neigh_deq_out,
   output logic neigh_valid_out,
 
-  output logic neigh_full,
-  output logic neigh_empty,
+  output logic neigh_full_out,
+  output logic neigh_empty_out,
 
   input wire mem_valid_in,
   input wire mem_data_in,
@@ -41,12 +41,12 @@ module graph_fetch #(parameter DIM = 2)(
   message_router #( PROC_BITS = 4,  DATA_SIZE = 32,  PROC_ID=4'b0000) neigh_port1 (
     .clk_in(clk_in),
     .rst_in(rst_in),
-    .addr_req(read_addr_neigh),
+    .addr_req_in(read_addr_neigh),
     .data_route_in(mem_data_in),
     .valid_in(mem_valid_in),
     .req_ready_in(req_ready_n),
     .valid_req_out(mem_valid_out),
-    .valid_out_route(neigh_ready),
+    .valid_route_out(neigh_ready),
     .msg_out(mem_req_out),
     .data_route_out(neigh_out)
   );
@@ -54,24 +54,24 @@ module graph_fetch #(parameter DIM = 2)(
   FIFO#(.DATA_WIDTH(32),.DEPTH(8)) neighbors (
         .clk_in(clk_in),
         .rst_in(rst_in),
-        .deq(neigh_deq),
-        .enq_data(neigh_out),
-        .enq(mem_valid_in),
-        .full(neigh_full),
-        .data_out(neigh_out_fifo),
+        .deq_in(neigh_deq_out),
+        .enq_data_in(neigh_out),
+        .enq_in(mem_valid_in),
+        .full_out(neigh_full_out),
+        .data_out(neigh_fifo_out),
         .valid_out(neigh_valid_out),
-        .empty(neigh_empty)
+        .empty_out(neigh_empty_out)
   );
 
   message_router #( PROC_BITS = 4,  DATA_SIZE = 32,  PROC_ID=4'b0001) data_port2 (
     .clk_in(clk_in),
     .rst_in(rst_in),
-    .addr_req(read_addr_data),
+    .addr_req_in(read_addr_data),
     .data_route_in(mem_data_in2),
     .valid_in(mem_valid_in2),
     .req_ready_in(req_ready_d),
     .valid_req_out(mem_valid_out2),
-    .valid_out_route(data_ready),
+    .valid_route_out(data_ready),
     .msg_out(mem_req_out2),
     .data_route_out(data_out[ct])
   );
@@ -100,22 +100,22 @@ module graph_fetch #(parameter DIM = 2)(
 
     always_ff @( posedge clk_in ) begin
       if (rst_in) begin
-        ready <= 1;
+        ready_out <= 1;
         ct <= 0;
         req_ready_d <= 0;
         req_ready_n <= 0;
       end else begin
         if (valid_in) begin
-          read_addr_data <= v_addr + 1;
-          read_addr_neigh <= v_addr + 1 + DIM;
+          read_addr_data <= v_addr_in + 1;
+          read_addr_neigh <= v_addr_in + 1 + DIM;
         end
 
-        if (read_addr_data != v_addr +1+DIM ) begin
+        if (read_addr_data != v_addr_in +1+DIM ) begin
           read_addr_data <= read_addr_data + 1;
           req_ready_d <= 1;
         end else req_ready_d <= 0;
         
-        if (neigh_out != 0 && !neigh_full) begin 
+        if (neigh_out != 0 && !neigh_full_out) begin 
           read_addr_neigh <= read_addr_neigh + 1;
           req_ready_n <= 1;
         end else req_ready_n <= 0;

@@ -46,12 +46,12 @@ module PriorityQueue #(parameter DATA_WIDTH = 32, parameter TAG_WIDTH = 32, para
     PQ_FIFO #(.DATA_WIDTH($clog2(DEPTH)+1), .DEPTH(DEPTH)) lru_cache (
         .clk_in(clk_in),
         .rst_in(rst_in),
-        .deq(rem_lru),
-        .enq_data(read_ptr),
-        .enq(push_lru),
-        .full(),
+        .deq_in(rem_lru),
+        .enq_data_in(read_ptr),
+        .enq_in(push_lru),
+        .full_out(),
         .data_out(write_ptr),
-        .empty(),
+        .empty_out(),
         .valid_out()
     );
 

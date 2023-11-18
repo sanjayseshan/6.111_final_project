@@ -6,12 +6,12 @@ module fifo_tb();
   logic clk_in;
   logic rst_in;
 
-  logic deq;
-  logic [32-1:0] enq_data;
-  logic enq;
-  logic full;
+  logic deq_in;
+  logic [32-1:0] enq_data_in;
+  logic enq_in;
+  logic full_out;
   logic [31:0] data_out;
-  logic empty;
+  logic empty_out;
   logic valid_out;
 
 //   logic [31:0] intermediate_subs_out;
@@ -19,12 +19,12 @@ module fifo_tb();
 FIFO #(.DATA_WIDTH(32), .DEPTH(8))Q(
   .clk_in(clk_in),
   .rst_in(rst_in),
-  .deq(deq),
-  .enq_data(enq_data),
-  .enq(enq),
-  .full(full),
+  .deq_in(deq_in),
+  .enq_data_in(enq_data_in),
+  .enq_in(enq_in),
+  .full_out(full_out),
   .data_out(data_out),
-  .empty(empty),
+  .empty_out(empty_out),
   .valid_out(valid_out)
 );
 
@@ -42,9 +42,9 @@ FIFO #(.DATA_WIDTH(32), .DEPTH(8))Q(
     $display("Starting Sim"); //print nice message at start
     clk_in = 0;
     rst_in = 0;
-    deq = 0;
-    enq=0;
-    enq_data=0;
+    deq_in = 0;
+    enq_in=0;
+    enq_data_in=0;
 
 
     #10;
@@ -55,45 +55,45 @@ FIFO #(.DATA_WIDTH(32), .DEPTH(8))Q(
   for (int i=0;i<10;i=i+1) begin
 
       #20;
-      enq = 1;
-      enq_data = 64;
+      enq_in = 1;
+      enq_data_in = 64;
       #10;
-      enq = 0;
+      enq_in = 0;
       #20;
-      enq = 1;
-      enq_data = 16;
+      enq_in = 1;
+      enq_data_in = 16;
       #10;
-      enq = 0;
+      enq_in = 0;
       #10;
-      deq = 1;
+      deq_in = 1;
       #10;
-      deq = 0;
+      deq_in = 0;
       #10;
-      deq = 1;
+      deq_in = 1;
       #10;
-      deq = 0;
+      deq_in = 0;
       
     end
 
 
   for (int i=0;i<10;i=i+1) begin
-    if (!full) begin
+    if (!full_out) begin
 
       #20;
-      enq = 1;
-      enq_data = i;
+      enq_in = 1;
+      enq_data_in = i;
       #10;
-      enq = 0;
+      enq_in = 0;
     end      
   end
 
 
   for (int i=0;i<10;i=i+1) begin
-    if (!empty) begin
+    if (!empty_out) begin
       #10;
-      deq = 1;
+      deq_in = 1;
       #10;
-      deq = 0;
+      deq_in = 0;
     end
       
   end
@@ -102,23 +102,23 @@ FIFO #(.DATA_WIDTH(32), .DEPTH(8))Q(
 
 
   for (int i=0;i<10;i=i+1) begin
-    if (!full) begin
+    if (!full_out) begin
 
       #20;
-      enq = 1;
-      enq_data = i<<2;
+      enq_in = 1;
+      enq_data_in = i<<2;
       #10;
-      enq = 0;
+      enq_in = 0;
     end      
   end
 
 
   for (int i=0;i<10;i=i+1) begin
-    if (!empty) begin
+    if (!empty_out) begin
       #10;
-      deq = 1;
+      deq_in = 1;
       #10;
-      deq = 0;
+      deq_in = 0;
     end
       
   end
