@@ -9,11 +9,16 @@ module graph_fetch_tb();
   logic valid_in;
   logic ready_out;
   logic [31:0] neigh_fifo_out;
-  logic [31:0] data_out [1:0];
-  logic data_valid_out [1:0];
+  logic [31:0] data_out;
+  logic data_valid_out;
+
+  logic pos_deq_in;
+  logic pos_valid_out;
+  logic pos_full_out;
+  logic pos_empty_out;
+
   logic neigh_deq_in;
   logic neigh_valid_out;
-
   logic neigh_full_out;
   logic neigh_empty_out;
 
@@ -27,25 +32,26 @@ module graph_fetch_tb();
   logic mem_valid_out2;
   logic [31+4:0] mem_req_out2;
 
-  logic fully_fetched_out;
+  logic [31:0] data_out0, data_out1, data_out2, data_out3;
+  logic data_valid_out0, data_valid_out1, data_valid_out2, data_valid_out3;
 
 
-  logic [31:0] data_out0, data_out1;
-  logic data_valid_out0, data_valid_out1;
-
-
-graph_fetch #(.DIM(2)) graph(
+graph_fetch #(.DIM(4)) graph(
   .clk_in(clk_in),
   .rst_in(rst_in),
   .v_addr_in(v_addr_in),
   .valid_in(valid_in),
   .ready_out(ready_out),
-  .neigh_fifo_out(neigh_fifo_out),
+
+  .pos_deq_in(pos_deq_in),
   .data_out(data_out),
   .data_valid_out(data_valid_out),
-  .neigh_deq_in(neigh_deq_in),
-  .neigh_valid_out(neigh_valid_out),
+  .pos_full_out(pos_full_out),
+  .pos_empty_out(pos_empty_out),
 
+  .neigh_deq_in(neigh_deq_in),
+  .neigh_fifo_out(neigh_fifo_out),
+  .neigh_valid_out(neigh_valid_out),
   .neigh_full_out(neigh_full_out),
   .neigh_empty_out(neigh_empty_out),
 
@@ -57,9 +63,7 @@ graph_fetch #(.DIM(2)) graph(
   .mem_valid_in2(mem_valid_in2),
   .mem_data_in2(mem_data_in2),
   .mem_valid_out2(mem_valid_out2),
-  .mem_req_out2(mem_req_out2),
-
-  .fully_fetched_out(fully_fetched_out)
+  .mem_req_out2(mem_req_out2)
 );
 
 
@@ -67,11 +71,15 @@ graph_fetch #(.DIM(2)) graph(
       #5;  //every 5 ns switch...so period of clock is 10 ns...100 MHz clock
       clk_in = !clk_in;
       
-      data_valid_out0 = data_valid_out[0];
-      data_valid_out1 = data_valid_out[1];
+    //   data_valid_out0 = data_valid_out[0];
+    //   data_valid_out1 = data_valid_out[1];
+    //   data_valid_out2 = data_valid_out[2];
+    //   data_valid_out3 = data_valid_out[3];
 
-      data_out0 = data_out[0];
-      data_out1 = data_out[1];
+    //   data_out0 = data_out[0];
+    //   data_out1 = data_out[1];
+    //   data_out2 = data_out[2];
+    //   data_out3 = data_out[3];
       
   end
 
@@ -84,12 +92,12 @@ graph_fetch #(.DIM(2)) graph(
     rst_in = 0;
     v_addr_in = 0;
     valid_in = 0;
-    mem_valid_in = 0;
-    mem_data_in = 0;
-    mem_valid_in2 = 0;
-    mem_data_in2 = 0;
+    // mem_valid_in = 0;
+    // mem_data_in = 0;
+    // mem_valid_in2 = 0;
+    // mem_data_in2 = 0;
     neigh_deq_in = 0;
-
+    pos_deq_in = 0;
 
     #10;
     rst_in = 1;
@@ -98,11 +106,25 @@ graph_fetch #(.DIM(2)) graph(
     #10;
     v_addr_in = 1;
     valid_in = 1;
-    mem_valid_in = 1;
-    mem_data_in = 6;
     #10;
     valid_in = 0;
+    #100;
+    pos_deq_in = 1;
     #10;
+    pos_deq_in = 0;
+    #10;
+    pos_deq_in = 1;
+    #10
+    pos_deq_in = 0;
+    #10;
+    pos_deq_in = 1;
+    #10
+    pos_deq_in = 0;
+    #10;
+    pos_deq_in = 1;
+    #10
+    pos_deq_in = 0;
+    #30;
     neigh_deq_in = 1;
     #10;
     neigh_deq_in = 0;
@@ -114,6 +136,76 @@ graph_fetch #(.DIM(2)) graph(
     neigh_deq_in = 1;
     #10;
     neigh_deq_in = 0;
+
+    #10;
+    v_addr_in = 55;
+    valid_in = 1;
+    #10;
+    valid_in = 0;
+    #100;
+    pos_deq_in = 1;
+    #10;
+    pos_deq_in = 0;
+    #10;
+    pos_deq_in = 1;
+    #10
+    pos_deq_in = 0;
+    #10;
+    pos_deq_in = 1;
+    #10
+    pos_deq_in = 0;
+    #10;
+    pos_deq_in = 1;
+    #10
+    pos_deq_in = 0;
+    #30;
+    neigh_deq_in = 1;
+    #10;
+    neigh_deq_in = 0;
+    #10;
+    neigh_deq_in = 1;
+    #10;
+    neigh_deq_in = 0;
+    #10;
+    neigh_deq_in = 1;
+    #10;
+    neigh_deq_in = 0;
+
+
+    #10;
+    v_addr_in = 64;
+    valid_in = 1;
+    #10;
+    valid_in = 0;
+    #100;
+    pos_deq_in = 1;
+    #10;
+    pos_deq_in = 0;
+    #10;
+    pos_deq_in = 1;
+    #10
+    pos_deq_in = 0;
+    #10;
+    pos_deq_in = 1;
+    #10
+    pos_deq_in = 0;
+    #10;
+    pos_deq_in = 1;
+    #10
+    pos_deq_in = 0;
+    #30;
+    neigh_deq_in = 1;
+    #10;
+    neigh_deq_in = 0;
+    #10;
+    neigh_deq_in = 1;
+    #10;
+    neigh_deq_in = 0;
+    #10;
+    neigh_deq_in = 1;
+    #10;
+    neigh_deq_in = 0;
+
 
 
     #200

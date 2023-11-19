@@ -1,6 +1,13 @@
 `timescale 1ns / 1ps
 `default_nettype none // prevents system from inferring an undeclared logic (good practice)
 
+`ifdef SYNTHESIS
+`define FPATH(X) `"X`"
+`else /* ! SYNTHESIS */
+`define FPATH(X) `"data/X`"
+`endif  /* ! SYNTHESIS */
+
+
 module graph_memory #(parameter DIM = 2, parameter PROC_BITS = 4)(
   input wire clk_in,
   input wire rst_in,
@@ -27,7 +34,7 @@ module graph_memory #(parameter DIM = 2, parameter PROC_BITS = 4)(
   logic [31:0] addrc;
 
   logic [1:0] cta;
-  logic [1:0] ctb;
+  logic ctb;
   logic [1:0] ctc;
 
   always_ff @( posedge clk_in) begin 
@@ -36,17 +43,38 @@ module graph_memory #(parameter DIM = 2, parameter PROC_BITS = 4)(
       ctb <= 0;
       ctb <= 0;
     end
-    if (data_validina) cta <= 0;
-    else cta <= cta+1;
-    if (data_validinb) ctb <= 0;
-    else ctb <= ctb+1;
+    // if (data_validina) cta <= 0;
+    // else cta <= cta+1;
+    // if (data_validinb) ctb <= 0;
+    // else ctb <= ctb+1;
     if (idx_validin) ctc <= 0;
     else ctc <= ctc+1;
 
-    if (cta == 2) data_valid_outa <= 1;
-    else data_valid_outa <= 0;
-    if (ctb == 2) data_valid_outb <= 1;
-    else data_valid_ouba <= 0;
+    // count 2 cycles to get BRAM values
+    if (data_validina) begin
+      cta <= 1;
+      data_valid_outa <= 0;
+    end
+    else begin
+      cta <= 0;
+      if (cta) data_valid_outa <= 1;
+      else data_valid_outa <= 0;
+    end
+
+    if (data_validinb) begin
+      ctb <= 1;
+      data_valid_outb <= 0;
+    end
+    else begin
+      ctb <= 0;
+      if (ctb) data_valid_outb <= 1;
+      else data_valid_outb <= 0;
+    end
+
+    // if (cta == 2) data_valid_outa <= 1;
+    // else data_valid_outa <= 0;
+    // if (ctb == 2) data_valid_outb <= 1;
+    // else data_valid_outb <= 0;
     if (ctc == 2) rowidx_valid_out <= 1;
     else rowidx_valid_out <= 0;
   end
@@ -55,22 +83,22 @@ module graph_memory #(parameter DIM = 2, parameter PROC_BITS = 4)(
     .RAM_WIDTH(32),                       // Specify RAM data width
     .RAM_DEPTH(1024),                     // Specify RAM depth (number of entries)
     .RAM_PERFORMANCE("HIGH_PERFORMANCE"), // Select "HIGH_PERFORMANCE" or "LOW_LATENCY"
-    .INIT_FILE("out_addrs.mem")                        // Specify name/location of RAM initialization file if using one (leave blank if not)
+    .INIT_FILE(`FPATH(out_addrs2.mem))                        // Specify name/location of RAM initialization file if using one (leave blank if not)
   ) data_mem (
-    .addra(data_addra),   // Port A address bus, width determined from RAM_DEPTH
-    .addrb(data_addrb),   // Port B address bus, width determined from RAM_DEPTH
+    .addra(data_addra[9:0]),   // Port A address bus, width determined from RAM_DEPTH
+    .addrb(data_addrb[9:0]),   // Port B address bus, width determined from RAM_DEPTH
     .dina(0),     // Port A RAM input data, width determined from RAM_WIDTH
     .dinb(0),     // Port B RAM input data, width determined from RAM_WIDTH
     .clka(clk_in),     // Port A clock
     .clkb(clk_in),     // Port B clock
-    .wea(0),       // Port A write enable
-    .web(0),       // Port B write enable
-    .ena(1),       // Port A RAM Enable, for additional power savings, disable port when not in use
-    .enb(1),       // Port B RAM Enable, for additional power savings, disable port when not in use
+    .wea(1'b0),       // Port A write enable
+    .web(1'b0),       // Port B write enable
+    .ena(1'b1),       // Port A RAM Enable, for additional power savings, disable port when not in use
+    .enb(1'b1),       // Port B RAM Enable, for additional power savings, disable port when not in use
     .rsta(rst_in),     // Port A output reset (does not affect memory contents)
     .rstb(rst_in),     // Port B output reset (does not affect memory contents)
-    .regcea(1), // Port A output register enable
-    .regceb(1), // Port B output register enable
+    .regcea(1'b1), // Port A output register enable
+    .regceb(1'b1), // Port B output register enable
     .douta(data_outa),   // Port A RAM output data, width determined from RAM_WIDTH
     .doutb(data_outb)    // Port B RAM output data, width determined from RAM_WIDTH
   );
@@ -79,15 +107,15 @@ module graph_memory #(parameter DIM = 2, parameter PROC_BITS = 4)(
     .RAM_WIDTH(32),                       // Specify RAM data width
     .RAM_DEPTH(1024),                     // Specify RAM depth (number of entries)
     .RAM_PERFORMANCE("HIGH_PERFORMANCE"), // Select "HIGH_PERFORMANCE" or "LOW_LATENCY" 
-    .INIT_FILE(`FPATH(out_ids.mem))          // Specify name/location of RAM initialization file if using one (leave blank if not)
+    .INIT_FILE(`FPATH(out_ids2.mem))          // Specify name/location of RAM initialization file if using one (leave blank if not)
   ) ptr_mem (
-    .addra(idx_addr),     // Address bus, width determined from RAM_DEPTH
+    .addra(idx_addr[9:0]),     // Address bus, width determined from RAM_DEPTH
     .dina(0),       // RAM input data, width determined from RAM_WIDTH
     .clka(clk_in),       // Clock
-    .wea(0),         // Write enable
-    .ena(1),         // RAM Enable, for additional power savings, disable port when not in use
+    .wea(1'b0),         // Write enable
+    .ena(1'b1),         // RAM Enable, for additional power savings, disable port when not in use
     .rsta(rst_in),       // Output reset (does not affect memory contents)
-    .regcea(1),   // Output register enable
+    .regcea(1'b1),   // Output register enable
     .douta(rowidx_out)      // RAM output data, width determined from RAM_WIDTH
   );
 

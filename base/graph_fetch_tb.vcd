@@ -1,5 +1,5 @@
 $date
-	Sun Nov 19 02:30:42 2023
+	Sun Nov 19 13:55:54 2023
 $end
 $version
 	Icarus Verilog
@@ -95,7 +95,7 @@ $scope module neighbors $end
 $var wire 1 + clk_in $end
 $var wire 1 4 deq_in $end
 $var wire 32 V enq_data_in [31:0] $end
-$var wire 1 2 enq_in $end
+$var wire 1 ' enq_in $end
 $var wire 1 5 rst_in $end
 $var parameter 32 W DATA_WIDTH $end
 $var parameter 32 X DEPTH $end
@@ -218,8 +218,6 @@ b110 P
 b1 6
 b1 :
 #35000
-0%
-b1 [
 b100 E
 b100 O
 b10 D
@@ -236,18 +234,11 @@ b0 V
 1F
 b11 D
 b11 H
-b10 [
 1+
 #50000
 0+
 14
 #55000
-b11 [
-b1 Z
-1"
-bx $
-bx =
-bx Y
 b100 D
 b100 H
 1&
@@ -263,58 +254,40 @@ b10000000000000000000000000000000100 (
 b10000000000000000000000000000000100 >
 b10000000000000000000000000000000100 N
 0F
-b100 [
-0"
+1*
 1+
 #70000
 0+
 14
 #75000
-b101 [
-b10 Z
-1"
-b0 $
-b0 =
-b0 Y
 0&
 1+
 #80000
 0+
 04
 #85000
-b110 [
-0"
 1+
 #90000
 0+
 14
 #95000
-b111 [
-b11 Z
-1"
 1+
 #100000
 0+
 04
 #105000
-b0 [
-0"
 1+
 #110000
 0+
 #115000
-b1 [
 1+
 #120000
 0+
 #125000
-b10 [
 1+
 #130000
 0+
 #135000
-1#
-b11 [
 1+
 #140000
 0+
