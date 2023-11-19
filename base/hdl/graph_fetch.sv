@@ -5,10 +5,11 @@ module graph_fetch #(parameter DIM = 2)(
   input wire clk_in,
   input wire rst_in,
   input wire [31:0] v_addr_in,
-  output wire ready_out,
+  input wire valid_in,
+  output logic ready_out,
   output logic [31:0] neigh_fifo_out,
-  output logic [31:0] data_out [DIM:0],
-  output logic data_valid_out [DIM:0],
+  output logic [31:0] data_out [DIM-1:0],
+  output logic data_valid_out [DIM-1:0],
   input wire neigh_deq_out,
   output logic neigh_valid_out,
 
@@ -16,14 +17,16 @@ module graph_fetch #(parameter DIM = 2)(
   output logic neigh_empty_out,
 
   input wire mem_valid_in,
-  input wire mem_data_in,
+  input wire [31+4:0] mem_data_in,
   output logic mem_valid_out,
   output logic [31+4:0] mem_req_out,
 
   input wire mem_valid_in2,
-  input wire mem_data_in2,
+  input wire [31+4:0] mem_data_in2,
   output logic mem_valid_out2,
-  output logic [31+4:0] mem_req_out2
+  output logic [31+4:0] mem_req_out2,
+
+  output logic fully_fetched_out
   );
 
   logic [31:0] read_addr_neigh;
@@ -38,7 +41,7 @@ module graph_fetch #(parameter DIM = 2)(
   logic req_ready_n;
   logic req_ready_d;
 
-  message_router #( PROC_BITS = 4,  DATA_SIZE = 32,  PROC_ID=4'b0000) neigh_port1 (
+  message_router #( .PROC_BITS(4),  .DATA_SIZE(32),  .PROC_ID(4'b0000)) neigh_port1 (
     .clk_in(clk_in),
     .rst_in(rst_in),
     .addr_req_in(read_addr_neigh),
@@ -63,7 +66,9 @@ module graph_fetch #(parameter DIM = 2)(
         .empty_out(neigh_empty_out)
   );
 
-  message_router #( PROC_BITS = 4,  DATA_SIZE = 32,  PROC_ID=4'b0001) data_port2 (
+  logic [31:0] data_out_ct;
+
+  message_router #( .PROC_BITS(4),  .DATA_SIZE(32),  .PROC_ID(4'b0001)) data_port2 (
     .clk_in(clk_in),
     .rst_in(rst_in),
     .addr_req_in(read_addr_data),
@@ -73,11 +78,12 @@ module graph_fetch #(parameter DIM = 2)(
     .valid_req_out(mem_valid_out2),
     .valid_route_out(data_ready),
     .msg_out(mem_req_out2),
-    .data_route_out(data_out[ct])
+    .data_route_out(data_out_ct)
   );
 
   always_comb begin
     data_valid_out[ct] = mem_valid_in;
+    data_out[ct] = data_out_ct;
 
   end
 
@@ -110,6 +116,11 @@ module graph_fetch #(parameter DIM = 2)(
           read_addr_neigh <= v_addr_in + 1 + DIM;
         end
 
+        if (read_addr_data >= v_addr_in+1+DIM && neigh_empty_out) begin
+          fully_fetched_out <= 1'b1;
+        end else fully_fetched_out <= 1'b0;
+
+        // add 1 to read addr until read in data
         if (read_addr_data != v_addr_in +1+DIM ) begin
           read_addr_data <= read_addr_data + 1;
           req_ready_d <= 1;
