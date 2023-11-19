@@ -77,7 +77,7 @@ void parse(Graph &g, std::vector<Embedding> points) {
         for (vidType m:g.N(v0)) {
             // printf("n=%d\n",m);
             // memlayout.push_back(m);
-            outfile3 << mappings[m] << endl; 
+            outfile3 << mappings[m+1] << endl; 
             pos++;
         }
         outfile3 << (uint32_t)0 << endl; 
