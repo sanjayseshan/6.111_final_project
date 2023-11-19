@@ -12,7 +12,7 @@ module FIFO #(parameter DATA_WIDTH = 32, parameter DEPTH = 8)(
   output logic empty_out,
   output logic valid_out
 );
-    logic [DATA_WIDTH-1:0] Q [DEPTH-1:0];
+    logic [DATA_WIDTH-1:0] queue [DEPTH-1:0];
     logic valid [DEPTH-1:0];
     logic [$clog2(DEPTH):0] read_ptr;
     logic [$clog2(DEPTH):0] write_ptr;
@@ -25,7 +25,7 @@ module FIFO #(parameter DATA_WIDTH = 32, parameter DEPTH = 8)(
     always_ff @( posedge clk_in ) begin
         if (rst_in) begin
             for (int i=0; i<DEPTH; i=i+1) begin
-                Q[i] <= 0;
+                queue[i] <= 0;
                 valid[i] <= 0;
 
             end
@@ -37,14 +37,16 @@ module FIFO #(parameter DATA_WIDTH = 32, parameter DEPTH = 8)(
             write_ptr <= 0;
             valid_out <= 0;
         end else begin
+            // dequeue value
             if (deq_in && !empty_out && valid[read_ptr]) begin
-                data_out <= Q[read_ptr];
+                data_out <= queue[read_ptr];
                 valid_out <= 1;
                 valid[read_ptr] <= 0;
                 read_ptr <= (read_ptr < DEPTH-1) ? read_ptr +1 : 0;
             end else valid_out <= 0;
+            // enqeue value
             if (enq_in && !full_out && valid[write_ptr] == 0) begin
-                Q[write_ptr] <= enq_data_in;
+                queue[write_ptr] <= enq_data_in;
                 valid[write_ptr] <= 1;
                 write_ptr <= (write_ptr < DEPTH-1) ? write_ptr +1 : 0;
             end
