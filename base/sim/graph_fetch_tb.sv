@@ -11,7 +11,7 @@ module graph_fetch_tb();
   logic [31:0] neigh_fifo_out;
   logic [31:0] data_out [1:0];
   logic data_valid_out [1:0];
-  logic neigh_deq_out;
+  logic neigh_deq_in;
   logic neigh_valid_out;
 
   logic neigh_full_out;
@@ -43,7 +43,7 @@ graph_fetch #(.DIM(2)) graph(
   .neigh_fifo_out(neigh_fifo_out),
   .data_out(data_out),
   .data_valid_out(data_valid_out),
-  .neigh_deq_out(neigh_deq_out),
+  .neigh_deq_in(neigh_deq_in),
   .neigh_valid_out(neigh_valid_out),
 
   .neigh_full_out(neigh_full_out),
@@ -88,6 +88,7 @@ graph_fetch #(.DIM(2)) graph(
     mem_data_in = 0;
     mem_valid_in2 = 0;
     mem_data_in2 = 0;
+    neigh_deq_in = 0;
 
 
     #10;
@@ -101,6 +102,18 @@ graph_fetch #(.DIM(2)) graph(
     mem_data_in = 6;
     #10;
     valid_in = 0;
+    #10;
+    neigh_deq_in = 1;
+    #10;
+    neigh_deq_in = 0;
+    #10;
+    neigh_deq_in = 1;
+    #10;
+    neigh_deq_in = 0;
+    #10;
+    neigh_deq_in = 1;
+    #10;
+    neigh_deq_in = 0;
 
 
     #200

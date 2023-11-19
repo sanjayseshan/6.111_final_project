@@ -10,7 +10,7 @@ module graph_fetch #(parameter DIM = 2)(
   output logic [31:0] neigh_fifo_out,
   output logic [31:0] data_out [DIM-1:0],
   output logic data_valid_out [DIM-1:0],
-  input wire neigh_deq_out,
+  input wire neigh_deq_in,
   output logic neigh_valid_out,
 
   output logic neigh_full_out,
@@ -35,6 +35,8 @@ module graph_fetch #(parameter DIM = 2)(
   logic neigh_ready;
   logic data_ready;
 
+  logic [31:0] neigh_out;
+
   logic [$clog2(DIM)+1:0] ct;
 
 
@@ -57,7 +59,7 @@ module graph_fetch #(parameter DIM = 2)(
   FIFO#(.DATA_WIDTH(32),.DEPTH(8)) neighbors (
         .clk_in(clk_in),
         .rst_in(rst_in),
-        .deq_in(neigh_deq_out),
+        .deq_in(neigh_deq_in),
         .enq_data_in(neigh_out),
         .enq_in(mem_valid_in),
         .full_out(neigh_full_out),
