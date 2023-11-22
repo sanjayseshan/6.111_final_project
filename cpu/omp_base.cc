@@ -1,12 +1,6 @@
 #include "ann.h"
-#include<tuple> 
-#include <list>
-#include <vector>
-#include <cmath>
+#include <tuple> 
 #include <queue>
-#include <iostream>
-#include <algorithm>
-#include <bits/stdc++.h>
 
 #include "utils.hh"
 #include "common.hpp"
@@ -21,8 +15,6 @@ void kNN_search(int K, int qsize, int dim, size_t dsize,
     num_threads = omp_get_num_threads();
   }
   std::cout << "OpenMP ANN (" << num_threads << " threads)\n";
-  Timer t;
-  t.Start();
 
   // #pragma omp parallel for
   // for (vidType u = 0; u < g.V(); u ++) {
@@ -39,7 +31,7 @@ void kNN_search(int K, int qsize, int dim, size_t dsize,
 
 
       // create visited list
-      int visited [10000] = { 0 }; 
+      int visited [dsize] = { 0 }; 
 
       // priority queues
       std::priority_queue<tuple<float,int>, vector<tuple<float, int>>, greater<tuple<float, int>>> S;
@@ -128,17 +120,11 @@ void kNN_search(int K, int qsize, int dim, size_t dsize,
       
       int checked_length = checked.size();
       for (int i=0; (i<K && i<checked_length); i++) {
-        int element = get<1>(checked.top());
-        float dist = get<0>(checked.top());
         results[query_id * K + (K-i-1)] = get<1>(checked.top());
         checked.pop();
 
         // std::cout << "\nelement: " << element << ", dist: " << dist;
       }
     }
-
-
-  t.Stop();
-  std::cout << "\nruntime [omp_base] = " << t.Seconds() << " sec\n";
 }
 
