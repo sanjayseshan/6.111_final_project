@@ -1,5 +1,3 @@
-// Copyright 2020 MIT
-// Authors: Xuhao Chen <cxh@mit.edu>
 #include "ann.h"
 #include<tuple> 
 #include <list>
@@ -12,7 +10,6 @@
 
 #include "utils.hh"
 #include "common.hpp"
-// using namespace std;
 
 void kNN_search(int K, int qsize, int dim, size_t dsize, 
                 const float *queries, const float *points, 
@@ -33,7 +30,6 @@ void kNN_search(int K, int qsize, int dim, size_t dsize,
   // }
 
   for (int query_id=0; query_id<qsize; query_id++) {
-    // add code here
 
     // define query
       const float* query = queries + query_id * dim;
@@ -41,8 +37,6 @@ void kNN_search(int K, int qsize, int dim, size_t dsize,
     // // fixed length L
       int L = 10*K;
 
-    //   // how many elements to return 
-    //   int k = K;
 
       // create visited list
       int visited [10000] = { 0 }; 
@@ -51,7 +45,6 @@ void kNN_search(int K, int qsize, int dim, size_t dsize,
       std::priority_queue<tuple<float,int>, vector<tuple<float, int>>, greater<tuple<float, int>>> S;
       std::priority_queue<tuple<float,int>> checked; 
 
-      std::list<int> output;
 
       int index = 0;
       // Embedding P_loc = points[index];
@@ -84,7 +77,7 @@ void kNN_search(int K, int qsize, int dim, size_t dsize,
         // for debugging
         // std::cout << "\nindex: " << v;
 
-        // marked v_i as checked
+        // marked v_i as checked if less than L points checked or dist less than max checked dist
         if (checked.size() < L || get<0>(S.top()) < get<0>(checked.top())) {
           checked.push(S.top());
 
@@ -92,6 +85,7 @@ void kNN_search(int K, int qsize, int dim, size_t dsize,
             checked.pop();
           }
         }
+        // otherwise, if size is L, exit
         else {
           if(checked.size()==L) {
             break;
@@ -111,6 +105,7 @@ void kNN_search(int K, int qsize, int dim, size_t dsize,
             // for debugging
             // std::cout << "\nu: " << u;
 
+
             // find distance
             const float* point = points + u*dim; //points[u];
             dist = 0.0;
@@ -120,25 +115,9 @@ void kNN_search(int K, int qsize, int dim, size_t dsize,
             dist = pow(dist, 0.5);
             // std::cout << "\ndist: " << dist;
 
-            // add to S 
-            // float max_dist = get<0>(S.top());
-            // if (dist < max_dist || S.size() < L) {
-              S.push(make_tuple(dist, u));
-            // }
 
-            // resize based on L
-            std::vector<tuple<float, int>> temp;
-            if (S.size() > L) {
-              while (S.size() > 1) {
-                temp.push_back(S.top());
-                S.pop();
-              }
-              S.pop();
-              for (tuple<float, int> element: temp){
-                S.push(element);
-              }
-              temp.clear();
-            }
+            // add point to S
+            S.push(make_tuple(dist, u));
           }
         }
       }
@@ -151,7 +130,6 @@ void kNN_search(int K, int qsize, int dim, size_t dsize,
       for (int i=0; (i<K && i<checked_length); i++) {
         int element = get<1>(checked.top());
         float dist = get<0>(checked.top());
-        // output.push_front(element);
         results[query_id * K + (K-i-1)] = get<1>(checked.top());
         checked.pop();
 
