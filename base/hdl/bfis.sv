@@ -4,7 +4,8 @@
 module bfis #(parameter DIM = 2)(
   input wire clk_in,
   input wire rst_in,
-  input wire [31:0] starting_point_in [DIM-1:0],
+  input wire [31:0] vertex_in [DIM-1:0],
+  input wire vertex_valid_in,
   input wire [31:0] query_in [DIM-1:0],
   input wire [15:0] pq_length_in,
   input wire [15:0] k_in,
@@ -22,6 +23,11 @@ module bfis #(parameter DIM = 2)(
 
     // state 1
     else if (state==5'b0) begin
+      if (vertex_valid_in) begin
+        // compute distance between the two
+        
+        // add vertex to priority queue
+      end
     end
 
     // state 2
@@ -44,7 +50,32 @@ module bfis #(parameter DIM = 2)(
     end
   end
 
-  
+
+  distance #(.DIM(2)) distance_calc (
+    .clk_in(clk_in),
+    .rst_in(rst_in),
+    .data_valid_in(),
+    .vertex_pos_in(),
+    .query_pos_in(),
+    .distance_sq_out(),
+    .data_valid_out()
+  );
+
+  PriorityQueue #(.DATA_WIDTH(32), .TAG_WIDTH(32), .DEPTH(8)) s (
+    .clk_in(clk_in),
+    .rst_in(rst_in),
+    .deq_in(),
+    .enq_data_in(),
+    .enq_tag_in(),
+    .enq_in(),
+    .full_out(),
+    .data_out(),
+    .tag_out(),
+    .size_out(),
+    .empty_out(),
+    .valid_out()
+  );
+
 
 endmodule
 
