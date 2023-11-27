@@ -46,21 +46,20 @@ module graph_fetch #(parameter DIM = 2)(
   logic req_ready_n;
   logic req_ready_d;
 
+  always_comb begin
+    mem_req_out = read_addr_data;
+    mem_valid_out = req_ready_d;
+    data_out_ct = mem_data_in;
+    valid_pos_out = mem_valid_in;
 
-  // fetch position and neighbor values from BRAM
-  // retrieve neighbor if ready and fifo isn't full
-  graph_memory# (.DIM(4), .PROC_BITS(0)) g (
-    .clk_in(clk_in),
-    .rst_in(rst_in),
-    .data_addra(read_addr_data),
-    .data_addrb(read_addr_neigh),
-    .data_validina(req_ready_d),
-    .data_validinb(req_ready_n&&(neigh_full_out!=1'b1)),
-    .data_outa(data_out_ct),
-    .data_outb(neigh_out),
-    .data_valid_outa(valid_pos_out),
-    .data_valid_outb(valid_neigh_out)
-  );
+    mem_req_out2 = read_addr_neigh;
+    mem_valid_out2 = req_ready_n&&(neigh_full_out!=1'b1);
+    neigh_out = mem_data_in2;
+    valid_neigh_out = mem_valid_in2;
+
+  end
+
+
 
   // fetch neighbors for vertex
   // message_router #( .PROC_BITS(4),  .DATA_SIZE(32),  .PROC_ID(4'b0000)) neigh_port1 (

@@ -36,6 +36,25 @@ module graph_fetch_tb();
   logic data_valid_out0, data_valid_out1, data_valid_out2, data_valid_out3;
 
 
+
+  // fetch position and neighbor values from BRAM
+  // retrieve neighbor if ready and fifo isn't full
+  graph_memory# (.DIM(4), .PROC_BITS(0)) g (
+    .clk_in(clk_in),
+    .rst_in(rst_in),
+    .data_addra(mem_req_out),
+    .data_addrb(mem_req_out2),
+    .data_validina(mem_valid_out),
+    .data_validinb(mem_valid_out2),
+    .data_outa(mem_data_in),
+    .data_outb(mem_data_in2),
+    .data_valid_outa(mem_valid_in),
+    .data_valid_outb(mem_valid_in2),
+
+
+  );
+
+
 graph_fetch #(.DIM(4)) graph(
   .clk_in(clk_in),
   .rst_in(rst_in),

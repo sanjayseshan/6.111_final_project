@@ -20,7 +20,7 @@ module graph_memory #(parameter DIM = 2, parameter PROC_BITS = 4)(
   output logic [31:0] rowidx_out,
   output logic [31:0] data_outa,
   output logic [31:0] data_outb,
-  output logic [31:0] data_outc,
+  // output logic [31:0] data_outc,
   output logic data_valid_outa,
   output logic data_valid_outb,
   output logic rowidx_valid_out
