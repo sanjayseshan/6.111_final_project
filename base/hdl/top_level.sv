@@ -18,98 +18,40 @@ module top_level(
   logic sys_rst;
   assign sys_rst = btn[0];
 
-
-
-
-graph_memory #( DIM = 2,  PROC_BITS = 4) storage (
-  .clk_in,
-  .rst_in,
-  .idx_addr,
-  .idx_validin,
-  .data_addra,
-  .data_addrb,
-  .data_validina,
-  .data_validinb,
-  .rowidx_out,
-  .data_outa,
-  .data_outb,
-  .data_outc,
-  .data_valid_outa,
-  .data_valid_outb,
-  .rowidx_valid_out
-  ); 
-
-  graph_fetch #(parameter DIM = 2) fetcher(
-  .clk_in,
-  .rst_in,
-  .v_addr,
-  .ready,
-  .neigh_out_fifo,
-  .data_out,
-  .data_valid_out,
-  .neigh_deq,
-  .neigh_valid_out,
-
-  .neigh_full,
-  .neigh_empty,
-
-  .mem_valid_in,
-  .mem_data_in,
-  .mem_valid_out,
-  .mem_req_out,
-
-  .mem_valid_in2,
-  .mem_data_in2,
-  .mem_valid_out2,
-  .mem_req_out2
+  bfis #(.DIM(4), .PQ_LENGTH_IN(8)) main(
+  .clk_in(clk_100mhz),
+  .rst_in(rst_in),
+  .vertex_in(vertex_in),
+  .vertex_valid_in(1),
+  .query_in(query_in),
+  .k_in(4),
+  .top_k_out(top_k_out),
+  .valid_out()
   );
 
+  logic [2:0] i;
 
-  logic clk_in;
-  logic rst_in;
-  logic data_valid_in [3:0];
-  logic [31:0] vertex_pos_in [3:0];
-  logic [31:0] query_pos_in [3:0];
-  logic [31:0] distance_sq_out;
-  logic data_valid_out;
-
-  logic [31:0] vertex_pos_in0;
-  logic [31:0] vertex_pos_in1;
-  logic [31:0] vertex_pos_in2;
-  logic [31:0] vertex_pos_in3;
-  logic [31:0] query_pos_in0;
-  logic [31:0] query_pos_in1;
-  logic [31:0] query_pos_in2;
-  logic [31:0] query_pos_in3;
-  logic data_valid_in0;
-  logic data_valid_in1;
-  logic data_valid_in2;
-  logic data_valid_in3;
-
-//   logic [31:0] intermediate_subs_out;
-
-  distance #(.DIM(4)) distance_calculator(
-    .clk_in(clk_100mhz),
-    .rst_in(sys_rst),
-    .data_valid_in(data_valid_in),
-    .vertex_pos_in(vertex_pos_in),
-    .query_pos_in(query_pos_in),
-    .distance_sq_out(distance_sq_out),
-    .data_valid_out(data_valid_out)
-    // .intermediate_subs_out(intermediate_subs_out)
-  );
+  always_ff @( posedge clk_100mhz ) begin 
+    if (rst_in) i <= 0;
+    else begin
+      if (i==4) i<=0;
+      else i<=i+1;
+    end
+    
+  end
 
 
+  manta man (
+      .clk(clk_100mhz),
+      .rx(uart_rxd),
+      .tx(uart_txd),
+      .val1_in(vertex_in),
+      .val2_in(query_in[i]),
+      .val3_out(top_k_out[i]),
+      .val4_out(0)
+    );
 
 
-  // manta man (
-  //     .clk(clk_100mhz),
-  //     .rx(uart_rxd),
-  //     .tx(uart_txd),
-  //     .val1_in(val1_in),
-  //     .val2_in(val2_in),
-  //     .val3_out(divisor_in),
-  //    .val4_out(dividend_in));
   //   //lots of stuff
 
 
