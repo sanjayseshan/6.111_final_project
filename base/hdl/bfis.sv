@@ -97,6 +97,8 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH_IN = 8)(
     
   end
 
+  logic [31:0] dist_valid_out,dist_out;
+
   PriorityQueue #(.DATA_WIDTH(32), .TAG_WIDTH(32), .DEPTH(PQ_LENGTH_IN)) s (
     .clk_in(clk_in),
     .rst_in(rst_in),
@@ -111,6 +113,7 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH_IN = 8)(
     .empty_out(),
     .valid_out(pq_valid_out)
   );
+
 
   graph_memory# (.DIM(DIM), .PROC_BITS(0)) gmem (
     .clk_in(clk_in),
@@ -131,6 +134,9 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH_IN = 8)(
     .rowidx_out(start_addr_a),
   );
 
+
+  logic [31:0] neigh_fifo_out, data_out, v_addr_in, ready_out;
+  logic pos_empty_out, pos_full_out, data_valid_out, pos_deq_in, valid_in;
 
   graph_fetch #(.DIM(DIM)) graph(
     .clk_in(clk_in),
@@ -162,6 +168,8 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH_IN = 8)(
     .mem_req_out2(mem_req_out2)
   );
 
+  logic pq_valid_out, neigh_valid_out, checked, visited, valid_checked, valid_visited;
+  logic [32:0] pq_out;
   checked_visited #(.PROC_BITS(0)) cvmem (
     .clk_in(clk_in),
     .rst_in(rst_in),
