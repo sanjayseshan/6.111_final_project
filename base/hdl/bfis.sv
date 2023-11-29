@@ -30,6 +30,7 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH = 8)(
         state <= 5'b0;
 
         ct_dist <= 0;
+        pq_deq_in <= 1'b0;
     end
 
     // state 0: computes distance between P and Q and adds P to S
@@ -48,7 +49,10 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH = 8)(
 
       // add vertex to priority queue
       else if (dist_valid_out) begin
-          if (pq_size >= 1) state <= 5'b1;
+          if (pq_size >= 1) begin
+            state <= 5'b1;
+            pq_deq_in <= 1'b1;
+          end
       end
     end
 
@@ -79,7 +83,7 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH = 8)(
   logic [31:0] mem_req_out;
 
   logic mem_valid_in2;
-  logic [3:0] mem_data_in2;
+  logic [31:0] mem_data_in2;
   logic mem_valid_out2;
   logic [31:0] mem_req_out2;
 
@@ -106,15 +110,16 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH = 8)(
   logic [31:0] pq_out, pq_dist_out;
   logic pq_valid_out;
   logic [$clog2(PQ_LENGTH):0] pq_size;
+  logic pq_deq_in;
 
 
   PriorityQueue #(.DATA_WIDTH(32), .TAG_WIDTH(32), .DEPTH(PQ_LENGTH)) s (
     .clk_in(clk_in),
     .rst_in(rst_in),
-    .deq_in(1'b0),
+    .deq_in(pq_deq_in),
     .enq_data_in(vertex_addr_in),
     .enq_tag_in(dist_out),
-    .enq_in(dist_valid_out&&(state==5'b0)),
+    .enq_in(dist_valid_out),
     // .full_out(),
     .data_out(pq_out),
     .tag_out(pq_dist_out),
@@ -156,6 +161,8 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH = 8)(
   // );
 
 
+  // logic start_cycle;
+
   // graph_memory# (.DIM(DIM), .PROC_BITS(0)) gmem (
   //   .clk_in(clk_in),
   //   .rst_in(rst_in),
@@ -176,58 +183,59 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH = 8)(
   // );
 
 
-  // logic [31:0] neigh_fifo_out, data_out, v_addr_in, ready_out;
-  // logic pos_empty_out, pos_full_out, fetch_data_valid_out, pos_deq_in, valid_in;
+  logic [31:0] neigh_fifo_out, data_out, v_addr_in;
+  logic pos_empty_out, pos_full_out, fetch_data_valid_out, pos_deq_in, valid_in, ready_out;
+  logic neigh_full_out, neigh_empty_out, neigh_valid_out;
 
-  // graph_fetch #(.DIM(DIM)) graph(
-  //   .clk_in(clk_in),
-  //   .rst_in(rst_in),
-  //   .v_addr_in(v_addr_in),
-  //   .valid_in(valid_in),
-  //   .ready_out(ready_out),
+  graph_fetch #(.DIM(DIM)) graph(
+    .clk_in(clk_in),
+    .rst_in(rst_in),
+    .v_addr_in(v_addr_in),
+    .valid_in(valid_in),
+    .ready_out(ready_out),
 
-  //   .pos_deq_in(pos_deq_in),
-  //   .data_out(data_out),
-  //   .data_valid_out(fetch_data_valid_out),
-  //   .pos_full_out(pos_full_out),
-  //   .pos_empty_out(pos_empty_out),
+    .pos_deq_in(pos_deq_in),
+    .data_out(data_out),
+    .data_valid_out(fetch_data_valid_out),
+    .pos_full_out(pos_full_out),
+    .pos_empty_out(pos_empty_out),
 
-  //   .neigh_deq_in(1'b1),
-  //   .neigh_fifo_out(neigh_fifo_out),
-  //   .neigh_valid_out(neigh_valid_out),
-  //   .neigh_full_out(neigh_full_out),
-  //   .neigh_empty_out(neigh_empty_out),
+    .neigh_deq_in(1'b1),
+    .neigh_fifo_out(neigh_fifo_out),
+    .neigh_valid_out(neigh_valid_out),
+    .neigh_full_out(neigh_full_out),
+    .neigh_empty_out(neigh_empty_out),
 
-  //   // MEMORY CONNECTIONS 
-  //   .mem_valid_in(mem_valid_in),
-  //   .mem_data_in(mem_data_in),
-  //   .mem_valid_out(mem_valid_out),
-  //   .mem_req_out(mem_req_out),
-  //   .mem_valid_in2(mem_valid_in2),
-  //   .mem_data_in2(mem_data_in2),
-  //   .mem_valid_out2(mem_valid_out2),
-  //   .mem_req_out2(mem_req_out2)
-  // );
+    // MEMORY CONNECTIONS 
+    .mem_valid_in(mem_valid_in),
+    .mem_data_in(mem_data_in),
+    .mem_valid_out(mem_valid_out),
+    .mem_req_out(mem_req_out),
+    .mem_valid_in2(mem_valid_in2),
+    .mem_data_in2(mem_data_in2),
+    .mem_valid_out2(mem_valid_out2),
+    .mem_req_out2(mem_req_out2)
+  );
 
-  // logic neigh_valid_out, checked, visited, valid_checked, valid_visited;
+  logic checked, visited, valid_checked, valid_visited;
+  // logic update_checked, update_visited;
 
-  // checked_visited #(.PROC_BITS(0)) cvmem (
-  //   .clk_in(clk_in),
-  //   .rst_in(rst_in),
-  //   .c_addr_in(pq_out),
-  //   .v_addr_in(neigh_fifo_out),
-  //   .c_addr_valid_in(pq_valid_out),
-  //   .v_addr_valid_in(neigh_valid_out),
-  //   .write_c_data_in(1'b1),
-  //   .write_c_valid_in(pq_valid_out),
-  //   .write_v_data_in(1'b1),
-  //   .write_v_valid_in(neigh_valid_out),
-  //   .checked_out(checked),
-  //   .visited_out(visited),
-  //   .valid_c_out(valid_checked),
-  //   .valid_v_out(valid_visited)
-   
-  // );
+  checked_visited #(.PROC_BITS(0)) cvmem (
+    .clk_in(clk_in),
+    .rst_in(rst_in),
+    .c_addr_in(pq_out),
+    .v_addr_in(neigh_fifo_out),
+    .c_addr_valid_in(pq_valid_out),
+    .v_addr_valid_in(neigh_valid_out),
+    .write_c_data_in(1'b1),
+    .write_c_valid_in(pq_valid_out),
+    .write_v_data_in(1'b1),
+    .write_v_valid_in(neigh_valid_out),
+    .checked_out(checked),
+    .visited_out(visited),
+    .valid_c_out(valid_checked),
+    .valid_v_out(valid_visited)  
+  );
 
 
 endmodule
