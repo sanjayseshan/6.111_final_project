@@ -86,7 +86,7 @@ end
   );
 
  xilinx_single_port_ram_read_first #(
-    .RAM_WIDTH(2),                       // Specify RAM data width
+    .RAM_WIDTH(1),                       // Specify RAM data width
     .RAM_DEPTH(1024),                     // Specify RAM depth (number of entries)
     .RAM_PERFORMANCE("HIGH_PERFORMANCE"), // Select "HIGH_PERFORMANCE" or "LOW_LATENCY" 
     .INIT_FILE(`FPATH(empty.mem))          // Specify name/location of RAM initialization file if using one (leave blank if not)

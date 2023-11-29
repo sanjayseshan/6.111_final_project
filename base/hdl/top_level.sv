@@ -18,7 +18,7 @@ module top_level(
   logic sys_rst;
   assign sys_rst = btn[0];
 
-  bfis #(.DIM(4), .PQ_LENGTH_IN(8)) main(
+  bfis #(.DIM(4), .PQ_LENGTH(8)) main(
   .clk_in(clk_100mhz),
   .rst_in(rst_in),
   .vertex_in(vertex_in),
