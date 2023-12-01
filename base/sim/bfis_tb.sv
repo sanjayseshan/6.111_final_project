@@ -84,15 +84,35 @@ module bfis_tb();
     query_in[2] = 1;//67;
     query_in[3] = 1;//67;
     vertex_addr_in = 1;
-    vertex_in = 1;
+    vertex_in = 84018776;
     vertex_valid_in = 1;
     #10;
     vertex_valid_in = 0;
     #10;
-    vertex_in = 1;
+    
+
+
+
+    vertex_in = 39438292;
     vertex_valid_in = 1;
     #10;
     vertex_valid_in = 0;
+    #10;
+    vertex_in = 78309920;
+    vertex_valid_in = 1;
+    #10;
+    vertex_valid_in = 0;
+    #10;
+    vertex_addr_in = 1;
+    vertex_in = 79844000;
+    vertex_valid_in = 1;
+    #10;
+    vertex_valid_in = 0;
+      #10;
+    // vertex_in = 2;
+    // vertex_valid_in = 1;
+    // #10;
+    // vertex_valid_in = 0;
     #40;
 
 
