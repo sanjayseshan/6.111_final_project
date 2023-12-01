@@ -68,8 +68,8 @@ module PriorityQueue #(parameter DATA_WIDTH = 32, parameter TAG_WIDTH = 32, para
                 // write_ptr <= 0;
             end
             data_out <= 0;
-            full_out <= 0;
-            empty_out <= 0;
+            // full_out <= 0;
+            // empty_out <= 0;
             // valid_out <= 0;
             valid_out <= 0;
             size_out <= 0;
@@ -136,20 +136,21 @@ module PQ_FIFO #(parameter DATA_WIDTH = 32, parameter DEPTH = 8)(
                 valid[i] <= 1;
             end
 
-            data_out <= 0;
-            full_out <= 0;
-            empty_out <= 0;
+            // data_out <= 0;
+            // full_out <= 0;
+            // empty_out <= 0;
             // valid_out <= 0;
             read_ptr <= 0;
             write_ptr <= 0;
-            valid_out <= 0;
+            // valid_out <= 0;
         end else begin
             if (deq_in && !empty_out && valid[read_ptr]) begin
                 // data_out <= queue[read_ptr];
                 // valid_out <= 1;
                 valid[read_ptr] <= 0; // reset valid bit
                 read_ptr <= (read_ptr < DEPTH-1) ? read_ptr +1 : 0; // move read ptr by 1
-            end else valid_out <= 0;
+            end 
+            // else valid_out <= 0;
             if (enq_in && !full_out && valid[write_ptr] == 0) begin
                 queue[write_ptr] <= enq_data_in; 
                 valid[write_ptr] <= 1;

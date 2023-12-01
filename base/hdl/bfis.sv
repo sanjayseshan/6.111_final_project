@@ -22,59 +22,15 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH = 8)(
   logic pos_valid [DIM-1:0];
   logic [31:0] pos_vec [DIM-1:0];
 
-  always_ff @ (posedge clk_in) begin
-    if (rst_in) begin
-        // top_k_out <= 0;
-        valid_out <= 1'b0;
+  logic [31:0] neigh_fifo_out, data_out, v_addr_in;
+  logic pos_empty_out, pos_full_out, fetch_data_valid_out, pos_deq_in, valid_in, ready_out;
+  logic neigh_full_out, neigh_empty_out, neigh_valid_out;
 
-        state <= 5'b0;
+  logic [31:0] pq_out, pq_dist_out;
+  logic pq_valid_out;
+  logic [$clog2(PQ_LENGTH):0] pq_size;
+  logic pq_deq_in;
 
-        ct_dist <= 0;
-        pq_deq_in <= 1'b0;
-    end
-
-    // state 0: computes distance between P and Q and adds P to S
-    else if (state==5'b0) begin
-      // compute distance between the two
-      if (vertex_valid_in) begin
-        pos_vec[ct_dist] <= vertex_in;
-        if (ct_dist<DIM) begin 
-          ct_dist <= ct_dist+1;
-          pos_valid[ct_dist] <= 1'b1;
-        end else begin 
-          ct_dist <= 0;
-          pos_valid[DIM-1] <= 1'b0;
-        end
-      end
-
-      // add vertex to priority queue
-      else if (dist_valid_out) begin
-          if (pq_size >= 1) begin
-            state <= 5'b1;
-            pq_deq_in <= 1'b1;
-          end
-      end
-    end
-
-    // state 1
-    else if (state==5'b1) begin
-    end
-
-    else if (state==5'b10) begin
-    end
-
-    else if (state==5'b11) begin
-    end
-
-    else if (state==5'b100) begin
-    end
-
-    else if (state==5'b101) begin
-    end
-
-    else if (state==5'b110) begin
-    end
-  end
 
 
   logic mem_valid_in;
@@ -95,6 +51,71 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH = 8)(
   logic [31:0] dist_out;
   logic dist_valid_out; 
 
+  always_ff @ (posedge clk_in) begin
+    if (rst_in) begin
+        // top_k_out <= 0;
+        valid_out <= 1'b0;
+
+        state <= 5'b0;
+
+        ct_dist <= 0;
+        pq_deq_in <= 1'b0;
+    end
+
+    // state 0: computes distance between P and Q and adds P to S
+    else if (state==5'b0) begin
+      // compute distance between the two
+      // vertex_addr_in <= 
+      if (vertex_valid_in) begin
+        pos_vec[ct_dist] <= vertex_in;
+        if (ct_dist<DIM) begin 
+          ct_dist <= ct_dist+1;
+          pos_valid[ct_dist] <= 1'b1;
+        end else begin 
+          ct_dist <= 0;
+          pos_valid[DIM-1] <= 1'b0;
+        end
+      end
+
+      // add vertex to priority queue
+      else if (dist_valid_out) begin
+          if (pq_size >= 1) begin
+            state <= 5'b1;
+            pq_deq_in <= 1'b1;
+            valid_in <= 1;
+          end
+      end
+    end
+
+    // state 1
+    else if (state==5'b1) begin
+      // neigh_deq_in <= 1;
+      pq_deq_in <= 1'b0;
+      valid_in <= 1;
+      top_k_out[0] <= v_addr_in;
+      top_k_out[1] <= neigh_fifo_out;
+      top_k_out[2] <= mem_data_in;
+      top_k_out[3] <= mem_req_out;
+
+    end
+
+    else if (state==5'b10) begin
+    end
+
+    else if (state==5'b11) begin
+    end
+
+    else if (state==5'b100) begin
+    end
+
+    else if (state==5'b101) begin
+    end
+
+    else if (state==5'b110) begin
+    end
+  end
+
+
   distance #(.DIM(DIM)) distance_calc (
     .clk_in(clk_in),
     .rst_in(rst_in),
@@ -107,10 +128,6 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH = 8)(
 
 
 
-  logic [31:0] pq_out, pq_dist_out;
-  logic pq_valid_out;
-  logic [$clog2(PQ_LENGTH):0] pq_size;
-  logic pq_deq_in;
 
 
   PriorityQueue #(.DATA_WIDTH(32), .TAG_WIDTH(32), .DEPTH(PQ_LENGTH)) s (
@@ -121,7 +138,7 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH = 8)(
     .enq_tag_in(dist_out),
     .enq_in(dist_valid_out),
     // .full_out(),
-    .data_out(pq_out),
+    .data_out(v_addr_in),
     .tag_out(pq_dist_out),
     .size_out(pq_size),
     // .empty_out(),
@@ -163,29 +180,26 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH = 8)(
 
   // logic start_cycle;
 
-  // graph_memory# (.DIM(DIM), .PROC_BITS(0)) gmem (
-  //   .clk_in(clk_in),
-  //   .rst_in(rst_in),
-  //   .data_addra(mem_req_out),
-  //   .data_addrb(mem_req_out2),
-  //   .data_validina(mem_valid_out),
-  //   .data_validinb(mem_valid_out2),
-  //   .data_outa(mem_data_in),
-  //   .data_outb(mem_data_in2),
-  //   .data_valid_outa(mem_valid_in),
-  //   .data_valid_outb(mem_valid_in2),
+  graph_memory# (.DIM(DIM), .PROC_BITS(0)) gmem (
+    .clk_in(clk_in),
+    .rst_in(rst_in),
+    .data_addra(mem_req_out),
+    .data_addrb(mem_req_out2),
+    .data_validina(mem_valid_out),
+    .data_validinb(mem_valid_out2),
+    .data_outa(mem_data_in),
+    .data_outb(mem_data_in2),
+    .data_valid_outa(mem_valid_in),
+    .data_valid_outb(mem_valid_in2)
 
 
-  //   .idx_addr(vertex_in),
-  //   .idx_validin(start_cycle),
-  //   .rowidx_valid_out(start_addr_a_valid),
-  //   .rowidx_out(start_addr_a)
-  // );
+    // .idx_addr(vertex_in),
+    // .idx_validin(start_cycle),
+    // .rowidx_valid_out(start_addr_a_valid),
+    // .rowidx_out(start_addr_a)
+  );
 
 
-  logic [31:0] neigh_fifo_out, data_out, v_addr_in;
-  logic pos_empty_out, pos_full_out, fetch_data_valid_out, pos_deq_in, valid_in, ready_out;
-  logic neigh_full_out, neigh_empty_out, neigh_valid_out;
 
   graph_fetch #(.DIM(DIM)) graph(
     .clk_in(clk_in),
@@ -194,7 +208,7 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH = 8)(
     .valid_in(valid_in),
     .ready_out(ready_out),
 
-    .pos_deq_in(pos_deq_in),
+    .pos_deq_in(1),
     .data_out(data_out),
     .data_valid_out(fetch_data_valid_out),
     .pos_full_out(pos_full_out),

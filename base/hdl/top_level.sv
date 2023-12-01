@@ -18,9 +18,14 @@ module top_level(
   logic sys_rst;
   assign sys_rst = btn[0];
 
+  logic [31:0] vertex_in;
+  logic [31:0] query_in [4-1:0];
+  logic [31:0] top_k_out [4:0];
+
+
   bfis #(.DIM(4), .PQ_LENGTH(8)) main(
   .clk_in(clk_100mhz),
-  .rst_in(rst_in),
+  .rst_in(sys_rst),
   .vertex_in(vertex_in),
   .vertex_valid_in(1),
   .query_in(query_in),
@@ -32,7 +37,7 @@ module top_level(
   logic [2:0] i;
 
   always_ff @( posedge clk_100mhz ) begin 
-    if (rst_in) i <= 0;
+    if (sys_rst) i <= 0;
     else begin
       if (i==4) i<=0;
       else i<=i+1;
@@ -47,8 +52,8 @@ module top_level(
       .tx(uart_txd),
       .val1_in(vertex_in),
       .val2_in(query_in[i]),
-      .val3_out(top_k_out[i]),
-      .val4_out(0)
+      .val3_out(top_k_out[0]),
+      .val4_out(top_k_out[1])
     );
 
 

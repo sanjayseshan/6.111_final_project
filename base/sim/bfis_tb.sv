@@ -16,6 +16,10 @@ module bfis_tb();
 
   logic [31:0] query_pos_in0;
   logic [31:0] query_pos_in1;
+  logic [31:0] top_k_out0;
+  logic [31:0] top_k_out1;
+  logic [31:0] top_k_out2;
+  logic [31:0] top_k_out3;
 //   logic [31:0] query_pos_in2;
 //   logic [31:0] query_pos_in3;
 //   logic [31:0] query_pos_in4;
@@ -45,6 +49,10 @@ module bfis_tb();
 
       query_pos_in0 = query_in[0];
       query_pos_in1 = query_in[1];
+      top_k_out0 = top_k_out[0];
+      top_k_out1 = top_k_out[1];
+      top_k_out2 = top_k_out[2];
+      top_k_out3 = top_k_out[3];
     //   query_in2 = query_in[2];
     //   query_in3 = query_in[3];
 
@@ -69,13 +77,13 @@ module bfis_tb();
     rst_in = 0;
     query_in[0] = 5;//23;
     query_in[1] = 7;//67;
-    vertex_addr_in = 15;
-    vertex_in = 4;
+    vertex_addr_in = 1;
+    vertex_in = 1;
     vertex_valid_in = 1;
     #10;
     vertex_valid_in = 0;
     #10;
-    vertex_in = 20;
+    vertex_in = 1;
     vertex_valid_in = 1;
     #10;
     vertex_valid_in = 0;

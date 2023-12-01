@@ -31,7 +31,7 @@ module FIFO #(parameter DATA_WIDTH = 32, parameter DEPTH = 8)(
             end
             data_out <= 0;
             // full_out <= 0;
-            empty_out <= 0;
+            // empty_out <= 0;
             // valid_out <= 0;
             read_ptr <= 0;
             write_ptr <= 0;

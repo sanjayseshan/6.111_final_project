@@ -5,6 +5,6 @@
 # xsim distance_tb -t xsim_run.tcl
 
 xvlog --sv ./hdl/*
-xelab -svlog sim/fifo_tb.sv --debug wave
+xelab -svlog sim/bfis_tb.sv --debug wave
 rm dump.vcd
-xsim fifo_tb -t xsim_run.tcl
+xsim bfis_tb -t xsim_run.tcl
