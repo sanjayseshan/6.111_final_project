@@ -11,13 +11,13 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH = 8)(
   // input wire [15:0] pq_length_in,
   input wire [15:0] k_in,
   output logic [31:0] top_k_out [4:0],
-  output logic valid_out
+  output logic valid_out,
+  output logic [4:0] state
   );
 
-  logic [4:0] state;
 
 
-  logic [0:$clog2(DIM)] ct_dist;
+  logic [$clog2(DIM):0] ct_dist;
   
   logic pos_valid [DIM-1:0];
   logic [31:0] pos_vec [DIM-1:0];
@@ -92,10 +92,10 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH = 8)(
       // neigh_deq_in <= 1;
       pq_deq_in <= 1'b0;
       valid_in <= 1;
-      top_k_out[0] <= v_addr_in;
-      top_k_out[1] <= neigh_fifo_out;
-      top_k_out[2] <= mem_data_in;
-      top_k_out[3] <= mem_req_out;
+      top_k_out[0] <= mem_req_out; //v_addr_in;
+      top_k_out[1] <= mem_data_in;//neigh_fifo_out;
+      top_k_out[2] <= mem_valid_out;//mem_data_in;
+      top_k_out[3] <= mem_valid_in; //mem_req_out;
 
     end
 

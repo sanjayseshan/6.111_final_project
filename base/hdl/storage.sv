@@ -57,11 +57,13 @@ module graph_memory #(parameter DIM = 2, parameter PROC_BITS = 4)(
     end
     else begin
       cta <= 0;
+      
+    end
+
       if (cta) begin
         data_valid_outa <= 1;
         // data_outa <= 1;
       end else data_valid_outa <= 0;
-    end
 
     if (data_validinb) begin
       ctb <= 1;
@@ -69,10 +71,10 @@ module graph_memory #(parameter DIM = 2, parameter PROC_BITS = 4)(
     end
     else begin
       ctb <= 0;
+
+    end
       if (ctb) data_valid_outb <= 1;
       else data_valid_outb <= 0;
-    end
-
     // if (cta == 2) data_valid_outa <= 1;
     // else data_valid_outa <= 0;
     // if (ctb == 2) data_valid_outb <= 1;
