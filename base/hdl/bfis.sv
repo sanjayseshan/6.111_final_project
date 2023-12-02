@@ -82,7 +82,7 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH = 8)(
           if (pq_size >= 1) begin
             state <= 5'b1;
             pq_deq_in <= 1'b1;
-            valid_in <= 1;
+            valid_in <= 1'b1;
             // v_addr_in <= vertex_addr_in;
           end
       end
@@ -209,7 +209,7 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH = 8)(
     .valid_in(valid_in),
     .ready_out(ready_out),
 
-    .pos_deq_in(1),
+    .pos_deq_in(1'b1),
     .data_out(data_out),
     .data_valid_out(fetch_data_valid_out),
     .pos_full_out(pos_full_out),
