@@ -1,5 +1,5 @@
 $date
-   Sun Dec  3 17:12:15 2023
+   Sun Dec  3 14:12:43 2023
 $end
 $version
   2023.1
@@ -7,584 +7,1225 @@ $end
 $timescale
   1ps
 $end
-$scope module distance_tb $end
-$var reg 1 , clk_in $end
-$var reg 1 - rst_in $end
-$var reg 32 # distance_sq_out [31:0] $end
-$var reg 1 $ data_valid_out $end
-$var reg 32 . vertex_pos_in0 [31:0] $end
-$var reg 32 / vertex_pos_in1 [31:0] $end
-$var reg 32 0 vertex_pos_in2 [31:0] $end
-$var reg 32 1 vertex_pos_in3 [31:0] $end
-$var reg 32 2 vertex_pos_in4 [31:0] $end
-$var reg 32 3 vertex_pos_in5 [31:0] $end
-$var reg 32 4 vertex_pos_in6 [31:0] $end
-$var reg 32 5 vertex_pos_in7 [31:0] $end
-$var reg 32 6 vertex_pos_in8 [31:0] $end
-$var reg 32 7 query_pos_in0 [31:0] $end
-$var reg 32 8 query_pos_in1 [31:0] $end
-$var reg 32 9 query_pos_in2 [31:0] $end
-$var reg 32 : query_pos_in3 [31:0] $end
-$var reg 32 ; query_pos_in4 [31:0] $end
-$var reg 32 < query_pos_in5 [31:0] $end
-$var reg 32 = query_pos_in6 [31:0] $end
-$var reg 32 > query_pos_in7 [31:0] $end
-$var reg 32 ? query_pos_in8 [31:0] $end
-$var reg 1 @ data_valid_in0 $end
-$var reg 1 A data_valid_in1 $end
-$var reg 1 B data_valid_in2 $end
-$var reg 1 C data_valid_in3 $end
-$var reg 1 D data_valid_in4 $end
-$var reg 1 E data_valid_in5 $end
-$var reg 1 F data_valid_in6 $end
-$var reg 1 G data_valid_in7 $end
-$var reg 1 H data_valid_in8 $end
-$scope module distance_calculator $end
+$scope module bfis_tb $end
+$var reg 1 W! clk_in $end
+$var reg 1 X! rst_in $end
+$var reg 32 Y! vertex_in [31:0] $end
+$var reg 32 Z! vertex_addr_in [31:0] $end
+$var reg 1 [! vertex_valid_in $end
+$var reg 16 \! k_in [15:0] $end
+$var reg 1 ' valid_out $end
+$var reg 32 ]! query_pos_in0 [31:0] $end
+$var reg 32 ^! query_pos_in1 [31:0] $end
+$var reg 32 _! top_k_out0 [31:0] $end
+$var reg 32 `! top_k_out1 [31:0] $end
+$var reg 32 a! top_k_out2 [31:0] $end
+$var reg 32 b! top_k_out3 [31:0] $end
+$var reg 32 c! query_pos_in2 [31:0] $end
+$var reg 32 d! query_pos_in3 [31:0] $end
+$var reg 5 ( state [4:0] $end
+$scope module bfis_m $end
 $var wire 1 ! clk_in $end
 $var wire 1 " rst_in $end
-$var reg 32 # distance_sq_out [31:0] $end
-$var reg 1 $ data_valid_out $end
-$var reg 3 % state [2:0] $end
-$var reg 32 & distance [31:0] $end
-$var reg 1 ' valid_add_out $end
-$var reg 4 ( i [3:0] $end
-$var reg 4 ) j [3:0] $end
-$var reg 4 * k [3:0] $end
+$var wire 32 # vertex_in [31:0] $end
+$var wire 32 $ vertex_addr_in [31:0] $end
+$var wire 1 % vertex_valid_in $end
+$var wire 16 & k_in [15:0] $end
+$var reg 1 ' valid_out $end
+$var reg 5 ( state [4:0] $end
+$var reg 3 ) ct_dist [2:0] $end
+$var reg 32 * neigh_fifo_out [31:0] $end
+$var reg 32 + data_out [31:0] $end
+$var reg 32 , v_addr_in [31:0] $end
+$var reg 1 - pos_empty_out $end
+$var reg 1 . pos_full_out $end
+$var reg 1 / fetch_data_valid_out $end
+$var reg 1 0 pos_deq_in $end
+$var reg 1 1 valid_in $end
+$var reg 1 2 ready_out $end
+$var reg 1 3 neigh_full_out $end
+$var reg 1 4 neigh_empty_out $end
+$var reg 1 5 neigh_valid_out $end
+$var reg 32 6 pq_out [31:0] $end
+$var reg 32 7 pq_dist_out [31:0] $end
+$var reg 1 8 pq_valid_out $end
+$var reg 4 9 pq_size [3:0] $end
+$var reg 1 : pq_deq_in $end
+$var reg 1 ; mem_valid_in $end
+$var reg 32 < mem_data_in [31:0] $end
+$var reg 1 = mem_valid_out $end
+$var reg 32 > mem_req_out [31:0] $end
+$var reg 1 ? mem_valid_in2 $end
+$var reg 32 @ mem_data_in2 [31:0] $end
+$var reg 1 A mem_valid_out2 $end
+$var reg 32 B mem_req_out2 [31:0] $end
+$var reg 1 C data_valid_out $end
+$var reg 32 D dist_out [31:0] $end
+$var reg 1 E dist_valid_out $end
+$var reg 1 F checked $end
+$var reg 1 G visited $end
+$var reg 1 H valid_checked $end
+$var reg 1 I valid_visited $end
+$scope module distance_calc $end
+$var wire 1 ! clk_in $end
+$var wire 1 " rst_in $end
+$var reg 32 D distance_sq_out [31:0] $end
+$var reg 1 E data_valid_out $end
+$var reg 3 J state [2:0] $end
+$var reg 32 K distance [31:0] $end
+$var reg 1 L valid_add_out $end
+$var reg 2 M i [1:0] $end
+$var reg 2 N j [1:0] $end
+$var reg 2 O k [1:0] $end
 $upscope $end
-$scope begin Block98_3 $end
-$var reg 32 + i [31:0] $end
+$scope module s $end
+$var wire 1 ! clk_in $end
+$var wire 1 " rst_in $end
+$var wire 1 P deq_in $end
+$var wire 32 $ enq_data_in [31:0] $end
+$var wire 32 Q enq_tag_in [31:0] $end
+$var wire 1 R enq_in $end
+$var reg 1 S full_out $end
+$var reg 32 , data_out [31:0] $end
+$var reg 32 7 tag_out [31:0] $end
+$var reg 4 9 size_out [3:0] $end
+$var reg 1 T empty_out $end
+$var reg 1 8 valid_out $end
+$var reg 4 U read_ptr [3:0] $end
+$var reg 4 V write_ptr [3:0] $end
+$var reg 32 W curval [31:0] $end
+$var reg 1 X rem_lru $end
+$var reg 1 Y push_lru $end
+$scope begin Block39_3 $end
+$var reg 32 Z i [31:0] $end
+$upscope $end
+$scope module lru_cache $end
+$var wire 1 ! clk_in $end
+$var wire 1 " rst_in $end
+$var wire 1 [ deq_in $end
+$var wire 4 \ enq_data_in [3:0] $end
+$var wire 1 ] enq_in $end
+$var reg 1 ^ full_out $end
+$var reg 4 V data_out [3:0] $end
+$var reg 1 _ empty_out $end
+$var reg 1 ` valid_out $end
+$var reg 4 a read_ptr [3:0] $end
+$var reg 4 b write_ptr [3:0] $end
+$scope begin Block133_6 $end
+$var reg 32 c i [31:0] $end
+$upscope $end
+$upscope $end
+$scope begin Block62_8 $end
+$var reg 32 d i [31:0] $end
+$upscope $end
+$upscope $end
+$scope module gmem $end
+$var wire 1 ! clk_in $end
+$var wire 1 " rst_in $end
+$var wire 32 e idx_addr [31:0] $end
+$var wire 1 f idx_validin $end
+$var wire 32 g data_addra [31:0] $end
+$var wire 32 h data_addrb [31:0] $end
+$var wire 1 i data_validina $end
+$var wire 1 j data_validinb $end
+$var reg 32 k rowidx_out [31:0] $end
+$var reg 32 < data_outa [31:0] $end
+$var reg 32 @ data_outb [31:0] $end
+$var reg 1 ; data_valid_outa $end
+$var reg 1 ? data_valid_outb $end
+$var reg 1 l rowidx_valid_out $end
+$var reg 32 m addra [31:0] $end
+$var reg 32 n addrb [31:0] $end
+$var reg 32 o addrc [31:0] $end
+$var reg 2 p cta [1:0] $end
+$var reg 1 q ctb $end
+$var reg 2 r ctc [1:0] $end
+$scope module data_mem $end
+$var wire 10 s addra [9:0] $end
+$var wire 10 t addrb [9:0] $end
+$var wire 32 u dina [31:0] $end
+$var wire 32 v dinb [31:0] $end
+$var wire 1 ! clka $end
+$var wire 1 ! clkb $end
+$var wire 1 w wea $end
+$var wire 1 x web $end
+$var wire 1 y ena $end
+$var wire 1 z enb $end
+$var wire 1 " rsta $end
+$var wire 1 " rstb $end
+$var wire 1 { regcea $end
+$var wire 1 | regceb $end
+$var wire 32 } douta [31:0] $end
+$var wire 32 ~ doutb [31:0] $end
+$var reg 32 !! ram_data_a [31:0] $end
+$var reg 32 "! ram_data_b [31:0] $end
+$var integer 32 #! idx [31:0] $end
+$var reg 32 $! \output_register.douta_reg  [31:0] $end
+$var reg 32 %! \output_register.doutb_reg  [31:0] $end
+$upscope $end
+$scope module ptr_mem $end
+$var wire 10 &! addra [9:0] $end
+$var wire 32 '! dina [31:0] $end
+$var wire 1 ! clka $end
+$var wire 1 (! wea $end
+$var wire 1 )! ena $end
+$var wire 1 " rsta $end
+$var wire 1 *! regcea $end
+$var wire 32 +! douta [31:0] $end
+$var reg 32 ,! ram_data [31:0] $end
+$var reg 32 -! \output_register.douta_reg  [31:0] $end
+$upscope $end
+$upscope $end
+$scope module graph $end
+$var wire 1 ! clk_in $end
+$var wire 1 " rst_in $end
+$var wire 32 .! v_addr_in [31:0] $end
+$var wire 1 /! valid_in $end
+$var reg 1 2 ready_out $end
+$var wire 1 0! pos_deq_in $end
+$var reg 32 + data_out [31:0] $end
+$var reg 1 / data_valid_out $end
+$var reg 1 . pos_full_out $end
+$var reg 1 - pos_empty_out $end
+$var wire 1 1! neigh_deq_in $end
+$var reg 32 * neigh_fifo_out [31:0] $end
+$var reg 1 5 neigh_valid_out $end
+$var reg 1 3 neigh_full_out $end
+$var reg 1 4 neigh_empty_out $end
+$var wire 1 2! mem_valid_in $end
+$var wire 32 3! mem_data_in [31:0] $end
+$var reg 1 = mem_valid_out $end
+$var reg 32 > mem_req_out [31:0] $end
+$var wire 1 4! mem_valid_in2 $end
+$var wire 32 5! mem_data_in2 [31:0] $end
+$var reg 1 A mem_valid_out2 $end
+$var reg 32 B mem_req_out2 [31:0] $end
+$var reg 4 6! ct [3:0] $end
+$var reg 1 7! req_ready_n $end
+$scope module neighbors $end
+$var wire 1 ! clk_in $end
+$var wire 1 " rst_in $end
+$var wire 1 1! deq_in $end
+$var wire 32 5! enq_data_in [31:0] $end
+$var wire 1 8! enq_in $end
+$var reg 1 3 full_out $end
+$var reg 32 * data_out [31:0] $end
+$var reg 1 4 empty_out $end
+$var reg 1 5 valid_out $end
+$var reg 2 9! read_ptr [1:0] $end
+$var reg 2 :! write_ptr [1:0] $end
+$scope begin Block27_22 $end
+$var reg 32 ;! i [31:0] $end
+$upscope $end
+$upscope $end
+$scope module position $end
+$var wire 1 ! clk_in $end
+$var wire 1 " rst_in $end
+$var wire 1 0! deq_in $end
+$var wire 32 3! enq_data_in [31:0] $end
+$var wire 1 <! enq_in $end
+$var reg 1 . full_out $end
+$var reg 32 + data_out [31:0] $end
+$var reg 1 - empty_out $end
+$var reg 1 / valid_out $end
+$var reg 3 =! read_ptr [2:0] $end
+$var reg 3 >! write_ptr [2:0] $end
+$scope begin Block27_25 $end
+$var reg 32 ?! i [31:0] $end
+$upscope $end
+$upscope $end
+$upscope $end
+$scope module cvmem $end
+$var wire 1 ! clk_in $end
+$var wire 1 " rst_in $end
+$var wire 32 @! c_addr_in [31:0] $end
+$var wire 32 A! v_addr_in [31:0] $end
+$var wire 1 B! c_addr_valid_in $end
+$var wire 1 C! v_addr_valid_in $end
+$var wire 1 D! write_c_data_in $end
+$var wire 1 E! write_c_valid_in $end
+$var wire 1 F! write_v_data_in $end
+$var wire 1 G! write_v_valid_in $end
+$var reg 1 F checked_out $end
+$var reg 1 G visited_out $end
+$var reg 1 H valid_c_out $end
+$var reg 1 I valid_v_out $end
+$var reg 1 H! counter $end
+$var reg 1 I! counter2 $end
+$scope module bram_3 $end
+$var wire 10 J! addra [9:0] $end
+$var wire 1 D! dina [0:0] $end
+$var wire 1 ! clka $end
+$var wire 1 E! wea $end
+$var wire 1 K! ena $end
+$var wire 1 " rsta $end
+$var wire 1 L! regcea $end
+$var wire 1 M! douta [0:0] $end
+$var reg 1 N! ram_data [0:0] $end
+$var reg 1 O! \output_register.douta_reg  [0:0] $end
+$upscope $end
+$scope module bram_3_2 $end
+$var wire 10 P! addra [9:0] $end
+$var wire 1 F! dina [0:0] $end
+$var wire 1 ! clka $end
+$var wire 1 G! wea $end
+$var wire 1 Q! ena $end
+$var wire 1 " rsta $end
+$var wire 1 R! regcea $end
+$var wire 1 S! douta [0:0] $end
+$var reg 1 T! ram_data [0:0] $end
+$var reg 1 U! \output_register.douta_reg  [0:0] $end
+$upscope $end
+$upscope $end
+$upscope $end
+$scope begin Block72_37 $end
+$var reg 32 V! i [31:0] $end
 $upscope $end
 $upscope $end
 $enddefinitions $end
 #0
 $dumpvars
 0!
+b0 !!
 0"
+b0 "!
 bx #
-x$
-bx %
+b10000000000 #!
+bx $
+b0 $!
+x%
+b0 %!
 bx &
+bz &!
 x'
+b0 '!
 bx (
+0(!
 bx )
+1)!
 bx *
-b1001 +
-0,
-0-
-bx .
-bx /
-bx 0
-bx 1
-bx 2
-bx 3
-bx 4
-bx 5
+1*!
+bx +
+b0 +!
+bx ,
+b0 ,!
+x-
+b0 -!
+x.
+bx .!
+x/
+x/!
+x0
+10!
+x1
+11!
+x2
+x2!
+x3
+b0 3!
+x4
+x4!
+x5
+b0 5!
 bx 6
+bx 6!
 bx 7
-bx 8
+x7!
+x8
+08!
 bx 9
-bx :
-bx ;
-bx <
-bx =
+bx 9!
+x:
+bx :!
+x;
+b0 ;!
+b0 <
+x<!
+x=
+bx =!
 bx >
-bx ?
-x@
+bx >!
+x?
+b0 ?!
+b0 @
+bx @!
 xA
-xB
+bx A!
+bx B
+xB!
 xC
-xD
+xC!
+bx D
+1D!
 xE
-xF
-xG
+xE!
+0F
+1F!
+0G
+xG!
 xH
+xH!
+xI
+xI!
+bx J
+bx J!
+bx K
+1K!
+xL
+1L!
+bx M
+0M!
+bx N
+0N!
+bx O
+0O!
+xP
+bx P!
+bx Q
+1Q!
+xR
+1R!
+xS
+0S!
+xT
+0T!
+bx U
+0U!
+bx V
+b10 V!
+b11111111111111111111111111111111 W
+0W!
+xX
+0X!
+xY
+bx Y!
+b1000 Z
+bx Z!
+x[
+x[!
+bx \
+bx \!
+x]
+bx ]!
+x^
+bx ^!
+x_
+bx _!
+x`
+bx `!
+bx a
+bx a!
+bx b
+bx b!
+b0 c
+bx c!
+b0 d
+bx d!
+bz e
+zf
+bx g
+bx h
+xi
+xj
+b0 k
+xl
+bx m
+bx n
+bx o
+bx p
+xq
+bx r
+bx s
+bx t
+b0 u
+b0 v
+0w
+0x
+1y
+1z
+1{
+1|
+b0 }
+b0 ~
 $end
 #5000
 1!
-1,
-b0 .
-b0 /
-b0 0
-b0 1
-b0 2
-b0 3
-b0 4
-b0 5
-b0 6
-b0 7
-b0 8
-b0 9
-b0 :
-b0 ;
-b0 <
-b0 =
-b0 >
-b0 ?
-0@
+bx !!
+bx "!
+bx ,!
+0/
+0/!
+02!
+04!
+05
+07!
+08
+0;
+0<!
+0=
+0?
 0A
-0B
-0C
-0D
-0E
-0F
-0G
+0B!
+0C!
+0E!
+0G!
 0H
+0I
+xN!
+xT!
+1W!
+0X
+0Y
+0[
+0]
+b0 ]!
+b0 ^!
+0i
+0j
+0l
+b0 p
+0q
 #10000
 0!
 1"
-0,
-1-
+0W!
+1X!
 #15000
 1!
-b0 #
-0$
-b0 %
-b0 &
+0'
 b0 (
-1,
+b0 )
+b0 *
+b0 +
+b0 ,
+1-
+0.
+b0 .!
+12
+03
+14
+b0 6!
+b0 9
+b0 9!
+0:
+b0 :!
+b10 ;!
+b0 =!
+b0 >!
+b100 ?!
+b0 A!
+b0 D
+0E
+b0 J
+b0 K
+b0 M
+0P
+b0 P!
+b0 Q
+0R
+0S
+1T
+b0 U
+b0 V
+1W!
+b1000 Z
+b0 \
+1^
+0_
+1`
+b0 a
+b0 b
+b1000 c
+b1000 d
 #20000
 0!
 0"
-0,
-0-
-b10111 7
-b1000011 8
-b10 9
-b1100011 :
-b10001 ;
-b1100111 <
-b1 =
-b110101 >
-b10010 ?
+b101000000100000011001011000 #
+b1 $
+1%
+0W!
+0X!
+b101000000100000011001011000 Y!
+b1 Z!
+1[!
+b101 ]!
+b111 ^!
+b1 c!
+b1 d!
 #25000
 1!
-1,
+bx $!
+bx %!
+b1 )
+bx +!
+bx -!
+bx 3!
+bx 5!
+bx <
+bx @
+xF
+xG
+xM!
+xO!
+xS!
+0T!
+xU!
+1W!
+bx k
+bx }
+bx ~
 #30000
 0!
-0,
+0%
+0W!
+0[!
+b0 a!
+b0 b!
 #35000
 1!
-1,
+0G
+b1 M
+b0 N
+0S!
+0U!
+1W!
 #40000
 0!
-0,
-b1011001 .
-1@
+b10010110011100011111010100 #
+1%
+0W!
+b10010110011100011111010100 Y!
+1[!
 #45000
 1!
-b1 (
-b0 )
-1,
+b10 )
+b0 O
+1W!
 #50000
 0!
-0,
-b1111011 /
-0@
-1A
+0%
+0W!
+0[!
 #55000
 1!
-b10 (
-b1 )
-b0 *
-1,
+b1010111011100111111111011101001 K
+b10 M
+b1 N
+1W!
 #60000
 0!
-0,
-b11100111 0
-0A
-1B
+b100101010101110101000100000 #
+1%
+0W!
+b100101010101110101000100000 Y!
+1[!
 #65000
 1!
-b1000100000100 &
-b11 (
-b10 )
-b1 *
-1,
+b11 )
+b10101110111001111111110111010010 K
+b1 O
+1W!
 #70000
 0!
-0,
-b1010010 1
-0B
-1C
+0%
+0W!
+0[!
 #75000
 1!
-b1110101000100 &
-b100 (
-b11 )
-b10 *
-1,
+b1101011011000100101011111111011 K
+b11 M
+b10 N
+1W!
 #80000
 0!
-0,
-b111 2
-0C
-1D
+b100110000100101001010100000 #
+1%
+0W!
+b100110000100101001010100000 Y!
+1[!
 #85000
 1!
-b1110101000011101 &
-b101 (
 b100 )
-b11 *
-1,
+b100111110111001011001000100100 K
+b10 O
+1W!
 #90000
 0!
-0,
-b1100 3
-0D
-1E
+0%
+0W!
+0[!
 #95000
 1!
-b1110101100111110 &
-b110 (
-b101 )
-b100 *
-1,
+b11100111001001010110000111100101 K
+b0 M
+b11 N
+1W!
 #100000
 0!
-0,
-b10100 4
-0E
-1F
+0W!
 #105000
 1!
-b1110101110100010 &
-b111 (
-b110 )
-b101 *
-1,
+b10100110011011100001000110100110 K
+b0 N
+b11 O
+1W!
 #110000
 0!
-0,
-b100111 5
-0F
-1G
+0W!
 #115000
 1!
-b10000101111111011 &
-b1000 (
-b111 )
-b110 *
-1,
+b11110010000101000101000001100111 D
+1E
+b0 K
+b0 O
+b11110010000101000101000001100111 Q
+1R
+1W!
 #120000
 0!
-0,
-b10011 6
-0G
-1H
+0W!
 #125000
 1!
-b10000110101100100 &
-b0 (
-b1000 )
-b111 *
-1,
+b1 (
+11
+b1 9
+1:
+b0 D
+0E
+1P
+b0 Q
+0R
+0T
+b11110010000101000101000001100111 W
+1W!
+1X
+b1000 Z
+1[
 #130000
 0!
-0,
-0H
+0W!
+b1 a!
+b1 b!
 #135000
 1!
-b10000111000101000 &
-b0 )
-b1000 *
-1,
+b1 ,
+b1 .!
+1/!
+b11110010000101000101000001100111 7
+18
+b0 9
+1B!
+1E!
+1T
+b1 U
+b1 V
+b11111111111111111111111111111111 W
+1W!
+0X
+1Y
+b1000 Z
+0[
+b1 \
+1]
+0^
+b1 a
 #140000
 0!
-0,
+0W!
+b0 _!
+b0 `!
+b0 a!
+b0 b!
 #145000
 1!
-b10000111000101001 #
-1$
-b0 &
-b0 *
-1,
+0/!
+17!
+08
+1=
+b10 >
+1A
+b110 B
+0B!
+0E!
+1H!
+1I!
+1W!
+0Y
+0]
+1^
+b1 b
+b10 g
+b110 h
+1i
+1j
+b10 s
+b110 t
 #150000
 0!
-0,
+0W!
 #155000
 1!
-b0 #
-0$
-1,
+b10000100000000011000011101110110 !!
+b1001 "!
+07!
+b11 >
+0A
+1H
+0H!
+1I
+0I!
+1W!
+b11 g
+0j
+b1 p
+1q
+b11 s
 #160000
 0!
-0,
+0W!
 #165000
 1!
-1,
+b111001010000111000001010010010 !!
+b10000100000000011000011101110110 $!
+b1001 %!
+12!
+b10000100000000011000011101110110 3!
+14!
+b1001 5!
+18!
+1;
+b10000100000000011000011101110110 <
+1<!
+b100 >
+1?
+b1001 @
+0H
+0I
+1W!
+b100 g
+0q
+b100 s
+b10000100000000011000011101110110 }
+b1001 ~
 #170000
 0!
-0,
+0W!
 #175000
 1!
-1,
+b1111000001100001001100100100000 !!
+b111001010000111000001010010010 $!
+0-
+b111001010000111000001010010010 3!
+04
+04!
+b1 6!
+17!
+08!
+b1 :!
+1;
+b111001010000111000001010010010 <
+b101 >
+b1 >!
+0?
+1A
+b111 B
+1W!
+b101 g
+b111 h
+1j
+b101 s
+b111 t
+b111001010000111000001010010010 }
 #180000
 0!
-0,
+0W!
 #185000
 1!
-1,
+b1111001100001000100000000000000 !!
+b10111 "!
+b1111000001100001001100100100000 $!
+b1001 *
+b10000100000000011000011101110110 +
+1/
+b1111000001100001001100100100000 3!
+14
+15
+b10 6!
+07!
+b1 9!
+1;
+b1111000001100001001100100100000 <
+0=
+b1 =!
+b10 >!
+0A
+b1001 A!
+1C!
+1G!
+b1001 P!
+1W!
+0i
+0j
+1q
+b1111000001100001001100100100000 }
 #190000
 0!
-0,
+0W!
 #195000
 1!
-1,
+b1111001100001000100000000000000 $!
+b10111 %!
+b111001010000111000001010010010 +
+b1111001100001000100000000000000 3!
+14!
+05
+b10111 5!
+b11 6!
+18!
+b1111001100001000100000000000000 <
+b10 =!
+b11 >!
+1?
+b10111 @
+0C!
+0G!
+1W!
+b0 p
+0q
+b1111001100001000100000000000000 }
+b10111 ~
 #200000
 0!
-0,
+0W!
+b1001 _!
+b1 `!
+b10000100000000011000011101110110 a!
+b1 b!
 #205000
 1!
-1,
+b1111000001100001001100100100000 +
+02!
+04
+04!
+b100 6!
+17!
+08!
+b0 :!
+0;
+0<!
+b11 =!
+b0 >!
+0?
+1A
+b1000 B
+1T!
+1W!
+b1000 h
+1j
+b1000 t
 #210000
 0!
-0,
+0W!
+b0 `!
+b111001010000111000001010010010 a!
 #215000
 1!
-1,
+b0 "!
+b10111 *
+b1111001100001000100000000000000 +
+1-
+14
+15
+07!
+b0 9!
+b0 =!
+0A
+b10111 A!
+1C!
+1G
+1G!
+b10111 P!
+1S!
+1U!
+1W!
+0j
+1q
 #220000
 0!
-0,
+0W!
+b1111000001100001001100100100000 a!
 #225000
 1!
-1,
+b0 %!
+0/
+14!
+05
+b0 5!
+1?
+b0 @
+0C!
+0G!
+0T!
+1W!
+0q
+b0 ~
 #230000
 0!
-0,
+0W!
+b10111 _!
+b1 `!
+b1111001100001000100000000000000 a!
 #235000
 1!
-1,
+04!
+0?
+0G
+0S!
+1T!
+0U!
+1W!
 #240000
 0!
-0,
+0W!
+b0 `!
+b0 b!
 #245000
 1!
-1,
+1G
+1S!
+1U!
+1W!
 #250000
 0!
-0,
+0W!
 #255000
 1!
-1,
+1W!
 #260000
 0!
-0,
+0W!
 #265000
 1!
-1,
+1W!
 #270000
 0!
-0,
+0W!
 #275000
 1!
-1,
+1W!
 #280000
 0!
-0,
+0W!
 #285000
 1!
-1,
+1W!
 #290000
 0!
-0,
+0W!
 #295000
 1!
-1,
+1W!
 #300000
 0!
-0,
+0W!
 #305000
 1!
-1,
+1W!
 #310000
 0!
-0,
+0W!
 #315000
 1!
-1,
+1W!
 #320000
 0!
-0,
+0W!
 #325000
 1!
-1,
+1W!
 #330000
 0!
-0,
+0W!
 #335000
 1!
-1,
+1W!
 #340000
 0!
-0,
+0W!
 #345000
 1!
-1,
+1W!
 #350000
 0!
-0,
+0W!
 #355000
 1!
-1,
+1W!
 #360000
 0!
-0,
+0W!
 #365000
 1!
-1,
+1W!
 #370000
 0!
-0,
+0W!
 #375000
 1!
-1,
+1W!
 #380000
 0!
-0,
+0W!
 #385000
 1!
-1,
+1W!
 #390000
 0!
-0,
+0W!
 #395000
 1!
-1,
+1W!
 #400000
 0!
-0,
+0W!
 #405000
 1!
-1,
+1W!
 #410000
 0!
-0,
+0W!
 #415000
 1!
-1,
+1W!
 #420000
 0!
-0,
+0W!
 #425000
 1!
-1,
+1W!
 #430000
 0!
-0,
+0W!
 #435000
 1!
-1,
+1W!
 #440000
 0!
-0,
+0W!
 #445000
 1!
-1,
+1W!
 #450000
 0!
-0,
+0W!
 #455000
 1!
-1,
+1W!
 #460000
 0!
-0,
+0W!
 #465000
 1!
-1,
+1W!
 #470000
 0!
-0,
+0W!
 #475000
 1!
-1,
+1W!
 #480000
 0!
-0,
+0W!
 #485000
 1!
-1,
+1W!
 #490000
 0!
-0,
+0W!
 #495000
 1!
-1,
+1W!
 #500000
 0!
-0,
+0W!
 #505000
 1!
-1,
+1W!
 #510000
 0!
-0,
+0W!
 #515000
 1!
-1,
+1W!
 #520000
 0!
-0,
+0W!
 #525000
 1!
-1,
+1W!
 #530000
 0!
-0,
+0W!
 #535000
 1!
-1,
+1W!
 #540000
 0!
-0,
+0W!
 #545000
 1!
-1,
+1W!
 #550000
 0!
-0,
+0W!
 #555000
 1!
-1,
+1W!
 #560000
 0!
-0,
+0W!
 #565000
 1!
-1,
+1W!
 #570000
 0!
-0,
+0W!
 #575000
 1!
-1,
+1W!
 #580000
 0!
-0,
+0W!
 #585000
 1!
-1,
+1W!
 #590000
 0!
-0,
+0W!
 #595000
 1!
-1,
+1W!
 #600000
 0!
-0,
+0W!
 #605000
 1!
-1,
+1W!
 #610000
 0!
-0,
+0W!
 #615000
 1!
-1,
+1W!
 #620000
 0!
-0,
+0W!
 #625000
 1!
-1,
+1W!
+#630000
+0!
+0W!
+#635000
+1!
+1W!
