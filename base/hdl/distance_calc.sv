@@ -18,6 +18,7 @@ module distance #(parameter DIM = 2)(
 
   logic [0:$clog2(DIM)-1] i; // index into array for subtraction
   logic [0:$clog2(DIM)-1] j; // index into array for multiplication
+  logic [0:$clog2(DIM)-1] k; // index into array for multiplication
 
 
   // state machine for distance calc
@@ -25,6 +26,9 @@ module distance #(parameter DIM = 2)(
     if (rst_in) begin
         state <= 0;
         i <= 0;
+        distance <= 0;
+        distance_sq_out <= 0;
+        data_valid_out <= 1'b0;
     end
     else if (state==2'b0) begin
         // data_valid_out <= 1'b0;
@@ -32,7 +36,7 @@ module distance #(parameter DIM = 2)(
 
         // subtraction (q_i - p_i) one substraction per cycle
         if (data_valid_in[i]) begin
-            intermediate_subs_out[i] = query_pos_in[i] - vertex_pos_in[i]; 
+            intermediate_subs_out[i] <= query_pos_in[i] - vertex_pos_in[i]; 
             valid_subs_out[i] <= 1'b1;
             
             // increment indexing counter
@@ -51,20 +55,42 @@ module distance #(parameter DIM = 2)(
 
         // find square of difference if subtraction complete
         if (valid_subs_out[j]) begin
-            intermediate_mults_out[j] = intermediate_subs_out[j]*intermediate_subs_out[j];
+            intermediate_mults_out[j] <= intermediate_subs_out[j]*intermediate_subs_out[j];
             valid_mults_out[j] <= 1'b1;
 
             // reset valid bit when complete
             valid_subs_out[j] <= 1'b0;
 
             if (j>=(DIM-1)) j <= 0;
+
+            k <= j;
         end
             
         // move to next state if all multiplications are complete
-        if (valid_mults_out[DIM-1]==1'b1) begin
-            state <= 2'b1;
-            valid_mults_out[DIM-1] <= 1'b0;
+        // if (valid_mults_out[DIM-1]==1'b1) begin
+        //     state <= 2'b1;
+        //     valid_mults_out[DIM-1] <= 1'b0;
+        // end
+
+        // add squares of differences
+        if (k==(DIM-1) && valid_mults_out[k]) begin
+          distance_sq_out <= distance + intermediate_mults_out[k];
+          data_valid_out <= 1'b1;
+
+          intermediate_mults_out[0] <= 0;
+          distance <= 0;
+          k <= 0;
         end
+        else if (k<(DIM-1) && valid_mults_out[k]) begin
+          distance <= distance + intermediate_mults_out[k];
+        end
+
+        // reset values if valid square of distance 
+        if (data_valid_out==1'b1) begin
+          data_valid_out <= 1'b0;
+          distance_sq_out <= 0;
+        end
+
     end
 
     // multiplication (square difference), one multiplication per cycle
@@ -83,36 +109,38 @@ module distance #(parameter DIM = 2)(
     // end
 
     // recursively add squares of differences
-    else if (state==2'b1) begin
-        if (data_valid_out) begin
-          state <= 2'b0;
-          intermediate_mults_out[0]>=0;
-        end
+    // else if (state==2'b1) begin
+    //     if (data_valid_out) begin
+    //       state <= 2'b0;
+    //       intermediate_mults_out[0]<=0;
+    //     end
 
-        // if(valid_add_out) begin
-        //     data_valid_out <= 1'b1;
-        //     distance_sq_out <= distance;
-        //     state <= 2'b0;
-        // end
-    end
+    //     // if(valid_add_out) begin
+    //     //     data_valid_out <= 1'b1;
+    //     //     distance_sq_out <= distance;
+    //     //     state <= 2'b0;
+    //     // end
+    // end
 
  end
 
  // use recursive addition module
- recursive_add_n_dim  #(
-    .DIM(DIM)
-    ) add_distances(
-        .clk_in(clk_in),
-        .rst_in(rst_in),
-        .data_valid_in((state==2'b1)),
-        .intermediate_mults_in(intermediate_mults_out),
-        .distance_sq_out(distance_sq_out),
-        .data_valid_out(data_valid_out)
-    );
+//  recursive_add_n_dim  #(
+//     .DIM(DIM)
+//     ) add_distances(
+//         .clk_in(clk_in),
+//         .rst_in(rst_in),
+//         .data_valid_in((state==2'b1)),
+//         .intermediate_mults_in(intermediate_mults_out),
+//         .distance_sq_out(distance_sq_out),
+//         .data_valid_out(data_valid_out)
+//     );
  
 endmodule
 
 
+
+// NOTE: we don't use module but leaving it here for future use
 // recursive addition module 
 module recursive_add_n_dim # (parameter DIM = 1)(
   input wire clk_in,
