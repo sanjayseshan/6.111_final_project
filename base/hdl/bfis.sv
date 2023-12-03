@@ -71,6 +71,8 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH = 8)(
         if (ct_dist<DIM) begin 
           ct_dist <= ct_dist+1;
           pos_valid[ct_dist] <= 1'b1;
+          if (ct_dist != 0) pos_valid[ct_dist-1] <= 1'b0;
+
         end else begin 
           ct_dist <= 0;
           pos_valid[DIM-1] <= 1'b0;
@@ -80,23 +82,27 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH = 8)(
       // add vertex to priority queue
       else if (dist_valid_out) begin
           if (pq_size >= 1) begin
+            pos_valid[DIM-1] <= 0;
+            pos_valid[DIM-2] <= 0;
             state <= 5'b1;
             pq_deq_in <= 1'b1;
             valid_in <= 1'b1;
             // v_addr_in <= vertex_addr_in;
           end
       end
+      top_k_out[2] <= dist_valid_out;// mem_valid_in; //mem_req_out;
+      top_k_out[3] <= dist_valid_out;// mem_valid_in; //mem_req_out;
     end
 
     // state 1
     else if (state==5'b1) begin
       // neigh_deq_in <= 1;
-      pq_deq_in <= 1'b0;
+      pq_deq_in <= 1'b1;
       valid_in <= 1;
-      top_k_out[0] <= v_addr_in;//mem_req_out; //v_addr_in;
+      top_k_out[0] <= mem_req_out; // v_addr_in;//mem_req_out; //v_addr_in;
       top_k_out[1] <= mem_data_in;//neigh_fifo_out;
       top_k_out[2] <= mem_valid_out;//mem_data_in;
-      top_k_out[3] <= mem_valid_in; //mem_req_out;
+      top_k_out[3] <= dist_valid_out;// mem_valid_in; //mem_req_out;
 
     end
 
@@ -206,7 +212,7 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH = 8)(
     .clk_in(clk_in),
     .rst_in(rst_in),
     .v_addr_in(v_addr_in),
-    .valid_in(valid_in),
+    .valid_in(pq_valid_out),
     .ready_out(ready_out),
 
     .pos_deq_in(1'b1),

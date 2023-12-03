@@ -84,7 +84,11 @@ module distance #(parameter DIM = 2)(
 
     // recursively add squares of differences
     else if (state==2'b1) begin
-        if (data_valid_out) state <= 2'b0; 
+        if (data_valid_out) begin
+          state <= 2'b0;
+          intermediate_mults_out[0]>=0;
+        end
+
         // if(valid_add_out) begin
         //     data_valid_out <= 1'b1;
         //     distance_sq_out <= distance;

@@ -158,7 +158,7 @@ module graph_fetch #(parameter DIM = 2)(
         else begin
 
           // if just retrieved position and haven't read all positions yet
-          if (mem_valid_in && mem_req_out <= v_addr_in + DIM) begin
+          if (mem_valid_in && mem_req_out <= v_addr_in + DIM-1) begin
             mem_req_out <= mem_req_out + 1;
             mem_valid_out <= 1;
           end else mem_valid_out <= 0;
