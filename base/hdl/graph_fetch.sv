@@ -44,20 +44,21 @@ module graph_fetch #(parameter DIM = 2)(
   logic [$clog2(DIM)+1:0] ct; // count for position dims retrieved
 
   logic req_ready_n;
+  logic req_ready_d;
   // logic mem_valid_out;
 
-  always_comb begin
-    // mem_req_out = mem_req_out;
-    // mem_valid_out = mem_valid_out;
-    // mem_data_in = mem_data_in;
-    // mem_valid_in = mem_valid_in;
+  // always_comb begin
+  //   // mem_req_out = mem_req_out;
+  //   // mem_valid_out = mem_valid_out;
+  //   // mem_data_in = mem_data_in;
+  //   // mem_valid_in = mem_valid_in;
 
-    // mem_req_out2 = mem_req_out2;
-    mem_valid_out2 = req_ready_n&&(neigh_full_out!=1'b1);
-    // mem_data_in2 = mem_data_in2;
-    // mem_valid_in2 = mem_valid_in2;
+  //   // mem_req_out2 = mem_req_out2;
+  //   mem_valid_out2 = req_ready_n&&(neigh_full_out!=1'b1);
+  //   // mem_data_in2 = mem_data_in2;
+  //   // mem_valid_in2 = mem_valid_in2;
 
-  end
+  // end
 
 
 
@@ -77,7 +78,7 @@ module graph_fetch #(parameter DIM = 2)(
 
   // FIFO for outputting neighbor values
   // add neighbor if valid and not 0
-  FIFO#(.DATA_WIDTH(32),.DEPTH(2)) neighbors (
+  FIFO#(.DATA_WIDTH(32),.DEPTH(4)) neighbors (
         .clk_in(clk_in),
         .rst_in(rst_in),
         .deq_in(neigh_deq_in),
@@ -92,7 +93,7 @@ module graph_fetch #(parameter DIM = 2)(
 
   // FIFO for outputting position vector values
   // add position if valid and haven't added all dimensions yet
-  FIFO#(.DATA_WIDTH(32),.DEPTH(DIM)) position (
+  FIFO#(.DATA_WIDTH(32),.DEPTH(DIM<<2)) position (
       .clk_in(clk_in),
       .rst_in(rst_in),
       .deq_in(pos_deq_in),
@@ -146,38 +147,63 @@ module graph_fetch #(parameter DIM = 2)(
         ready_out <= 1;
         ct <= 0;
         mem_valid_out <= 0;
+        mem_valid_out2 <= 0;
         req_ready_n <= 0;
+        req_ready_d <= 0;
       end else begin
         if (valid_in) begin
-          mem_req_out <= v_addr_in + 1;
+          // mem_req_out <= v_addr_in + 1;
           mem_req_out2 <= v_addr_in + 1 + DIM;
-          mem_valid_out <= 1;
-          req_ready_n <= 1;
+          mem_valid_out2 <= 1'b1;
+          // mem_valid_out <= 1;
+          req_ready_n <= 1'b0;
+          req_ready_d <= 1'b0;
           ct <= 0;
         end
         else begin
 
+          if(mem_data_in2 != 0 && mem_valid_in2) begin
+            mem_req_out <= mem_data_in2 + 1;
+            mem_valid_out <= 1'b1;
+            req_ready_d <= 1'b1;
+          end      
           // if just retrieved position and haven't read all positions yet
-          if (mem_req_out <= v_addr_in + DIM-1) begin
+          else if (req_ready_d && mem_req_out <= mem_data_in2 + DIM-1) begin
             mem_req_out <= mem_req_out + 1;
-            mem_valid_out <= 1;
-          end else mem_valid_out <= 0;
+            mem_valid_out <= 1'b1;
+            // if (mem_req_out == mem_data_in2 + DIM-1 && ct>DIM) req_ready_d <= 1'b0;
+          end 
+          else begin
+            mem_valid_out <= 1'b0;
+            req_ready_d <= 1'b0;
+          end
           
           // && !neigh_full_out
           // if more neighbors left and just retrieved neighbor
-          if (mem_data_in2 != 0 && mem_valid_in2) begin 
-            mem_req_out2 <= mem_req_out2 + 1;
-            req_ready_n <= 1'b1;
+          if (mem_data_in2 != 0 && ct>=(DIM-1)) begin 
+            if (neigh_full_out) req_ready_n <= 1'b1;
+            else begin
+              mem_valid_out2 <= 1'b1;
+              mem_req_out2 <= mem_req_out2 + 1;
+            end
           end 
           // if neighbor fifo is full, stall retrieving from BRAM
-          else if (mem_data_in2 != 0 && neigh_full_out) req_ready_n <= 1'b1; 
-          else req_ready_n <= 1'b0;
+          else if (req_ready_n && ~neigh_full_out) begin 
+            mem_req_out2 <= mem_req_out2 + 1;
+            mem_valid_out2 <= 1'b1;
+            req_ready_n <= 1'b0;
+          end
+          else begin
+            if (~neigh_full_out) req_ready_n <= 1'b0; 
+            mem_valid_out2 <= 1'b0;
+          end
+          // else req_ready_n <= 1'b0;
           
         
           // if (data_ready) ct <= ct +1;
           // count for number of dimensions retrieved
           if (mem_valid_in && ~pos_full_out) begin
-            ct <= ct+1;
+            ct <= (ct>=DIM-1) ? 0 : ct+1;
           end
         end
       end
