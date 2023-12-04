@@ -16,6 +16,7 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH = 8)(
   );
 
 
+  logic [31:0] point_addr;
 
   logic [$clog2(DIM):0] ct_dist;
   
@@ -46,6 +47,8 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH = 8)(
 
   logic data_valid_out;
 
+  logic neigh_deq;
+
 
 
   logic [31:0] dist_out;
@@ -60,12 +63,14 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH = 8)(
 
         ct_dist <= 0;
         pq_deq_in <= 1'b0;
+        point_addr <= vertex_addr_in;
     end
 
     // state 0: computes distance between P and Q and adds P to S
     else if (state==5'b0) begin
       // compute distance between the two
-      // vertex_addr_in <= 
+      point_addr <= vertex_addr_in;
+
       if (vertex_valid_in) begin
         pos_vec[ct_dist] <= vertex_in;
         if (ct_dist<DIM) begin 
@@ -73,15 +78,18 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH = 8)(
           pos_valid[ct_dist] <= 1'b1;
           if (ct_dist != 0) pos_valid[ct_dist-1] <= 1'b0;
 
-        end else begin 
-          ct_dist <= 0;
-          pos_valid[DIM-1] <= 1'b0;
-        end
+        end 
+        // else begin 
+        //   ct_dist <= 0;
+        //   pos_valid[DIM-1] <= 1'b0;
+        // end
       end
 
       // add vertex to priority queue
       else if (dist_valid_out) begin
           // if (pq_size >= 1) begin
+            ct_dist <= 0;
+
             pos_valid[DIM-1] <= 0;
             pos_valid[DIM-2] <= 0;
             state <= 5'b1;
@@ -97,12 +105,33 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH = 8)(
     // state 1
     else if (state==5'b1) begin
       // neigh_deq_in <= 1;
-      pq_deq_in <= 1'b1;
+      // pq_deq_in <= 1'b1;
       valid_in <= 1;
       top_k_out[0] <= neigh_fifo_out;//mem_req_out2; // v_addr_in;//mem_req_out; //v_addr_in;
       top_k_out[1] <= neigh_valid_out;// mem_data_in2;//neigh_fifo_out;
       top_k_out[2] <= data_out;//mem_valid_out2;//mem_data_in;
       top_k_out[3] <= fetch_data_valid_out;//mem_valid_in2;//dist_valid_out;// mem_valid_in; //mem_req_out;
+
+      if (fetch_data_valid_out) begin
+        if (ct_dist==0) begin
+          neigh_deq <= 1'b1;
+        end
+        else if (neigh_valid_out) begin
+          neigh_deq <= 1'b0;
+          point_addr <= neigh_fifo_out;
+        end
+
+        pos_vec[ct_dist] <= data_out;
+        if (ct_dist<DIM) begin 
+          ct_dist <= ct_dist+1;
+          pos_valid[ct_dist] <= 1'b1;
+          if (ct_dist != 0) pos_valid[ct_dist-1] <= 1'b0;
+
+        end else begin 
+          ct_dist <= 0;
+          pos_valid[DIM-1] <= 1'b0;
+        end
+      end
 
     end
 
@@ -136,12 +165,11 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH = 8)(
 
 
 
-
   PriorityQueue #(.DATA_WIDTH(32), .TAG_WIDTH(32), .DEPTH(PQ_LENGTH)) s (
     .clk_in(clk_in),
     .rst_in(rst_in),
     .deq_in(pq_deq_in),
-    .enq_data_in(vertex_addr_in),
+    .enq_data_in(point_addr),
     .enq_tag_in(dist_out),
     .enq_in(dist_valid_out),
     // .full_out(),
@@ -221,7 +249,7 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH = 8)(
     .pos_full_out(pos_full_out),
     .pos_empty_out(pos_empty_out),
 
-    .neigh_deq_in(1'b1),
+    .neigh_deq_in(neigh_deq),
     .neigh_fifo_out(neigh_fifo_out),
     .neigh_valid_out(neigh_valid_out),
     .neigh_full_out(neigh_full_out),
