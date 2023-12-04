@@ -19,6 +19,7 @@ module graph_fetch #(parameter DIM = 2)(
   output logic neigh_valid_out,
   output logic neigh_full_out,
   output logic neigh_empty_out,
+  output logic reached_neigh_end_out,
 
   input wire mem_valid_in,
   input wire [31:0] mem_data_in,
@@ -144,12 +145,13 @@ module graph_fetch #(parameter DIM = 2)(
 
     always_ff @( posedge clk_in ) begin
       if (rst_in) begin
-        ready_out <= 1;
+        ready_out <= 1'b1;
         ct <= 0;
-        mem_valid_out <= 0;
-        mem_valid_out2 <= 0;
-        req_ready_n <= 0;
-        req_ready_d <= 0;
+        mem_valid_out <= 1'b0;
+        mem_valid_out2 <= 1'b0;
+        req_ready_n <= 1'b0;
+        req_ready_d <=1'b0;
+        reached_neigh_end_out <= 1'b0;
       end else begin
         if (valid_in) begin
           // mem_req_out <= v_addr_in + 1;
@@ -159,6 +161,8 @@ module graph_fetch #(parameter DIM = 2)(
           req_ready_n <= 1'b0;
           req_ready_d <= 1'b0;
           ct <= 0;
+          
+          reached_neigh_end_out <= 1'b0;
         end
         else begin
 
@@ -199,6 +203,8 @@ module graph_fetch #(parameter DIM = 2)(
           end
           // else req_ready_n <= 1'b0;
           
+          if (mem_data_in2 == 0) reached_neigh_end_out <= 1'b1;
+          else reached_neigh_end_out <= 1'b0;
         
           // if (data_ready) ct <= ct +1;
           // count for number of dimensions retrieved

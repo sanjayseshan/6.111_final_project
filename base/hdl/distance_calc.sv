@@ -77,12 +77,14 @@ module distance #(parameter DIM = 2)(
           distance_sq_out <= distance + intermediate_mults_out[k];
           data_valid_out <= 1'b1;
 
-          intermediate_mults_out[0] <= 0;
+          // intermediate_mults_out[0] <= 0;
+          valid_mults_out[k] <= 1'b0;
           distance <= 0;
           k <= 0;
         end
         else if (k<(DIM-1) && valid_mults_out[k]) begin
           distance <= distance + intermediate_mults_out[k];
+          valid_mults_out[k] <= 1'b0;
         end
 
         // reset values if valid square of distance 
