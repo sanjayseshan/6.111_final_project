@@ -31,18 +31,18 @@ void parse(Graph &g, std::vector<Embedding> points) {
         mappings[v] = pos;
         // fd.write();
         // memlayout.push_back(v);
-        outfile << v << endl; 
+        outfile << std::hex << v << endl; 
         pos++;
         for (float i:points[v0]) {
             // memlayout.push_back((uint32_t)i);
             // printf("e=%f\n",i);
-            outfile << (uint32_t)int(i*100000000) << endl; 
+            outfile << std::hex << (uint32_t)int(i*1000) << endl; 
             pos++;
         }
         for (vidType m:g.N(v0)) {
             // printf("n=%d\n",m);
             // memlayout.push_back(m);
-            outfile << m << endl; 
+            outfile << std::hex << m << endl; 
             pos++;
         }
         outfile << (uint32_t)0 << endl; 
@@ -66,18 +66,18 @@ void parse(Graph &g, std::vector<Embedding> points) {
         auto v = v0+1;
         // fd.write();
         // memlayout.push_back(v);
-        outfile3 << v << endl; 
+        outfile3 << std::hex << v << endl; 
         pos++;
         for (float i:points[v0]) {
             // memlayout.push_back((uint32_t)i);
             // printf("e=%f\n",i);
-            outfile3 << (uint32_t)int(i*100000000) << endl; 
+            outfile3 << std::hex << (uint32_t)int(i*1000) << endl; 
             pos++;
         }
         for (vidType m:g.N(v0)) {
             // printf("n=%d\n",m);
             // memlayout.push_back(m);
-            outfile3 << mappings[m+1] << endl; 
+            outfile3 << std::hex << mappings[m+1] << endl; 
             pos++;
         }
         outfile3 << (uint32_t)0 << endl; 
@@ -92,7 +92,7 @@ void parse(Graph &g, std::vector<Embedding> points) {
 
     ofstream outfile2("out_vidx.mem"); 
     for (vidType i=0;i<g.size();i++)
-        outfile2 << mappings[i] << endl; 
+        outfile2 << std::hex << mappings[i] << endl; 
     free(mappings);
     outfile2.close();
 
