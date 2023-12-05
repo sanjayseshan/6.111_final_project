@@ -1,0 +1,1577 @@
+$date
+   Tue Dec  5 00:54:36 2023
+$end
+$version
+  2023.1
+$end
+$timescale
+  1ps
+$end
+$scope module bfis_tb $end
+$var reg 1 X! clk_in $end
+$var reg 1 Y! rst_in $end
+$var reg 32 Z! vertex_in [31:0] $end
+$var reg 32 [! vertex_addr_in [31:0] $end
+$var reg 1 \! vertex_valid_in $end
+$var reg 16 ]! k_in [15:0] $end
+$var reg 1 ' valid_out $end
+$var reg 32 ^! query_pos_in0 [31:0] $end
+$var reg 32 _! query_pos_in1 [31:0] $end
+$var reg 32 `! top_k_out0 [31:0] $end
+$var reg 32 a! top_k_out1 [31:0] $end
+$var reg 32 b! top_k_out2 [31:0] $end
+$var reg 32 c! top_k_out3 [31:0] $end
+$var reg 32 d! query_pos_in2 [31:0] $end
+$var reg 32 e! query_pos_in3 [31:0] $end
+$var reg 5 ( state [4:0] $end
+$scope module bfis_m $end
+$var wire 1 ! clk_in $end
+$var wire 1 " rst_in $end
+$var wire 32 # vertex_in [31:0] $end
+$var wire 32 $ vertex_addr_in [31:0] $end
+$var wire 1 % vertex_valid_in $end
+$var wire 16 & k_in [15:0] $end
+$var reg 1 ' valid_out $end
+$var reg 5 ( state [4:0] $end
+$var reg 32 ) point_addr [31:0] $end
+$var reg 3 * ct_dist [2:0] $end
+$var reg 32 + neigh_fifo_out [31:0] $end
+$var reg 32 , data_out [31:0] $end
+$var reg 32 - v_addr_in [31:0] $end
+$var reg 1 . pos_empty_out $end
+$var reg 1 / pos_full_out $end
+$var reg 1 0 fetch_data_valid_out $end
+$var reg 1 1 pos_deq_in $end
+$var reg 1 2 valid_in $end
+$var reg 1 3 ready_out $end
+$var reg 1 4 neigh_full_out $end
+$var reg 1 5 neigh_empty_out $end
+$var reg 1 6 neigh_valid_out $end
+$var reg 1 7 reached_neigh_end_out $end
+$var reg 32 8 pq_out [31:0] $end
+$var reg 32 9 pq_dist_out [31:0] $end
+$var reg 1 : pq_valid_out $end
+$var reg 4 ; pq_size [3:0] $end
+$var reg 1 < pq_deq_in $end
+$var reg 1 = mem_valid_in $end
+$var reg 32 > mem_data_in [31:0] $end
+$var reg 1 ? mem_valid_out $end
+$var reg 32 @ mem_req_out [31:0] $end
+$var reg 1 A mem_valid_in2 $end
+$var reg 32 B mem_data_in2 [31:0] $end
+$var reg 1 C mem_valid_out2 $end
+$var reg 32 D mem_req_out2 [31:0] $end
+$var reg 1 E data_valid_out $end
+$var reg 1 F neigh_deq $end
+$var reg 1 G pos_deq $end
+$var reg 32 H dist_out [31:0] $end
+$var reg 1 I dist_valid_out $end
+$var reg 1 J checked $end
+$var reg 1 K visited $end
+$var reg 1 L valid_checked $end
+$var reg 1 M valid_visited $end
+$var reg 32 N visited_addr_in [31:0] $end
+$var reg 1 O visited_addr_valid_in $end
+$var reg 1 P sent $end
+$scope module distance_calc $end
+$var wire 1 ! clk_in $end
+$var wire 1 " rst_in $end
+$var reg 32 H distance_sq_out [31:0] $end
+$var reg 1 I data_valid_out $end
+$var reg 3 Q state [2:0] $end
+$var reg 32 R distance [31:0] $end
+$var reg 1 S valid_add_out $end
+$var reg 2 T i [1:0] $end
+$var reg 2 U j [1:0] $end
+$var reg 2 V k [1:0] $end
+$upscope $end
+$scope module s $end
+$var wire 1 ! clk_in $end
+$var wire 1 " rst_in $end
+$var wire 1 W deq_in $end
+$var wire 32 X enq_data_in [31:0] $end
+$var wire 32 Y enq_tag_in [31:0] $end
+$var wire 1 Z enq_in $end
+$var reg 1 [ full_out $end
+$var reg 32 - data_out [31:0] $end
+$var reg 32 9 tag_out [31:0] $end
+$var reg 4 ; size_out [3:0] $end
+$var reg 1 \ empty_out $end
+$var reg 1 : valid_out $end
+$var reg 4 ] read_ptr [3:0] $end
+$var reg 4 ^ write_ptr [3:0] $end
+$var reg 32 _ curval [31:0] $end
+$var reg 1 ` rem_lru $end
+$var reg 1 a push_lru $end
+$scope begin Block39_3 $end
+$var reg 32 b i [31:0] $end
+$upscope $end
+$scope module lru_cache $end
+$var wire 1 ! clk_in $end
+$var wire 1 " rst_in $end
+$var wire 1 c deq_in $end
+$var wire 4 d enq_data_in [3:0] $end
+$var wire 1 e enq_in $end
+$var reg 1 f full_out $end
+$var reg 4 ^ data_out [3:0] $end
+$var reg 1 g empty_out $end
+$var reg 1 h valid_out $end
+$var reg 4 i read_ptr [3:0] $end
+$var reg 4 j write_ptr [3:0] $end
+$scope begin Block133_6 $end
+$var reg 32 k i [31:0] $end
+$upscope $end
+$upscope $end
+$scope begin Block62_8 $end
+$var reg 32 l i [31:0] $end
+$upscope $end
+$upscope $end
+$scope module gmem $end
+$var wire 1 ! clk_in $end
+$var wire 1 " rst_in $end
+$var wire 32 m idx_addr [31:0] $end
+$var wire 1 n idx_validin $end
+$var wire 32 o data_addra [31:0] $end
+$var wire 32 p data_addrb [31:0] $end
+$var wire 1 q data_validina $end
+$var wire 1 r data_validinb $end
+$var reg 32 s rowidx_out [31:0] $end
+$var reg 32 > data_outa [31:0] $end
+$var reg 32 B data_outb [31:0] $end
+$var reg 1 = data_valid_outa $end
+$var reg 1 A data_valid_outb $end
+$var reg 1 t rowidx_valid_out $end
+$var reg 32 u addra [31:0] $end
+$var reg 32 v addrb [31:0] $end
+$var reg 32 w addrc [31:0] $end
+$var reg 2 x cta [1:0] $end
+$var reg 1 y ctb $end
+$var reg 2 z ctc [1:0] $end
+$scope module data_mem $end
+$var wire 10 { addra [9:0] $end
+$var wire 10 | addrb [9:0] $end
+$var wire 32 } dina [31:0] $end
+$var wire 32 ~ dinb [31:0] $end
+$var wire 1 ! clka $end
+$var wire 1 ! clkb $end
+$var wire 1 !! wea $end
+$var wire 1 "! web $end
+$var wire 1 #! ena $end
+$var wire 1 $! enb $end
+$var wire 1 " rsta $end
+$var wire 1 " rstb $end
+$var wire 1 %! regcea $end
+$var wire 1 &! regceb $end
+$var wire 32 '! douta [31:0] $end
+$var wire 32 (! doutb [31:0] $end
+$var reg 32 )! ram_data_a [31:0] $end
+$var reg 32 *! ram_data_b [31:0] $end
+$var integer 32 +! idx [31:0] $end
+$var reg 32 ,! \output_register.douta_reg  [31:0] $end
+$var reg 32 -! \output_register.doutb_reg  [31:0] $end
+$upscope $end
+$scope module ptr_mem $end
+$var wire 10 .! addra [9:0] $end
+$var wire 32 /! dina [31:0] $end
+$var wire 1 ! clka $end
+$var wire 1 0! wea $end
+$var wire 1 1! ena $end
+$var wire 1 " rsta $end
+$var wire 1 2! regcea $end
+$var wire 32 3! douta [31:0] $end
+$var reg 32 4! ram_data [31:0] $end
+$var reg 32 5! \output_register.douta_reg  [31:0] $end
+$upscope $end
+$upscope $end
+$scope module graph $end
+$var wire 1 ! clk_in $end
+$var wire 1 " rst_in $end
+$var wire 32 6! v_addr_in [31:0] $end
+$var wire 1 7! valid_in $end
+$var reg 1 3 ready_out $end
+$var wire 1 8! pos_deq_in $end
+$var reg 32 , data_out [31:0] $end
+$var reg 1 0 data_valid_out $end
+$var reg 1 / pos_full_out $end
+$var reg 1 . pos_empty_out $end
+$var wire 1 9! neigh_deq_in $end
+$var reg 32 + neigh_fifo_out [31:0] $end
+$var reg 1 6 neigh_valid_out $end
+$var reg 1 4 neigh_full_out $end
+$var reg 1 5 neigh_empty_out $end
+$var reg 1 7 reached_neigh_end_out $end
+$var wire 1 :! mem_valid_in $end
+$var wire 32 ;! mem_data_in [31:0] $end
+$var reg 1 ? mem_valid_out $end
+$var reg 32 @ mem_req_out [31:0] $end
+$var wire 1 <! mem_valid_in2 $end
+$var wire 32 =! mem_data_in2 [31:0] $end
+$var reg 1 C mem_valid_out2 $end
+$var reg 32 D mem_req_out2 [31:0] $end
+$var reg 4 >! ct [3:0] $end
+$var reg 1 ?! req_ready_n $end
+$var reg 1 @! req_ready_d $end
+$scope module neighbors $end
+$var wire 1 ! clk_in $end
+$var wire 1 " rst_in $end
+$var wire 1 9! deq_in $end
+$var wire 32 =! enq_data_in [31:0] $end
+$var wire 1 A! enq_in $end
+$var reg 1 4 full_out $end
+$var reg 32 + data_out [31:0] $end
+$var reg 1 5 empty_out $end
+$var reg 1 6 valid_out $end
+$var reg 3 B! read_ptr [2:0] $end
+$var reg 3 C! write_ptr [2:0] $end
+$scope begin Block27_21 $end
+$var reg 32 D! i [31:0] $end
+$upscope $end
+$upscope $end
+$scope module position $end
+$var wire 1 ! clk_in $end
+$var wire 1 " rst_in $end
+$var wire 1 8! deq_in $end
+$var wire 32 ;! enq_data_in [31:0] $end
+$var wire 1 E! enq_in $end
+$var reg 1 / full_out $end
+$var reg 32 , data_out [31:0] $end
+$var reg 1 . empty_out $end
+$var reg 1 0 valid_out $end
+$var reg 5 F! read_ptr [4:0] $end
+$var reg 5 G! write_ptr [4:0] $end
+$scope begin Block27_24 $end
+$var reg 32 H! i [31:0] $end
+$upscope $end
+$upscope $end
+$upscope $end
+$scope module vmem $end
+$var wire 1 ! clk_in $end
+$var wire 1 " rst_in $end
+$var wire 32 I! v_addr_in [31:0] $end
+$var wire 1 J! v_addr_valid_in $end
+$var reg 1 K visited_out $end
+$var reg 1 M valid_v_out $end
+$var reg 1 K! counter $end
+$var reg 2 L! counter2 [1:0] $end
+$var reg 1 M! visited $end
+$var reg 1 N! write_v_valid_in $end
+$scope module bram_3_2 $end
+$var wire 10 O! addra [9:0] $end
+$var wire 1 P! dina [0:0] $end
+$var wire 1 ! clka $end
+$var wire 1 Q! wea $end
+$var wire 1 R! ena $end
+$var wire 1 " rsta $end
+$var wire 1 S! regcea $end
+$var wire 1 T! douta [0:0] $end
+$var reg 1 U! ram_data [0:0] $end
+$var reg 1 V! \output_register.douta_reg  [0:0] $end
+$upscope $end
+$upscope $end
+$upscope $end
+$scope begin Block72_32 $end
+$var reg 32 W! i [31:0] $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+#0
+$dumpvars
+0!
+0!!
+0"
+0"!
+bx #
+1#!
+bx $
+1$!
+x%
+1%!
+bx &
+1&!
+x'
+b0 '!
+bx (
+b0 (!
+bx )
+b0 )!
+bx *
+b0 *!
+bx +
+b10000000000 +!
+bx ,
+b0 ,!
+bx -
+b0 -!
+x.
+bz .!
+x/
+b0 /!
+x0
+00!
+x1
+11!
+x2
+12!
+x3
+b0 3!
+x4
+b0 4!
+x5
+b0 5!
+x6
+bx 6!
+x7
+x7!
+bx 8
+x8!
+bx 9
+x9!
+x:
+x:!
+bx ;
+b0 ;!
+x<
+x<!
+x=
+b0 =!
+b0 >
+bx >!
+x?
+x?!
+bx @
+x@!
+xA
+0A!
+b0 B
+bx B!
+xC
+bx C!
+bx D
+b0 D!
+xE
+xE!
+xF
+bx F!
+xG
+bx G!
+bx H
+b0 H!
+xI
+bx I!
+xJ
+xJ!
+xK
+xK!
+xL
+bx L!
+xM
+0M!
+bx N
+xN!
+xO
+bx O!
+xP
+1P!
+bx Q
+xQ!
+bx R
+1R!
+xS
+1S!
+bx T
+0T!
+bx U
+0U!
+bx V
+0V!
+xW
+b10 W!
+bx X
+0X!
+bx Y
+0Y!
+xZ
+bx Z!
+x[
+bx [!
+x\
+x\!
+bx ]
+bx ]!
+bx ^
+bx ^!
+b11111111111111111111111111111111 _
+bx _!
+x`
+bx `!
+xa
+bx a!
+b1000 b
+bx b!
+xc
+bx c!
+bx d
+bx d!
+xe
+bx e!
+xf
+xg
+xh
+bx i
+bx j
+b0 k
+b0 l
+bz m
+zn
+bx o
+bx p
+xq
+xr
+b0 s
+xt
+bx u
+bx v
+bx w
+bx x
+xy
+bx z
+bx {
+bx |
+b0 }
+b0 ~
+$end
+#5000
+1!
+bx )!
+bx *!
+00
+bx 4!
+06
+17
+07!
+0:
+0:!
+0<!
+0=
+0?
+0@!
+0A
+0C
+0E!
+0M
+xU!
+1X!
+b0 ^!
+b0 _!
+0`
+0a
+0c
+0e
+0q
+0r
+0t
+b0 x
+0y
+#10000
+0!
+1"
+0X!
+1Y!
+#15000
+1!
+0'
+b0 (
+b0 *
+b0 +
+b0 ,
+b0 -
+1.
+0/
+13
+04
+15
+b0 6!
+07
+b0 ;
+0<
+b0 >!
+0?!
+b0 B!
+b0 C!
+b100 D!
+b0 F!
+b0 G!
+b0 H
+b10000 H!
+0I
+0K
+b0 Q
+b0 R
+b0 T
+0W
+1X!
+b0 Y
+0Z
+0[
+1\
+b0 ]
+b0 ^
+b1000 b
+b0 d
+1f
+0g
+1h
+b0 i
+b0 j
+b1000 k
+b1000 l
+#20000
+0!
+0"
+b101000000100000011001011000 #
+b1 $
+1%
+0X!
+0Y!
+b101000000100000011001011000 Z!
+b1 [!
+1\!
+b101 ^!
+b111 _!
+b1 d!
+b1 e!
+#25000
+1!
+bx '!
+bx (!
+b1 )
+b1 *
+bx ,!
+bx -!
+bx 3!
+bx 5!
+17
+bx ;!
+bx =!
+bx >
+bx B
+xM!
+xT!
+xV!
+b1 X
+1X!
+bx s
+#30000
+0!
+0%
+0X!
+0\!
+b0 b!
+b0 c!
+#35000
+1!
+07
+b1 T
+b0 U
+1X!
+#40000
+0!
+b10010110011100011111010100 #
+1%
+0X!
+b10010110011100011111010100 Z!
+1\!
+#45000
+1!
+b10 *
+b0 V
+1X!
+#50000
+0!
+0%
+0X!
+0\!
+#55000
+1!
+b1010111011100111111111011101001 R
+b10 T
+b1 U
+1X!
+#60000
+0!
+b100101010101110101000100000 #
+1%
+0X!
+b100101010101110101000100000 Z!
+1\!
+#65000
+1!
+b11 *
+b1 V
+1X!
+#70000
+0!
+0%
+0X!
+0\!
+#75000
+1!
+b10011111011100101100100010010 R
+b11 T
+b10 U
+1X!
+#80000
+0!
+b100110000100101001010100000 #
+1%
+0X!
+b100110000100101001010100000 Z!
+1\!
+#85000
+1!
+b100 *
+b10 V
+1X!
+#90000
+0!
+0%
+0X!
+0\!
+#95000
+1!
+b11010011001101110000100011010011 R
+b0 T
+b11 U
+1X!
+#100000
+0!
+0X!
+#105000
+1!
+b0 U
+b11 V
+1X!
+#110000
+0!
+0X!
+#115000
+1!
+b11110110111010100011110010100 H
+1I
+b0 R
+b0 V
+1X!
+b11110110111010100011110010100 Y
+1Z
+#120000
+0!
+0X!
+#125000
+1!
+b1 (
+b0 *
+b1 ;
+1<
+b0 H
+0I
+0P
+1W
+1X!
+b0 Y
+0Z
+0\
+b11110110111010100011110010100 _
+1`
+b1000 b
+1c
+#130000
+0!
+0X!
+b1 b!
+b1 c!
+#135000
+1!
+b1 -
+b1 6!
+b11110110111010100011110010100 9
+1:
+b0 ;
+0<
+b0 I!
+0J!
+b0 N
+0O
+b0 O!
+0W
+1X!
+1\
+b1 ]
+b1 ^
+b11111111111111111111111111111111 _
+0`
+1a
+b1000 b
+0c
+b1 d
+1e
+0f
+b1 i
+#140000
+0!
+0X!
+b0 `!
+b0 a!
+b0 b!
+b0 c!
+#145000
+1!
+0:
+b1 I!
+1J!
+b1 N
+1O
+b1 O!
+0U!
+1X!
+0a
+0e
+1f
+b1 j
+#150000
+0!
+0X!
+#155000
+1!
+0J!
+b1 L!
+0M!
+0O
+1P
+0T!
+0V!
+1X!
+#160000
+0!
+0X!
+#165000
+1!
+b10 L!
+1X!
+#170000
+0!
+0X!
+#175000
+1!
+b11 L!
+1N!
+1Q!
+1X!
+#180000
+0!
+0X!
+#185000
+1!
+17!
+b0 L!
+1M
+0N!
+0Q!
+1X!
+#190000
+0!
+0X!
+#195000
+1!
+07!
+1C
+b110 D
+0M
+1U!
+1X!
+b110 p
+1r
+b110 |
+#200000
+0!
+0X!
+#205000
+1!
+b1001 *!
+0C
+1M!
+1T!
+1V!
+1X!
+0r
+1y
+#210000
+0!
+0X!
+#215000
+1!
+b1001 (!
+b1001 -!
+1<!
+b1001 =!
+1A
+1A!
+b1001 B
+1X!
+0y
+#220000
+0!
+0X!
+#225000
+1!
+05
+0<!
+1?
+b1010 @
+1@!
+0A
+0A!
+b1 C!
+1X!
+b1010 o
+1q
+b1010 {
+#230000
+0!
+0X!
+#235000
+1!
+b10 (
+b1110001111 )!
+19!
+b1011 @
+1F
+0P
+1X!
+b1011 o
+b1 x
+b1011 {
+#240000
+0!
+0X!
+#245000
+1!
+b1110001111 '!
+b11000101 )!
+b1001 +
+b1110001111 ,!
+15
+16
+09!
+1:!
+b1110001111 ;!
+1=
+b1110001111 >
+b1100 @
+b1 B!
+1E!
+0F
+1X!
+b1100 o
+b1100 {
+#250000
+0!
+0X!
+#255000
+1!
+b11000101 '!
+b1001 )
+b101001111 )!
+b11000101 ,!
+0.
+06
+18!
+b11000101 ;!
+1=
+b11000101 >
+b1 >!
+b1101 @
+1G
+b1 G!
+b1001 I!
+b1001 N
+b1001 O!
+b1001 X
+1X!
+b1101 o
+b1101 {
+#260000
+0!
+0X!
+b1001 `!
+b1 a!
+#265000
+1!
+b101001111 '!
+b1100000000 )!
+b1110001111 ,
+b101001111 ,!
+10
+b101001111 ;!
+1=
+b101001111 >
+b10 >!
+0?
+0@!
+b1 F!
+b10 G!
+0U!
+1X!
+0q
+#270000
+0!
+0X!
+b0 a!
+#275000
+1!
+b1100000000 '!
+b1 *
+b11000101 ,
+b1100000000 ,!
+b1100000000 ;!
+b1100000000 >
+b11 >!
+b10 F!
+b11 G!
+0M!
+0T!
+0V!
+1X!
+b0 x
+#280000
+0!
+0X!
+b1110001111 b!
+b1 c!
+#285000
+1!
+b10 *
+b101001111 ,
+0:!
+0=
+b0 >!
+1C
+b111 D
+0E!
+b11 F!
+b100 G!
+b1 T
+1X!
+b111 p
+1r
+b111 |
+#290000
+0!
+0X!
+b11000101 b!
+#295000
+1!
+b11 *
+b10001 *!
+b1100000000 ,
+1.
+0C
+b100 F!
+b10 T
+b1 U
+1X!
+0r
+1y
+#300000
+0!
+0X!
+b101001111 b!
+#305000
+1!
+b10001 (!
+b100 *
+b10001 -!
+00
+1<!
+b10001 =!
+1A
+1A!
+b10001 B
+b11001000011001100100 R
+b11 T
+b10 U
+b1 V
+1X!
+0y
+#310000
+0!
+0X!
+b1100000000 b!
+#315000
+1!
+05
+0<!
+1?
+b10010 @
+1@!
+0A
+0A!
+b10 C!
+b11010001001101101000 R
+b0 T
+b11 U
+b10 V
+1X!
+b10010 o
+1q
+b10010 {
+#320000
+0!
+0X!
+b0 c!
+#325000
+1!
+b100010101 )!
+b10011 @
+b11101100011100101100 R
+b0 U
+b11 V
+1X!
+b10011 o
+b1 x
+b10011 {
+#330000
+0!
+0X!
+#335000
+1!
+b100010101 '!
+b1000101001 )!
+b100010101 ,!
+1:!
+b100010101 ;!
+1=
+b100010101 >
+b10100 @
+1E!
+b101111100000100101101 H
+1I
+b0 R
+b0 V
+1X!
+b101111100000100101101 Y
+1Z
+b10100 o
+b10100 {
+#340000
+0!
+0X!
+#345000
+1!
+b1000101001 '!
+b111011101 )!
+b1000101001 ,!
+0.
+08!
+19!
+b1 ;
+b1000101001 ;!
+1=
+b1000101001 >
+b1 >!
+b10101 @
+1F
+0G
+b101 G!
+b0 H
+0I
+1X!
+b0 Y
+0Z
+0\
+b101111100000100101101 _
+1`
+b1000 b
+1c
+b10101 o
+b10101 {
+#350000
+0!
+0X!
+#355000
+1!
+b111011101 '!
+b1001110100 )!
+b10001 +
+b111011101 ,!
+15
+16
+09!
+b111011101 ;!
+1=
+b111011101 >
+b10 >!
+0?
+0@!
+b10 B!
+0F
+b110 G!
+1X!
+b10 ^
+0`
+0c
+0f
+b10 i
+0q
+#360000
+0!
+0X!
+#365000
+1!
+b1001110100 '!
+b10001 )
+b0 *
+b1001110100 ,!
+06
+18!
+b1001110100 ;!
+b1001110100 >
+b11 >!
+1G
+b111 G!
+b10001 I!
+b10001 N
+b10001 O!
+b10001 X
+1X!
+b0 x
+#370000
+0!
+0X!
+b10001 `!
+b1 a!
+#375000
+1!
+b100010101 ,
+10
+0:!
+0=
+b0 >!
+1C
+b1000 D
+0E!
+b101 F!
+b1000 G!
+1X!
+b1000 p
+1r
+b1000 |
+#380000
+0!
+0X!
+b0 a!
+#385000
+1!
+b1 *
+b0 *!
+b1000101001 ,
+0C
+b110 F!
+1X!
+0r
+1y
+#390000
+0!
+0X!
+b100010101 b!
+b1 c!
+#395000
+1!
+b0 (!
+b10 *
+b111011101 ,
+b0 -!
+1<!
+b0 =!
+1A
+b0 B
+b111 F!
+b1 T
+1X!
+0y
+#400000
+0!
+0X!
+b1000101001 b!
+#405000
+1!
+b11 *
+b1001110100 ,
+1.
+17
+0<!
+0A
+b1000 F!
+b10 T
+b1 U
+1X!
+#410000
+0!
+0X!
+b111011101 b!
+#415000
+1!
+b100 *
+00
+b10010000100000000 R
+b11 T
+b10 U
+b1 V
+1X!
+#420000
+0!
+0X!
+b1001110100 b!
+#425000
+1!
+b1011010110110000100 R
+b0 T
+b11 U
+b10 V
+1X!
+#430000
+0!
+0X!
+b0 c!
+#435000
+1!
+b10010010001010010100 R
+b0 U
+b11 V
+1X!
+#440000
+0!
+0X!
+#445000
+1!
+b11110010001000111101 H
+1I
+b0 R
+b0 V
+1X!
+b11110010001000111101 Y
+1Z
+#450000
+0!
+0X!
+#455000
+1!
+b11 (
+b10 ;
+b0 H
+0I
+1X!
+b0 Y
+0Z
+b10 ]
+b11110010001000111101 _
+1`
+b1000 b
+1c
+b10 d
+#460000
+0!
+0X!
+#465000
+1!
+b1 (
+1<
+1W
+1X!
+b11 ^
+0`
+0c
+b11 i
+#470000
+0!
+0X!
+#475000
+1!
+b10001 -
+b10001 6!
+b11110010001000111101 9
+1:
+b1 ;
+0<
+b1 I!
+b1 N
+b1 O!
+0W
+1X!
+b1 ]
+b101111100000100101101 _
+1a
+b1000 b
+b1 d
+1e
+#480000
+0!
+0X!
+#485000
+1!
+0:
+b10001 I!
+1J!
+b10001 N
+1O
+b10001 O!
+1U!
+1X!
+0a
+0e
+b10 j
+#490000
+0!
+0X!
+#495000
+1!
+0J!
+b1 L!
+1M!
+0O
+1P
+1T!
+0U!
+1V!
+1X!
+#500000
+0!
+0X!
+#505000
+1!
+b10 L!
+0M!
+0T!
+0V!
+1X!
+#510000
+0!
+0X!
+#515000
+1!
+b11 L!
+1N!
+1Q!
+1X!
+#520000
+0!
+0X!
+#525000
+1!
+17!
+b0 L!
+1M
+0N!
+0Q!
+1X!
+#530000
+0!
+0X!
+#535000
+1!
+07
+07!
+1C
+b10110 D
+0M
+1U!
+1X!
+b10110 p
+1r
+b10110 |
+#540000
+0!
+0X!
+#545000
+1!
+b1 *!
+17
+0C
+1M!
+1T!
+1V!
+1X!
+0r
+1y
+#550000
+0!
+0X!
+#555000
+1!
+b1 (!
+b1 -!
+1<!
+b1 =!
+1A
+1A!
+b1 B
+1X!
+0y
+#560000
+0!
+0X!
+#565000
+1!
+05
+07
+0<!
+1?
+b10 @
+1@!
+0A
+0A!
+b11 C!
+1X!
+b10 o
+1q
+b10 {
+#570000
+0!
+0X!
+#575000
+1!
+b10 (
+b1101001000 )!
+19!
+b11 @
+1F
+0P
+1X!
+b11 o
+b1 x
+b11 {
+#580000
+0!
+0X!
+#585000
+1!
+b1101001000 '!
+b110001010 )!
+b1 +
+b1101001000 ,!
+15
+16
+09!
+1:!
+b1101001000 ;!
+1=
+b1101001000 >
+b100 @
+b11 B!
+1E!
+0F
+1X!
+b100 o
+b100 {
+#590000
+0!
+0X!
+#595000
+1!
+b110001010 '!
+b1 )
+b1100001111 )!
+b0 *
+b110001010 ,!
+0.
+06
+b110001010 ;!
+1=
+b110001010 >
+b1 >!
+b101 @
+b1001 G!
+b1 I!
+b1 N
+b1 O!
+b1 X
+1X!
+b101 o
+b101 {
+#600000
+0!
+0X!
+b1 `!
+b1 a!
+#605000
+1!
+b1100001111 '!
+b1100011110 )!
+b1101001000 ,
+b1100001111 ,!
+10
+b1100001111 ;!
+1=
+b1100001111 >
+b10 >!
+0?
+0@!
+b1001 F!
+b1010 G!
+1X!
+0q
+#610000
+0!
+0X!
+b0 a!
+#615000
+1!
+b1100011110 '!
+b1 *
+b110001010 ,
+b1100011110 ,!
+b1100011110 ;!
+b1100011110 >
+b11 >!
+b1010 F!
+b1011 G!
+1X!
+b0 x
+#620000
+0!
+0X!
+b1101001000 b!
+b1 c!
+#625000
+1!
+b10 *
+b1100001111 ,
+0:!
+0=
+b0 >!
+1C
+b10111 D
+0E!
+b1011 F!
+b1100 G!
+b1 T
+1X!
+b10111 p
+1r
+b10111 |
+#630000
+0!
+0X!
+b110001010 b!
+#635000
+1!
+b11 *
+b1001 *!
+b1100011110 ,
+1.
+0C
+b1100 F!
+b10 T
+b1 U
+1X!
+0r
+1y

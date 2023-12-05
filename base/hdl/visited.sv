@@ -94,8 +94,8 @@ always_ff @ (posedge clk_in) begin
         end
         else if (counter2>0) begin
             counter2 <= counter2 + 1;
-        end
-    end
+        end else valid_v_out <= 0;
+    end 
 end
 
 
