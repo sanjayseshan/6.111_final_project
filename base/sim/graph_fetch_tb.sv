@@ -32,8 +32,8 @@ module graph_fetch_tb();
   logic mem_valid_out2;
   logic [31:0] mem_req_out2;
 
-  logic [31:0] data_out0, data_out1, data_out2, data_out3;
-  logic data_valid_out0, data_valid_out1, data_valid_out2, data_valid_out3;
+  logic [31:0] data_out0, data_out1, data_out2, data_out3, visited_addr_in;
+  logic data_valid_out0, data_valid_out1, data_valid_out2, data_valid_out3, visited_addr_valid_in, visited, valid_visited;
 
 
 
@@ -54,6 +54,24 @@ module graph_fetch_tb();
 
   );
 
+
+
+  visited #(.PROC_BITS(0)) vmem (
+    .clk_in(clk_in),
+    .rst_in(rst_in),
+    // .c_addr_in(pq_out),
+    .v_addr_in(visited_addr_in), //neigh_fifo_out
+    // .c_addr_valid_in(pq_valid_out),
+    .v_addr_valid_in(visited_addr_valid_in), //neigh_valid_out
+    // .write_c_data_in(1'b1),
+    // .write_c_valid_in(pq_valid_out),
+    // .write_v_data_in(1'b1),
+    // .write_v_valid_in(neigh_valid_out),
+    // .checked_out(checked),
+    .visited_out(visited),
+    // .valid_c_out(valid_checked),
+    .valid_v_out(valid_visited)  
+  );
 
 graph_fetch #(.DIM(4)) graph(
   .clk_in(clk_in),
@@ -82,7 +100,12 @@ graph_fetch #(.DIM(4)) graph(
   .mem_valid_in2(mem_valid_in2),
   .mem_data_in2(mem_data_in2),
   .mem_valid_out2(mem_valid_out2),
-  .mem_req_out2(mem_req_out2)
+  .mem_req_out2(mem_req_out2),
+
+  .visited_req_out(visited_addr_in),
+  .visited_req_valid(visited_addr_valid_in),
+  .visited_val_returned(visited),
+  .visited_val_returned_valid(valid_visited)
 );
 
 

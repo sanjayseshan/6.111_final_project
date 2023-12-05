@@ -61,7 +61,7 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH = 8)(
   logic [31:0] visited_addr_in;
   logic visited_addr_valid_in;
 
-  logic sent;
+  // logic sent;
 
   always_ff @ (posedge clk_in) begin
     if (rst_in) begin
@@ -103,7 +103,7 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH = 8)(
             pos_valid[DIM-2] <= 0;
             state <= 5'b1;
             pq_deq_in <= 1'b1;
-            sent <= 0;
+            // sent <= 0;
 
             // valid_in <= 1'b1;
             // v_addr_in <= vertex_addr_in;
@@ -119,8 +119,8 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH = 8)(
     else if (state==5'b1) begin
       // neigh_deq_in <= 1;
       pq_deq_in <= 1'b0;
-      visited_addr_in <= v_addr_in;
-      visited_addr_valid_in <= (pq_valid_out && (sent == 0));
+      // visited_addr_in <= v_addr_in;
+      // visited_addr_valid_in <= (pq_valid_out && (sent == 0));
       // valid_in <= 1'b1;
       top_k_out[0] <= neigh_fifo_out;//neigh_fifo_out;//mem_req_out2; // v_addr_in;//mem_req_out; //v_addr_in;
       top_k_out[1] <= neigh_valid_out;//neigh_valid_out;// mem_data_in2;//neigh_fifo_out;
@@ -129,13 +129,14 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH = 8)(
 
       // deqs first neighbor
       if (~neigh_empty_out) begin
-          sent <= 0;
+          // sent <= 0;
         
         if (visited == 0) begin
           state <= 5'b10;
         end else state <= 0;
         neigh_deq <= 1'b1;
-      end else if (visited_addr_valid_in) sent <=1;
+      end 
+      // else if (visited_addr_valid_in) sent <=1;
     end
 
     else if (state==5'b10) begin
@@ -147,7 +148,7 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH = 8)(
       // retrieve position after retrieving neighbor
       //visited_addr_valid_in <= neigh_valid_out;
       if (neigh_valid_out) begin
-          visited_addr_in <= neigh_fifo_out;
+          // visited_addr_in <= neigh_fifo_out;
           point_addr <= neigh_fifo_out;
           pos_deq <= 1'b1;
           ct_dist <= 0;
@@ -276,11 +277,32 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH = 8)(
 
 
 
+
+ 
+
+  visited #(.PROC_BITS(0)) vmem (
+    .clk_in(clk_in),
+    .rst_in(rst_in),
+    // .c_addr_in(pq_out),
+    .v_addr_in(visited_addr_in), //neigh_fifo_out
+    // .c_addr_valid_in(pq_valid_out),
+    .v_addr_valid_in(visited_addr_valid_in), //neigh_valid_out
+    // .write_c_data_in(1'b1),
+    // .write_c_valid_in(pq_valid_out),
+    // .write_v_data_in(1'b1),
+    // .write_v_valid_in(neigh_valid_out),
+    // .checked_out(checked),
+    .visited_out(visited),
+    // .valid_c_out(valid_checked),
+    .valid_v_out(valid_visited)  
+  );
+
+
   graph_fetch #(.DIM(DIM)) graph(
     .clk_in(clk_in),
     .rst_in(rst_in),
     .v_addr_in(v_addr_in),
-    .valid_in(!visited && valid_visited), //pq_valid_out && 
+    .valid_in(pq_valid_out), // && !visited && valid_visited
     .ready_out(ready_out),
 
     .pos_deq_in(pos_deq),
@@ -304,26 +326,12 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH = 8)(
     .mem_valid_in2(mem_valid_in2),
     .mem_data_in2(mem_data_in2),
     .mem_valid_out2(mem_valid_out2),
-    .mem_req_out2(mem_req_out2)
-  );
+    .mem_req_out2(mem_req_out2),
 
- 
-
-  visited #(.PROC_BITS(0)) vmem (
-    .clk_in(clk_in),
-    .rst_in(rst_in),
-    // .c_addr_in(pq_out),
-    .v_addr_in(visited_addr_in), //neigh_fifo_out
-    // .c_addr_valid_in(pq_valid_out),
-    .v_addr_valid_in(visited_addr_valid_in), //neigh_valid_out
-    // .write_c_data_in(1'b1),
-    // .write_c_valid_in(pq_valid_out),
-    // .write_v_data_in(1'b1),
-    // .write_v_valid_in(neigh_valid_out),
-    // .checked_out(checked),
-    .visited_out(visited),
-    // .valid_c_out(valid_checked),
-    .valid_v_out(valid_visited)  
+    .visited_req_out(visited_addr_in),
+    .visited_req_valid(visited_addr_valid_in),
+    .visited_val_returned(visited),
+    .visited_val_returned_valid(valid_visited)
   );
 
 

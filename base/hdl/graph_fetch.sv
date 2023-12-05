@@ -29,7 +29,12 @@ module graph_fetch #(parameter DIM = 2)(
   input wire mem_valid_in2,
   input wire [31:0] mem_data_in2,
   output logic mem_valid_out2,
-  output logic [31:0] mem_req_out2
+  output logic [31:0] mem_req_out2,
+
+  output logic [31:0] visited_req_out,
+  output logic visited_req_valid,
+  input wire [31:0] visited_val_returned,
+  input wire visited_val_returned_valid
   );
 
   // logic [31:0] mem_req_out2; // neighbor address
@@ -46,6 +51,7 @@ module graph_fetch #(parameter DIM = 2)(
 
   logic req_ready_n;
   logic req_ready_d;
+  logic valid_bit;
   // logic mem_valid_out;
 
   // always_comb begin
@@ -141,6 +147,7 @@ module graph_fetch #(parameter DIM = 2)(
     // );
     
 
+    logic req_ready_v;
 
 
     always_ff @( posedge clk_in ) begin
@@ -151,15 +158,19 @@ module graph_fetch #(parameter DIM = 2)(
         mem_valid_out2 <= 1'b0;
         req_ready_n <= 1'b0;
         req_ready_d <=1'b0;
+        req_ready_v <= 0;
         reached_neigh_end_out <= 1'b0;
       end else begin
         if (valid_in) begin
           // mem_req_out <= v_addr_in + 1;
+          // mem_req_out <= v_addr_in;
           mem_req_out2 <= v_addr_in + 1 + DIM;
           mem_valid_out2 <= 1'b1;
           // mem_valid_out <= 1;
+          // mem_valid_out <= 1;
           req_ready_n <= 1'b0;
           req_ready_d <= 1'b0;
+          req_ready_v <= 0;
           ct <= 0;
           
           reached_neigh_end_out <= 1'b0;
@@ -168,9 +179,32 @@ module graph_fetch #(parameter DIM = 2)(
 
           if(mem_data_in2 != 0 && mem_valid_in2) begin
             mem_req_out <= mem_data_in2 + 1;
+            // mem_req_out <= mem_data_in2;
             mem_valid_out <= 1'b1;
-            req_ready_d <= 1'b1;
+            req_ready_v <= 1;
           end      
+
+          else if (req_ready_v && mem_valid_in) begin
+            mem_req_out <= mem_data_in2 + 1;
+            mem_valid_out <= 1'b1;
+            mem_valid_out <= 0;
+            visited_req_out <= mem_data_in;
+            visited_req_valid <= 1;
+
+            valid_bit <= mem_data_in;
+
+          end else if (req_ready_v && visited_val_returned_valid) begin
+            if (!visited_val_returned) begin
+              req_ready_d <= 1'b1;
+              req_ready_v <= 0;
+            end else begin
+              // mem_req_out <= mem_data_in2 + 1;
+              mem_req_out <= mem_req_out + 1;
+              mem_valid_out <= 1'b1;
+              req_ready_v <= 1;
+            end
+          end
+
           // if just retrieved position and haven't read all positions yet
           else if (req_ready_d && mem_req_out <= mem_data_in2 + DIM-1) begin
             mem_req_out <= mem_req_out + 1;
@@ -180,6 +214,8 @@ module graph_fetch #(parameter DIM = 2)(
           else begin
             mem_valid_out <= 1'b0;
             req_ready_d <= 1'b0;
+            visited_req_valid <= 0;
+
           end
           
           // && !neigh_full_out
