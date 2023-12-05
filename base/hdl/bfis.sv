@@ -54,6 +54,13 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH = 8)(
   logic [31:0] dist_out;
   logic dist_valid_out; 
 
+
+  logic checked, visited, valid_checked, valid_visited;
+  // logic update_checked, update_visited;
+
+  logic [31:0] visited_addr_in;
+  logic visited_addr_valid_in;
+
   always_ff @ (posedge clk_in) begin
     if (rst_in) begin
         // top_k_out <= 0;
@@ -108,6 +115,7 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH = 8)(
     else if (state==5'b1) begin
       // neigh_deq_in <= 1;
       pq_deq_in <= 1'b0;
+      visited_addr_in <= v_addr_in;
       // valid_in <= 1'b1;
       top_k_out[0] <= neigh_fifo_out;//mem_req_out2; // v_addr_in;//mem_req_out; //v_addr_in;
       top_k_out[1] <= neigh_valid_out;// mem_data_in2;//neigh_fifo_out;
@@ -115,7 +123,7 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH = 8)(
       top_k_out[3] <= fetch_data_valid_out;//mem_valid_in2;//dist_valid_out;// mem_valid_in; //mem_req_out;
 
       // deqs first neighbor
-      if (~neigh_empty_out) begin
+      if (~neigh_empty_out && visited_addr_valid_in) begin
         state <= 5'b10;
         neigh_deq <= 1'b1;
       end
@@ -123,7 +131,9 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH = 8)(
 
     else if (state==5'b10) begin
       // retrieve position after retrieving neighbor
+      visited_addr_valid_in <= neigh_valid_out;
       if (neigh_valid_out) begin
+          visited_addr_in <= neigh_fifo_out;
           point_addr <= neigh_fifo_out;
           pos_deq <= 1'b1;
           ct_dist <= 0;
@@ -256,7 +266,7 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH = 8)(
     .clk_in(clk_in),
     .rst_in(rst_in),
     .v_addr_in(v_addr_in),
-    .valid_in(pq_valid_out),
+    .valid_in(pq_valid_out && valid_visited && !visited),
     .ready_out(ready_out),
 
     .pos_deq_in(pos_deq),
@@ -283,16 +293,15 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH = 8)(
     .mem_req_out2(mem_req_out2)
   );
 
-  logic checked, visited, valid_checked, valid_visited;
-  // logic update_checked, update_visited;
+ 
 
   visited #(.PROC_BITS(0)) vmem (
     .clk_in(clk_in),
     .rst_in(rst_in),
     // .c_addr_in(pq_out),
-    .v_addr_in(neigh_fifo_out),
+    .v_addr_in(visited_addr_in), //neigh_fifo_out
     // .c_addr_valid_in(pq_valid_out),
-    .v_addr_valid_in(neigh_valid_out),
+    .v_addr_valid_in(visited_addr_valid_in), //neigh_valid_out
     // .write_c_data_in(1'b1),
     // .write_c_valid_in(pq_valid_out),
     // .write_v_data_in(1'b1),

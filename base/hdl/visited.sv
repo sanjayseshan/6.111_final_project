@@ -7,7 +7,7 @@
 `define FPATH(X) `"data/X`"
 `endif  /* ! SYNTHESIS */
 
-module visited #(parameter PROC_BITS = 4) (
+module visited #(parameter PROC_BITS = 0) (
     input wire clk_in,
     input wire rst_in,
     // input wire [31+PROC_BITS:0] c_addr_in,
