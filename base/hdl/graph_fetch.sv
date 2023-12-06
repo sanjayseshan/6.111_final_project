@@ -31,10 +31,15 @@ module graph_fetch #(parameter DIM = 2)(
   output logic mem_valid_out2,
   output logic [31:0] mem_req_out2,
 
+  input wire mem_idx_valid_in,
+  input wire [31:0] mem_idx_in,
+  output logic mem_idx_valid_out,
+  output logic [31:0] mem_idx_req_out,
+
   output logic [31:0] visited_req_out,
-  output logic visited_req_valid,
-  input wire [31:0] visited_val_returned,
-  input wire visited_val_returned_valid
+  output logic visited_req_valid_out,
+  input wire visited_val_returned_in,
+  input wire visited_val_returned_valid_in
   );
 
   // logic [31:0] mem_req_out2; // neighbor address
@@ -90,7 +95,7 @@ module graph_fetch #(parameter DIM = 2)(
         .rst_in(rst_in),
         .deq_in(neigh_deq_in),
         .enq_data_in(mem_data_in2),
-        .enq_in(mem_valid_in2&&(mem_data_in2!=0)), // mem_valid_in
+        .enq_in(visited_val_returned_valid_in&&(~visited_val_returned_in)&&(mem_data_in2!=0)), // mem_valid_in
         .full_out(neigh_full_out),
         .data_out(neigh_fifo_out),
         .valid_out(neigh_valid_out),
@@ -105,7 +110,7 @@ module graph_fetch #(parameter DIM = 2)(
       .rst_in(rst_in),
       .deq_in(pos_deq_in),
       .enq_data_in(mem_data_in),
-      .enq_in(mem_valid_in&&(ct<DIM)), 
+      .enq_in(mem_valid_in&&(ct<DIM)&&(~req_ready_v)), 
       .full_out(pos_full_out),
       .data_out(data_out),
       .valid_out(data_valid_out),
@@ -154,70 +159,77 @@ module graph_fetch #(parameter DIM = 2)(
       if (rst_in) begin
         ready_out <= 1'b1;
         ct <= 0;
+        
         mem_valid_out <= 1'b0;
         mem_valid_out2 <= 1'b0;
+        mem_idx_valid_out <= 1'b0;
+
         req_ready_n <= 1'b0;
         req_ready_d <=1'b0;
-        req_ready_v <= 0;
+        req_ready_v <= 1'b0;
+
         reached_neigh_end_out <= 1'b0;
       end else begin
         if (valid_in) begin
-          // mem_req_out <= v_addr_in + 1;
-          // mem_req_out <= v_addr_in;
           mem_req_out2 <= v_addr_in + 1 + DIM;
           mem_valid_out2 <= 1'b1;
           // mem_valid_out <= 1;
-          // mem_valid_out <= 1;
           req_ready_n <= 1'b0;
           req_ready_d <= 1'b0;
-          req_ready_v <= 0;
+          req_ready_v <= 1'b0;
           ct <= 0;
           
           reached_neigh_end_out <= 1'b0;
         end
         else begin
-
+          // find vertex id
           if(mem_data_in2 != 0 && mem_valid_in2) begin
-            mem_req_out <= mem_data_in2 + 1;
-            // mem_req_out <= mem_data_in2;
+            mem_req_out <= mem_data_in2;
             mem_valid_out <= 1'b1;
-            req_ready_v <= 1;
-          end      
+            req_ready_v <= 1'b1;
+          end    
 
+          // check if visited using vertex id
           else if (req_ready_v && mem_valid_in) begin
-            mem_req_out <= mem_data_in2 + 1;
-            mem_valid_out <= 1'b1;
-            mem_valid_out <= 0;
+            // mem_req_out <= mem_data_in2 + 1;
+            mem_valid_out <= 1'b0;
             visited_req_out <= mem_data_in;
-            visited_req_valid <= 1;
-
-            valid_bit <= mem_data_in;
-
-          end else if (req_ready_v && visited_val_returned_valid) begin
-            if (!visited_val_returned) begin
+            visited_req_valid_out <= 1'b1;
+          
+          // received visited result
+          end else if (req_ready_v && visited_val_returned_valid_in) begin
+            // if not visited, find data
+            if (~visited_val_returned_in) begin
               req_ready_d <= 1'b1;
-              req_ready_v <= 0;
+            
+            // if visited, go to next neighbor
             end else begin
-              // mem_req_out <= mem_data_in2 + 1;
-              mem_req_out <= mem_req_out + 1;
-              mem_valid_out <= 1'b1;
-              req_ready_v <= 1;
+              req_ready_n <= 1'b1;
+              req_ready_v <= 1'b0;
+              // mem_req_out <= mem_req_out + 1;
+              // mem_valid_out <= 1'b1;
+              // req_ready_v <= 1'b1;
             end
           end
 
           // if just retrieved position and haven't read all positions yet
-          else if (req_ready_d && mem_req_out <= mem_data_in2 + DIM-1) begin
+          else if (req_ready_d && ~req_ready_v && mem_req_out <= mem_data_in2 + DIM-1) begin
             mem_req_out <= mem_req_out + 1;
             mem_valid_out <= 1'b1;
-            // if (mem_req_out == mem_data_in2 + DIM-1 && ct>DIM) req_ready_d <= 1'b0;
           end 
+          // retrieve first position
+          else if (req_ready_d && req_ready_v) begin
+            req_ready_v <= 1'b0;
+            mem_req_out <= mem_data_in2 + 1;
+            mem_valid_out <= 1'b1;
+          end
           else begin
             mem_valid_out <= 1'b0;
             req_ready_d <= 1'b0;
-            visited_req_valid <= 0;
-
+            visited_req_valid_out <= 1'b0;
           end
           
+
           // && !neigh_full_out
           // if more neighbors left and just retrieved neighbor
           if (mem_data_in2 != 0 && ct>=(DIM-1)) begin 
@@ -234,17 +246,19 @@ module graph_fetch #(parameter DIM = 2)(
             req_ready_n <= 1'b0;
           end
           else begin
-            if (~neigh_full_out) req_ready_n <= 1'b0; 
+            if (~neigh_full_out && ~req_ready_v) req_ready_n <= 1'b0; 
             mem_valid_out2 <= 1'b0;
           end
           // else req_ready_n <= 1'b0;
           
+          // if end of neighbors
           if (mem_data_in2 == 0) reached_neigh_end_out <= 1'b1;
           else reached_neigh_end_out <= 1'b0;
         
+
           // if (data_ready) ct <= ct +1;
           // count for number of dimensions retrieved
-          if (mem_valid_in && ~pos_full_out) begin
+          if (mem_valid_in && ~pos_full_out && ~req_ready_v) begin
             ct <= (ct>=DIM-1) ? 0 : ct+1;
           end
         end

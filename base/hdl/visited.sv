@@ -139,14 +139,11 @@ endmodule
 `default_nettype wire
 
 
-
-// checked_visited #(.PROC_BITS(4)) bram_3m (
+//  visited #(parameter PROC_BITS = 0) bram3_m (
 //     .clk_in(clk_in),
 //     .rst_in(rst_in),
-//     .idx_addr_in(),  // vertex addr for retrieving checked/visited
-//     .idx_valid_in(), // valid input for reading/writing
-//     .write_data_in(), // write data, doesn't matter if reading
-//     .write_valid_in(), // 1 = write, 0 = read (don't write)
-//     .bram3_out(), // 2 bit output from BRAM, 1st bit is checked, 0th is visited
-//     .valid_out() // valid output from BRAM
-// ); 
+//     .v_addr_in(),
+//     .v_addr_valid_in(),
+//     .visited_out(),
+//     .valid_v_out()
+// );

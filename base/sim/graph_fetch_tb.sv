@@ -35,6 +35,8 @@ module graph_fetch_tb();
   logic [31:0] data_out0, data_out1, data_out2, data_out3, visited_addr_in;
   logic data_valid_out0, data_valid_out1, data_valid_out2, data_valid_out3, visited_addr_valid_in, visited, valid_visited;
 
+  logic [31:0] idx_addr, rowidx_out;
+  logic idx_validin, rowidx_valid_out;
 
 
   // fetch position and neighbor values from BRAM
@@ -42,6 +44,8 @@ module graph_fetch_tb();
   graph_memory# (.DIM(0), .PROC_BITS(0)) g (
     .clk_in(clk_in),
     .rst_in(rst_in),
+    .idx_addr(idx_addr),
+    .idx_validin(idx_validin),
     .data_addra(mem_req_out),
     .data_addrb(mem_req_out2),
     .data_validina(mem_valid_out),
@@ -49,9 +53,9 @@ module graph_fetch_tb();
     .data_outa(mem_data_in),
     .data_outb(mem_data_in2),
     .data_valid_outa(mem_valid_in),
-    .data_valid_outb(mem_valid_in2)
-
-
+    .data_valid_outb(mem_valid_in2),
+    .rowidx_out(rowidx_out),
+    .rowidx_valid_out(rowidx_valid_out)
   );
 
 
@@ -59,19 +63,12 @@ module graph_fetch_tb();
   visited #(.PROC_BITS(0)) vmem (
     .clk_in(clk_in),
     .rst_in(rst_in),
-    // .c_addr_in(pq_out),
     .v_addr_in(visited_addr_in), //neigh_fifo_out
-    // .c_addr_valid_in(pq_valid_out),
     .v_addr_valid_in(visited_addr_valid_in), //neigh_valid_out
-    // .write_c_data_in(1'b1),
-    // .write_c_valid_in(pq_valid_out),
-    // .write_v_data_in(1'b1),
-    // .write_v_valid_in(neigh_valid_out),
-    // .checked_out(checked),
     .visited_out(visited),
-    // .valid_c_out(valid_checked),
     .valid_v_out(valid_visited)  
   );
+
 
 graph_fetch #(.DIM(4)) graph(
   .clk_in(clk_in),
@@ -102,10 +99,15 @@ graph_fetch #(.DIM(4)) graph(
   .mem_valid_out2(mem_valid_out2),
   .mem_req_out2(mem_req_out2),
 
+  .mem_idx_valid_in(rowidx_valid_out),
+  .mem_idx_in(rowidx_out),
+  .mem_idx_valid_out(idx_validin),
+  .mem_idx_req_out(idx_addr),
+
   .visited_req_out(visited_addr_in),
-  .visited_req_valid(visited_addr_valid_in),
-  .visited_val_returned(visited),
-  .visited_val_returned_valid(valid_visited)
+  .visited_req_valid_out(visited_addr_valid_in),
+  .visited_val_returned_in(visited),
+  .visited_val_returned_valid_in(valid_visited)
 );
 
 
@@ -150,7 +152,7 @@ graph_fetch #(.DIM(4)) graph(
     valid_in = 1;
     #10;
     valid_in = 0;
-    #100;
+    #300;
     pos_deq_in = 1;
     #10;
     pos_deq_in = 0;
@@ -197,7 +199,7 @@ graph_fetch #(.DIM(4)) graph(
     // neigh_deq_in = 0;
 
 
-    #300;
+    #50;
     v_addr_in = 55;
     valid_in = 1;
     #10;
@@ -218,59 +220,61 @@ graph_fetch #(.DIM(4)) graph(
     pos_deq_in = 1;
     #10
     pos_deq_in = 0;
-    #30;
-    neigh_deq_in = 1;
-    #10;
-    neigh_deq_in = 0;
-    #10;
-    neigh_deq_in = 1;
-    #10;
-    neigh_deq_in = 0;
-    #10;
-    neigh_deq_in = 1;
-    #10;
-    neigh_deq_in = 0;
-    #10;
-    pos_deq_in = 1;
-    #10;
-    pos_deq_in = 0;
-    #10;
-    pos_deq_in = 1;
-    #10;
-    pos_deq_in = 0;
-    #10;
-    pos_deq_in = 1;
-    #10;
-    pos_deq_in = 0;
-    #10;
-    pos_deq_in = 1;
-    #10;
-    pos_deq_in = 0;
-    #10;
-    pos_deq_in = 1;
-    #10;
-    pos_deq_in = 0;
-    #10;
-    pos_deq_in = 1;
-    #10
-    pos_deq_in = 0;
-    #10;
-    pos_deq_in = 1;
-    #10
-    pos_deq_in = 0;
-    #10;
-    pos_deq_in = 1;
-    #10
-    pos_deq_in = 0;
-
-
-
     #100;
+    pos_deq_in = 1;
+    #10;
+    pos_deq_in = 0;
+    #10;
+    pos_deq_in = 1;
+    #10;
+    pos_deq_in = 0;
+    #10;
+    pos_deq_in = 1;
+    #10;
+    pos_deq_in = 0;
+    #10;
+    pos_deq_in = 1;
+    #10;
+    pos_deq_in = 0;
+    #10;
+    neigh_deq_in = 1;
+    #10;
+    neigh_deq_in = 0;
+    #60;
+    neigh_deq_in = 1;
+    #10;
+    neigh_deq_in = 0;
+    #60;
+    neigh_deq_in = 1;
+    #10;
+    neigh_deq_in = 0;
+    #10;
+    pos_deq_in = 0;
+    #10;
+    pos_deq_in = 1;
+    #10;
+    pos_deq_in = 0;
+    #10;
+    pos_deq_in = 1;
+    #10
+    pos_deq_in = 0;
+    #10;
+    pos_deq_in = 1;
+    #10
+    pos_deq_in = 0;
+    #10;
+    pos_deq_in = 1;
+    #10
+    pos_deq_in = 0;
+
+
+
+    #50;
     v_addr_in = 64;
     valid_in = 1;
     #10;
     valid_in = 0;
-    #100;
+    #200;
     pos_deq_in = 1;
     #10;
     pos_deq_in = 0;
@@ -294,7 +298,7 @@ graph_fetch #(.DIM(4)) graph(
     neigh_deq_in = 1;
     #10;
     neigh_deq_in = 0;
-    #10;
+    #100;
     neigh_deq_in = 1;
     #10;
     neigh_deq_in = 0;
