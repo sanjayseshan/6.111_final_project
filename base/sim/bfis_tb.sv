@@ -10,7 +10,7 @@ module bfis_tb();
   logic vertex_valid_in;
   logic [31:0] query_in [3:0];
   logic [15:0] k_in;
-  logic [31:0] top_k_out [4:0];
+  logic [31:0] top_k_out;
   logic valid_out;
 
 
@@ -27,7 +27,7 @@ module bfis_tb();
 //   logic [31:0] query_pos_in6;
 //   logic [31:0] query_pos_in7;
 //   logic [31:0] query_pos_in8;
-  logic [4:0] state;
+  logic [2:0] state;
 
 
   bfis #(.DIM(4), .PQ_LENGTH(8)) bfis_m (
@@ -39,8 +39,8 @@ module bfis_tb();
     .query_in(query_in),
     .k_in(k_in),
     .top_k_out(top_k_out),
-    .valid_out(valid_out),
-    .state(state)
+    .valid_out(valid_out)
+    // .state(state)
   );
 
 
@@ -53,12 +53,11 @@ module bfis_tb();
       query_pos_in1 = query_in[1];
       query_pos_in2 = query_in[2];
       query_pos_in3 = query_in[3];
-      top_k_out0 = top_k_out[0];
-      top_k_out1 = top_k_out[1];
-      top_k_out2 = top_k_out[2];
-      top_k_out3 = top_k_out[3];
-    //   query_in2 = query_in[2];
-    //   query_in3 = query_in[3];
+      // top_k_out0 = top_k_out[0];
+      // top_k_out1 = top_k_out[1];
+      // top_k_out2 = top_k_out[2];
+      // top_k_out3 = top_k_out[3];
+
 
 
   end
@@ -86,6 +85,7 @@ module bfis_tb();
     vertex_addr_in = 1;
     vertex_in = 32'h348;//84018776;
     vertex_valid_in = 1;
+    k_in = 16'd4;
     #10;
     vertex_valid_in = 0;
     #10;
