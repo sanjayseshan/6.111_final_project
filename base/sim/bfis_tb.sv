@@ -84,7 +84,7 @@ module bfis_tb();
     query_in[2] = 1;//67;
     query_in[3] = 1;//67;
     vertex_addr_in = 1;
-    vertex_in = 84018776;
+    vertex_in = 32'h348;//84018776;
     vertex_valid_in = 1;
     #10;
     vertex_valid_in = 0;
@@ -93,18 +93,18 @@ module bfis_tb();
 
 
 
-    vertex_in = 39438292;
+    vertex_in = 32'h18a; //39438292;
     vertex_valid_in = 1;
     #10;
     vertex_valid_in = 0;
     #10;
-    vertex_in = 78309920;
+    vertex_in = 32'h30f;//78309920;
     vertex_valid_in = 1;
     #10;
     vertex_valid_in = 0;
     #10;
     vertex_addr_in = 1;
-    vertex_in = 79844000;
+    vertex_in = 32'h31e; //79844000;
     vertex_valid_in = 1;
     #10;
     vertex_valid_in = 0;
@@ -117,7 +117,7 @@ module bfis_tb();
 
 
 // result should be 959 or 0x3bf
-    #500;
+    #1600;
     $display("Simulation finished");
     $finish;
   end

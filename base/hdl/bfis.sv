@@ -61,7 +61,7 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH = 8)(
   logic [31:0] visited_addr_in;
   logic visited_addr_valid_in;
 
-  // logic sent;
+  logic distance_complete;
 
   always_ff @ (posedge clk_in) begin
     if (rst_in) begin
@@ -73,6 +73,8 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH = 8)(
         ct_dist <= 0;
         pq_deq_in <= 1'b0;
         point_addr <= vertex_addr_in;
+
+        distance_complete <= 1'b0;
     end
 
     // state 0: computes distance between P and Q and adds P to S
@@ -131,9 +133,9 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH = 8)(
       if (~neigh_empty_out) begin
           // sent <= 0;
         
-        if (visited == 0) begin
+        // if (visited == 0) begin
           state <= 5'b10;
-        end else state <= 0;
+        // end else state <= 0;
         neigh_deq <= 1'b1;
       end 
       // else if (visited_addr_valid_in) sent <=1;
@@ -167,9 +169,17 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH = 8)(
       end
 
       // if distance calculated and not all neighbors visited, get next neighbor
-      if(dist_valid_out && ~reached_neigh_end_out) begin
+      if(dist_valid_out && ~reached_neigh_end_out && neigh_empty_out) begin
+        distance_complete <= 1'b1;
+      end
+      else if (dist_valid_out && ~reached_neigh_end_out) begin
         neigh_deq <= 1'b1;
         pos_deq <= 1'b0;
+      end
+      else if (distance_complete && ~neigh_empty_out) begin
+        neigh_deq <= 1'b1;
+        pos_deq <= 1'b0;
+        distance_complete <= 1'b0;
       end
       else neigh_deq <= 1'b0;
 
@@ -329,9 +339,9 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH = 8)(
     .mem_req_out2(mem_req_out2),
 
     .visited_req_out(visited_addr_in),
-    .visited_req_valid(visited_addr_valid_in),
-    .visited_val_returned(visited),
-    .visited_val_returned_valid(valid_visited)
+    .visited_req_valid_out(visited_addr_valid_in),
+    .visited_val_returned_in(visited),
+    .visited_val_returned_valid_in(valid_visited)
   );
 
 
