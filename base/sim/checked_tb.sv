@@ -16,6 +16,7 @@ module checked_tb();
   logic [3:0] size_out;
   logic empty_out;
   logic valid_out;
+  logic [15:0] max_tag_out;
 
 //   logic [31:0] intermediate_subs_out;
 
@@ -32,7 +33,8 @@ CheckedQueue #(.DATA_WIDTH(32), .TAG_WIDTH(16), .DEPTH(8))Q(
   .tag_out(tag_out),
   .size_out(size_out),
   .empty_out(empty_out),
-  .valid_out(valid_out)
+  .valid_out(valid_out),
+  .max_tag_out(max_tag_out)
 );
 
 

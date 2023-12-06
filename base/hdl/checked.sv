@@ -14,7 +14,8 @@ module CheckedQueue #(parameter DATA_WIDTH = 32, parameter TAG_WIDTH = 32, param
   output logic [TAG_WIDTH-1:0] tag_out,
   output logic [$clog2(DEPTH):0] size_out,
   output logic empty_out,
-  output logic valid_out
+  output logic valid_out,
+  output logic [TAG_WIDTH-1:0] max_tag_out
 );
     
     logic [TAG_WIDTH-1:0] queue [DEPTH-1:0]; // distances
@@ -24,6 +25,7 @@ module CheckedQueue #(parameter DATA_WIDTH = 32, parameter TAG_WIDTH = 32, param
     logic [$clog2(DEPTH):0] read_ptr;
     logic [$clog2(DEPTH):0] write_ptr;
     logic [DATA_WIDTH-1:0] curval;
+    logic [DATA_WIDTH-1:0] maxval;
 
     logic rem_lru;
     logic push_lru;
@@ -38,12 +40,17 @@ module CheckedQueue #(parameter DATA_WIDTH = 32, parameter TAG_WIDTH = 32, param
         deq_in = deq_smallest_in || deq_largest_in;
 
         curval = deq_smallest_in ? 32'hFFFFFFFF : 32'h0;
+        maxval = 32'h0;
         
         if (deq_smallest_in) begin
             for (int i = 0; i<DEPTH; i=i+1) begin
                 if (valid[i] && queue[i] <= curval) begin
                     read_ptr = i;
                     curval = queue[i];
+                end
+
+                if (valid[i] && queue[i] > maxval) begin
+                    maxval = queue[i];
                 end
             end
         end
@@ -52,6 +59,7 @@ module CheckedQueue #(parameter DATA_WIDTH = 32, parameter TAG_WIDTH = 32, param
                 if (valid[i] && queue[i] >= curval) begin
                     read_ptr = i;
                     curval = queue[i];
+                    maxval = queue[i];
                 end
             end
         end
@@ -81,6 +89,7 @@ module CheckedQueue #(parameter DATA_WIDTH = 32, parameter TAG_WIDTH = 32, param
             data_out <= 0;
             valid_out <= 0;
             size_out <= 0;
+            max_tag_out <= 0;
         end 
         else begin
             // dequeue largest element
@@ -104,6 +113,8 @@ module CheckedQueue #(parameter DATA_WIDTH = 32, parameter TAG_WIDTH = 32, param
                 rem_lru <= 1;
                 valid[write_ptr] <= 1;
             end else rem_lru <= 0;
+            
+            max_tag_out <= maxval;
         end
     end
         
