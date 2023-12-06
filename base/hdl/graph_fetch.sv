@@ -31,11 +31,6 @@ module graph_fetch #(parameter DIM = 2)(
   output logic mem_valid_out2,
   output logic [31:0] mem_req_out2,
 
-  input wire mem_idx_valid_in,
-  input wire [31:0] mem_idx_in,
-  output logic mem_idx_valid_out,
-  output logic [31:0] mem_idx_req_out,
-
   output logic [31:0] visited_req_out,
   output logic visited_req_valid_out,
   input wire visited_val_returned_in,
@@ -162,7 +157,6 @@ module graph_fetch #(parameter DIM = 2)(
         
         mem_valid_out <= 1'b0;
         mem_valid_out2 <= 1'b0;
-        mem_idx_valid_out <= 1'b0;
 
         req_ready_n <= 1'b0;
         req_ready_d <=1'b0;

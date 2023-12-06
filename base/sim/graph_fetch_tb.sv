@@ -35,8 +35,6 @@ module graph_fetch_tb();
   logic [31:0] data_out0, data_out1, data_out2, data_out3, visited_addr_in;
   logic data_valid_out0, data_valid_out1, data_valid_out2, data_valid_out3, visited_addr_valid_in, visited, valid_visited;
 
-  logic [31:0] idx_addr, rowidx_out;
-  logic idx_validin, rowidx_valid_out;
 
 
   // fetch position and neighbor values from BRAM
@@ -44,8 +42,6 @@ module graph_fetch_tb();
   graph_memory# (.DIM(0), .PROC_BITS(0)) g (
     .clk_in(clk_in),
     .rst_in(rst_in),
-    .idx_addr(idx_addr),
-    .idx_validin(idx_validin),
     .data_addra(mem_req_out),
     .data_addrb(mem_req_out2),
     .data_validina(mem_valid_out),
@@ -53,9 +49,7 @@ module graph_fetch_tb();
     .data_outa(mem_data_in),
     .data_outb(mem_data_in2),
     .data_valid_outa(mem_valid_in),
-    .data_valid_outb(mem_valid_in2),
-    .rowidx_out(rowidx_out),
-    .rowidx_valid_out(rowidx_valid_out)
+    .data_valid_outb(mem_valid_in2)
   );
 
 
@@ -98,11 +92,6 @@ graph_fetch #(.DIM(4)) graph(
   .mem_data_in2(mem_data_in2),
   .mem_valid_out2(mem_valid_out2),
   .mem_req_out2(mem_req_out2),
-
-  .mem_idx_valid_in(rowidx_valid_out),
-  .mem_idx_in(rowidx_out),
-  .mem_idx_valid_out(idx_validin),
-  .mem_idx_req_out(idx_addr),
 
   .visited_req_out(visited_addr_in),
   .visited_req_valid_out(visited_addr_valid_in),
