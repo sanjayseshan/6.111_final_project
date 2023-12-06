@@ -136,7 +136,7 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH = 8)(
       top_k_out[3] <= fetch_data_valid_out ;//fetch_data_valid_out;//mem_valid_in2;//dist_valid_out;// mem_valid_in; //mem_req_out;
 
       if (pq_valid_out) begin
-        if ((checked_full_out && checked_max_tag < pq_dist_out) || (pq_empty_out && ~checked_empty_out)) begin
+        if ((checked_full_out && checked_max_tag < pq_dist_out)) begin
           state <= 5'b101;
         end
         else if (checked_full_out && pq_dist_out < checked_max_tag) begin
@@ -169,6 +169,9 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH = 8)(
         // end else state <= 0;
         neigh_deq <= 1'b1;
       end 
+      else if (reached_neigh_end_out && neigh_empty_out) begin
+        state <= 5'b100;
+      end
       // else if (visited_addr_valid_in) sent <=1;
     end
 
@@ -215,15 +218,30 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH = 8)(
       else neigh_deq <= 1'b0;
 
       // if all distances calculated, go to next state
-      if(reached_neigh_end_out && pos_empty_out && dist_valid_out) state <= 5'b100;
+      // if(reached_neigh_end_out && pos_empty_out && dist_valid_out) state <= 5'b100;
+      // else if (reached_neigh_end_out && pos_empty_out && distance_complete) begin
+      //   distance_complete <= 1'b0;
+      //   state <= 5'b100;
+      // end
+      if (reached_neigh_end_out && pos_empty_out) begin
+        if (dist_valid_out) state <= 5'b100;
+        else if (distance_complete) begin
+          distance_complete <= 1'b0;
+          state <= 5'b100;
+        end
+      end
     end
 
     else if (state==5'b100) begin
-      pq_deq_in <= 1'b1;
-      state <= 1'b1;
+      if (pq_empty_out && ~checked_empty_out) state <= 5'b101;
+      else begin
+        pq_deq_in <= 1'b1;
+        state <= 1'b1;
+      end
     end
 
     else if (state==5'b101) begin
+      checked_min_deq <= 1'b1;
     end
 
     else if (state==5'b110) begin
@@ -255,7 +273,7 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH = 8)(
     .data_out(checked_data_out),
     .tag_out(checked_tag_out),
     .size_out(checked_size),
-    .empty_out(),
+    .empty_out(checked_empty_out),
     .valid_out(checked_valid_out),
     .max_tag_out(checked_max_tag)
   );

@@ -246,8 +246,8 @@ module graph_fetch #(parameter DIM = 2)(
           // else req_ready_n <= 1'b0;
           
           // if end of neighbors
-          if (mem_data_in2 == 0) reached_neigh_end_out <= 1'b1;
-          else reached_neigh_end_out <= 1'b0;
+          if (mem_valid_in2 && mem_data_in2 == 0) reached_neigh_end_out <= 1'b1;
+          else if (mem_data_in2 != 0) reached_neigh_end_out <= 1'b0;
         
 
           // if (data_ready) ct <= ct +1;
