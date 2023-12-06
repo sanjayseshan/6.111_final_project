@@ -22,7 +22,7 @@ module CheckedQueue #(parameter DATA_WIDTH = 32, parameter TAG_WIDTH = 32, param
     logic [DATA_WIDTH-1:0] Q_data [DEPTH-1:0]; // point
     logic valid [DEPTH-1:0]; 
 
-    logic [$clog2(DEPTH):0] read_ptr;
+    logic [$clog2(DEPTH):0] read_ptr, prev_read_ptr;
     logic [$clog2(DEPTH):0] write_ptr;
     logic [DATA_WIDTH-1:0] curval;
     logic [DATA_WIDTH-1:0] maxval;
@@ -37,7 +37,7 @@ module CheckedQueue #(parameter DATA_WIDTH = 32, parameter TAG_WIDTH = 32, param
     always_comb begin
         empty_out = (size_out == 0);
         full_out = (size_out == DEPTH);
-        deq_in = deq_smallest_in || deq_largest_in;
+        // deq_in = deq_smallest_in || deq_largest_in;
 
         curval = deq_smallest_in ? 32'hFFFFFFFF : 32'h0;
         maxval = 32'h0;
@@ -49,7 +49,7 @@ module CheckedQueue #(parameter DATA_WIDTH = 32, parameter TAG_WIDTH = 32, param
                     curval = queue[i];
                 end
 
-                if (valid[i] && queue[i] > maxval) begin
+                if (valid[i] && queue[i] >= maxval) begin
                     maxval = queue[i];
                 end
             end
@@ -70,7 +70,7 @@ module CheckedQueue #(parameter DATA_WIDTH = 32, parameter TAG_WIDTH = 32, param
         .clk_in(clk_in),
         .rst_in(rst_in),
         .deq_in(rem_lru),
-        .enq_data_in(read_ptr),
+        .enq_data_in(prev_read_ptr),
         .enq_in(push_lru),
         .full_out(),
         .data_out(write_ptr),
@@ -85,6 +85,7 @@ module CheckedQueue #(parameter DATA_WIDTH = 32, parameter TAG_WIDTH = 32, param
                 Q_data[i] <= 0;
                 valid[i] <= 0;
                 read_ptr <= 0;
+                prev_read_ptr <= 0;
             end
             data_out <= 0;
             valid_out <= 0;
@@ -93,20 +94,21 @@ module CheckedQueue #(parameter DATA_WIDTH = 32, parameter TAG_WIDTH = 32, param
         end 
         else begin
             // dequeue largest element
-            if (deq_in && !empty_out && valid[read_ptr]) begin
+            if ((deq_smallest_in || deq_largest_in) && ~empty_out && valid[read_ptr]) begin
                 data_out <= Q_data[read_ptr];
                 tag_out <= queue[read_ptr];
-                push_lru <= 1;
+                push_lru <= 1'b1;
                 valid_out <= 1;
                 valid[read_ptr] <= 0;
-                read_ptr <= (read_ptr < DEPTH-1) ? read_ptr +1 : 0;
+                read_ptr <= (read_ptr < DEPTH-1) ? read_ptr + 1 : 0;
+                prev_read_ptr <= read_ptr;
                 size_out <= size_out -1;
             end else begin
                 valid_out <= 0;
-                push_lru <= 0;
+                push_lru <= 1'b0;
             end
             // enqueue element
-            if (enq_in && !full_out && valid[write_ptr] == 0) begin
+            if (enq_in && ~full_out && valid[write_ptr] == 0) begin
                 size_out <= size_out +1;
                 Q_data[write_ptr] <= enq_data_in;
                 queue[write_ptr] <= enq_tag_in;

@@ -21,7 +21,7 @@ module PriorityQueue #(parameter DATA_WIDTH = 32, parameter TAG_WIDTH = 32, para
     logic valid [DEPTH-1:0]; 
     // logic [$clog2(DEPTH):0] nelts;
 
-    logic [$clog2(DEPTH):0] read_ptr;
+    logic [$clog2(DEPTH):0] read_ptr, prev_read_ptr;
     logic [$clog2(DEPTH):0] write_ptr;
     logic [DATA_WIDTH-1:0] curval;
 
@@ -65,13 +65,14 @@ module PriorityQueue #(parameter DATA_WIDTH = 32, parameter TAG_WIDTH = 32, para
                 valid[i] <= 0;
                 // curval <= 32'hFFFFFFFF;
                 read_ptr <= 0;
+                prev_read_ptr <= 0;
                 // write_ptr <= 0;
             end
             data_out <= 0;
             // full_out <= 0;
             // empty_out <= 0;
             // valid_out <= 0;
-            valid_out <= 0;
+            valid_out <= 1'b0;
             size_out <= 0;
         end 
         else begin
@@ -79,14 +80,15 @@ module PriorityQueue #(parameter DATA_WIDTH = 32, parameter TAG_WIDTH = 32, para
             if (deq_in && !empty_out && valid[read_ptr]) begin
                 data_out <= Q_data[read_ptr];
                 tag_out <= queue[read_ptr];
-                push_lru <= 1;
-                valid_out <= 1;
-                valid[read_ptr] <= 0;
+                push_lru <= 1'b1;
+                valid_out <= 1'b1;
+                valid[read_ptr] <= 1'b0;
                 read_ptr <= (read_ptr < DEPTH-1) ? read_ptr +1 : 0;
+                prev_read_ptr <= read_ptr;
                 size_out <= size_out -1;
             end else begin
-                valid_out <= 0;
-                push_lru <= 0;
+                valid_out <=1'b0;
+                push_lru <= 1'b0;
             end
             // enqueue element
             if (enq_in && !full_out && valid[write_ptr] == 0) begin
@@ -94,7 +96,7 @@ module PriorityQueue #(parameter DATA_WIDTH = 32, parameter TAG_WIDTH = 32, para
                 Q_data[write_ptr] <= enq_data_in;
                 queue[write_ptr] <= enq_tag_in;
                 rem_lru <= 1;
-                valid[write_ptr] <= 1;
+                valid[write_ptr] <= 1'b1;
             end else rem_lru <= 0;
         end
     end
@@ -133,7 +135,7 @@ module PQ_FIFO #(parameter DATA_WIDTH = 32, parameter DEPTH = 8)(
             for (int i=0; i<DEPTH; i=i+1) begin
                 // init with x=i -- diff from FIFO
                 queue[i] <= i;
-                valid[i] <= 1;
+                valid[i] <= 1'b1;
             end
 
             // data_out <= 0;
