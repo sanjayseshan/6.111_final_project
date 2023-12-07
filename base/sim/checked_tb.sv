@@ -13,14 +13,14 @@ module checked_tb();
   logic full_out;
   logic [31:0] data_out;
   logic [15:0] tag_out;
-  logic [3:0] size_out;
+  logic [2:0] size_out;
   logic empty_out;
   logic valid_out;
   logic [15:0] max_tag_out;
 
 //   logic [31:0] intermediate_subs_out;
 
-CheckedQueue #(.DATA_WIDTH(32), .TAG_WIDTH(16), .DEPTH(8))Q(
+CheckedQueue #(.DATA_WIDTH(32), .TAG_WIDTH(16), .DEPTH(3))Q(
   .clk_in(clk_in),
   .rst_in(rst_in),
   .deq_smallest_in(deq_smallest_in),

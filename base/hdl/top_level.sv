@@ -10,10 +10,12 @@ module top_level(
   output logic [15:0] led //16 green output LEDs (located right above switches)
   );
 
-  assign led = sw; //for debugging
+  // assign led = sw; //for debugging
   //shut up those rgb LEDs (active high):
   // assign rgb1= 0;
   // assign rgb0 = 0;
+
+  logic [2:0] state;
 
   logic sys_rst;
   assign sys_rst = btn[0];
@@ -44,10 +46,33 @@ module top_level(
   .query_in(query_in_real),
   .k_in(4),
   .top_k_out(top_k_out),
-  .valid_out(valid_out)
+  .valid_out(valid_out),
+ .state(state)
+  );
+
+  logic [31:0] val_3, last_val_3, buf_k_out;
+
+  always_ff @( posedge clk_100mhz ) begin
+    last_val_3 <= val_3;
+    
+  end
+
+  logic [31:0] buf_valid_out;
+
+  FIFO #(.DATA_WIDTH(32),.DEPTH(4)) buf_out (
+  .clk_in(clk_100mhz),
+  .rst_in(sys_rst),
+  .enq_data_in(top_k_out),
+  .enq_in(valid_out),
+  .deq_in(val_3 != last_val_3 && val_3 == 1),
+  .full_out(),
+  .data_out(buf_k_out),
+  .empty_out(),
+  .valid_out(buf_valid_out)
   );
 
   //   input wire clk_in,
+ assign led = buf_k_out[15:0];
   // input wire rst_in,
   // input wire [31:0] vertex_id_in,
   // input wire [31:0] query_in [DIM-1:0],
@@ -72,10 +97,10 @@ module top_level(
       .clk(clk_100mhz),
       .rx(uart_rxd),
       .tx(uart_txd),
-      .val1_in(vertex_in),
-      .val2_in(query_in[i]),
-      .val3_out(valid_out),
-      .val4_out(top_k_out)
+      .val1_in(buf_k_out),
+      .val2_in(buf_valid_out),
+      .val3_out(val_3),
+      .val4_out(0)
     );
 
 
