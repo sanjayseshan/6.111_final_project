@@ -75,7 +75,7 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH = 8)(
   logic [31:0] idx_lookup_addr;
   logic idx_lookup_addr_valid;
   logic [31:0] idxaddr_out;
-  logic idxaddr_out_valid;
+  logic idxaddr_out_valid, checked_proc_deq;
 
   logic vertex_addr_in;
   logic [31:0] vertex_in, first_pos_lookup_addr, mem_req_out2_route, mem_data_in2_route;
@@ -195,15 +195,17 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH = 8)(
       // top_k_out[2] <= data_out;//data_out;//mem_valid_out2;//mem_data_in;
       // top_k_out[3] <= fetch_data_valid_out ;//fetch_data_valid_out;//mem_valid_in2;//dist_valid_out;// mem_valid_in; //mem_req_out;
 
+      // top_k_out <= checked_valid_out;
       if (pq_valid_out) begin
         if ((checked_full_out && checked_max_tag < pq_dist_out)) begin
           state <= 3'b101;
           k_count <= 4'b0;
         end
-        else if (checked_full_out && pq_dist_out < checked_max_tag) begin
+        else if (checked_full_out && pq_dist_out < checked_max_tag && checked_proc_deq) begin
           checked_max_deq <= 1'b1;
-        end
-        else if (~checked_full_out) begin
+        end else if (!checked_proc_deq) begin
+          checked_max_deq <= 1'b0;
+        end else if (~checked_full_out && checked_proc_deq) begin
           checked_valid_in <= 1'b1;
           state <= 3'b10;
           checked_counter <= 2'b0;
@@ -211,7 +213,7 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH = 8)(
           // if (checked_max_deq) checked_max_deq <= 1'b0;
         end
       end
-      else if (checked_valid_out) begin
+      else if (checked_valid_out && checked_proc_deq) begin
         checked_valid_in <= 1'b1;
         checked_max_deq <= 1'b0;
         state <= 3'b10;
@@ -238,9 +240,9 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH = 8)(
     end
 
     else if (state==3'b11) begin
-      // top_k_out[0] <= neigh_fifo_out;//neigh_fifo_out;//mem_req_out2; // v_addr_in;//mem_req_out; //v_addr_in;
+      // top_k_out <= neigh_fifo_out;//neigh_fifo_out;//mem_req_out2; // v_addr_in;//mem_req_out; //v_addr_in;
       // top_k_out[1] <= neigh_valid_out;//neigh_valid_out;// mem_data_in2;//neigh_fifo_out;
-      // top_k_out[2] <= data_out;//data_out;//mem_valid_out2;//mem_data_in;
+      top_k_out <= neigh_fifo_out;//pos_deq <= 1'b0;;//mem_valid_out2;//mem_data_in;
       // top_k_out[3] <= fetch_data_valid_out ;//fetch_data_valid_out;//mem_valid_in2;//dist_valid_out;// mem_valid_in; //mem_req_out;
 
       // retrieve position after retrieving neighbor
@@ -251,6 +253,10 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH = 8)(
           pos_deq <= 1'b1;
           ct_dist <= 0;
       end
+      //  else pos_deq <= 1'b0;
+
+
+      // top_k_out <= {fetch_data_valid_out};//{dist_valid_out,pos_valid[0],pos_valid[1],pos_valid[2],pos_valid[3]};
 
       // calculate distance 
       if(fetch_data_valid_out) begin
@@ -259,6 +265,8 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH = 8)(
           ct_dist <= ct_dist+1;
           pos_valid[ct_dist] <= 1'b1;
           if (ct_dist != 0) pos_valid[ct_dist-1] <= 1'b0;
+          if (ct_dist == DIM-1) pos_deq <= 1'b0;
+
         end else begin 
           pos_valid[DIM-1] <= 1'b0;
         end
@@ -267,6 +275,7 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH = 8)(
       // if distance calculated and not all neighbors visited, get next neighbor
       if(dist_valid_out && ~reached_neigh_end_out && neigh_empty_out) begin
         distance_complete <= 1'b1;
+        pos_deq <= 1'b1;
       end
       else if (dist_valid_out && ~reached_neigh_end_out) begin
         neigh_deq <= 1'b1;
@@ -329,6 +338,10 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH = 8)(
       valid_out <= vertex_valid_in;
 
     end
+
+    // if (state!=3'b101) 
+    // top_k_out <= checked_max_deq| checked_min_deq;;// 
+
   end
 
 
@@ -358,7 +371,8 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH = 8)(
     .size_out(checked_size),
     .empty_out(checked_empty_out),
     .valid_out(checked_valid_out),
-    .max_tag_out(checked_max_tag)
+    .max_tag_out(checked_max_tag),
+    .proc_deq_ready(checked_proc_deq)
   );
 
 

@@ -154,7 +154,59 @@ module distance_tb();
     data_valid_in[8] = 0;
 
 // result should be 959 or 0x3bf
-    #500;
+
+// result should be 69161 or 0x10e29
+    #5000;
+
+      query_pos_in[0] = 23; //5;
+    query_pos_in[1] = 67; //7;
+    query_pos_in[2] = 2; //10;
+    query_pos_in[3] = 99; //50;
+    query_pos_in[4] = 17;
+    query_pos_in[5] = 103;
+    query_pos_in[6] = 1;
+    query_pos_in[7] = 53;
+    query_pos_in[8] = 18;
+
+    #20;
+    data_valid_in[0] = 1;
+    vertex_pos_in[0] = 89; //8;
+    #10;
+    data_valid_in[0] = 0;
+    data_valid_in[1] = 1;
+    vertex_pos_in[1] = 123; //2;
+    #10;
+    data_valid_in[1] = 0;
+    data_valid_in[2] = 1;
+    vertex_pos_in[2] = 231; //15;
+    #10;
+    data_valid_in[2] = 0;
+    data_valid_in[3] = 1;
+    vertex_pos_in[3] = 82; //80;
+    #10;
+    data_valid_in[3] = 0;
+    data_valid_in[4] = 1;
+    vertex_pos_in[4] = 7;
+    #10;
+    data_valid_in[4] = 0;
+    data_valid_in[5] = 1;
+    vertex_pos_in[5] = 12;
+    #10;
+    data_valid_in[5] = 0;
+    data_valid_in[6] = 1;
+    vertex_pos_in[6] = 20;
+    #10;
+    data_valid_in[6] = 0;
+    data_valid_in[7] = 1;
+    vertex_pos_in[7] = 39;
+    #10;
+    data_valid_in[7] = 0;
+    data_valid_in[8] = 1;
+    vertex_pos_in[8] = 19;
+    #10;
+    data_valid_in[8] = 0;
+
+    #5000
     $display("Simulation finished");
     $finish;
   end

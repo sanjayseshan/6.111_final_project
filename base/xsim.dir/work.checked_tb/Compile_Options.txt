@@ -1,0 +1,1 @@
+-svlog "sim/checked_tb.sv" --debug "wave" 

@@ -30,7 +30,7 @@ module bfis_tb();
   logic [2:0] state;
 
 
-  bfis #(.DIM(4), .PQ_LENGTH(8)) bfis_m (
+  bfis #(.DIM(4), .PQ_LENGTH(5)) bfis_m (
     .clk_in(clk_in),
     .rst_in(rst_in),
     // .vertex_in(vertex_in),
@@ -120,7 +120,7 @@ module bfis_tb();
 
 
 // result should be 959 or 0x3bf
-    #4000;
+    #40000;
     $display("Simulation finished");
     $finish;
   end

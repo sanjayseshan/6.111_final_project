@@ -38,7 +38,7 @@ module top_level(
   end
 
 
-  bfis #(.DIM(4), .PQ_LENGTH(8)) main(
+  bfis #(.DIM(4), .PQ_LENGTH(5)) main(
   .clk_in(clk_100mhz),
   .rst_in(sys_rst),
   .vertex_id_in(1),
@@ -72,7 +72,7 @@ module top_level(
   );
 
   //   input wire clk_in,
- assign led = buf_k_out[15:0];
+ assign led = state;//buf_k_out[15:0];
   // input wire rst_in,
   // input wire [31:0] vertex_id_in,
   // input wire [31:0] query_in [DIM-1:0],

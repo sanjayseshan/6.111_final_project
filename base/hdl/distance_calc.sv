@@ -21,6 +21,9 @@ module distance #(parameter DIM = 2)(
   logic [0:$clog2(DIM)-1] k; // index into array for multiplication
 
 
+  logic [5:0] intermediate_mults_count [DIM-1:0]; // index into array for multiplication
+
+
   // state machine for distance calc
   always_ff @ (posedge clk_in) begin
     if (rst_in) begin
@@ -29,6 +32,7 @@ module distance #(parameter DIM = 2)(
         distance <= 0;
         distance_sq_out <= 0;
         data_valid_out <= 1'b0;
+        j <= 0;
     end
     else if (state==2'b0) begin
         // data_valid_out <= 1'b0;
@@ -36,14 +40,17 @@ module distance #(parameter DIM = 2)(
 
         // subtraction (q_i - p_i) one substraction per cycle
         if (data_valid_in[i]) begin
-            intermediate_subs_out[i] <= query_pos_in[i] - vertex_pos_in[i]; 
+            if (query_pos_in[i] > vertex_pos_in[i]) intermediate_subs_out[i] <= query_pos_in[i] - vertex_pos_in[i]; 
+            else  intermediate_subs_out[i] <= vertex_pos_in[i] - query_pos_in[i]; 
             valid_subs_out[i] <= 1'b1;
+            intermediate_mults_count[i] <= 0;
+            intermediate_mults_out[i] <= 0;
             
             // increment indexing counter
             if (i>=(DIM-1)) i <= 0;
             else i <= i + 1;
 
-            j <= i; // update mul indexing counter
+            // j <= i; // update mul indexing counter
             
         end
 
@@ -53,17 +60,42 @@ module distance #(parameter DIM = 2)(
         //     valid_subs_out[DIM-1] <= 0;
         // end
 
+
+        /*
+          int multiply(int x, int y)
+          {
+              int ret = 0;
+              for (int i = 0; i < 32; i++)
+              {
+                  if (((y >> i) & 1) == 1)
+                  {
+                      ret += (x << i);
+                  }
+              }
+              return ret;
+          }
+        */
         // find square of difference if subtraction complete
         if (valid_subs_out[j]) begin
-            intermediate_mults_out[j] <= intermediate_subs_out[j]*intermediate_subs_out[j];
+          if (intermediate_mults_count[j] < 32) begin
+            if ((intermediate_subs_out[j] >> intermediate_mults_count[j]) & 1 == 1) begin
+              intermediate_mults_out[j] <= intermediate_mults_out[j] + (intermediate_subs_out[j] << intermediate_mults_count[j]);//*intermediate_subs_out[j];
+            end
+            intermediate_mults_count[j] <= intermediate_mults_count[j] + 1;
+            // distance_sq_out <= intermediate_mults_out[j];
+          end else begin         
             valid_mults_out[j] <= 1'b1;
 
             // reset valid bit when complete
             valid_subs_out[j] <= 1'b0;
 
+            // if (j>=(DIM-1)) j <= 0;
+
             if (j>=(DIM-1)) j <= 0;
+            else j<= j+1;
 
             k <= j;
+          end
         end
             
         // move to next state if all multiplications are complete
