@@ -6,8 +6,8 @@ module bfis_tb();
   logic clk_in;
   logic rst_in;
   logic [31:0] vertex_in;
-  logic [31:0] vertex_addr_in;
-  logic vertex_valid_in;
+  logic [31:0] vertex_id_in;//vertex_addr_in;
+//  logic vertex_valid_in;
   logic [31:0] query_in [3:0];
   logic [15:0] k_in;
   logic [31:0] top_k_out;
@@ -16,10 +16,10 @@ module bfis_tb();
 
   logic [31:0] query_pos_in0;
   logic [31:0] query_pos_in1;
-  logic [31:0] top_k_out0;
-  logic [31:0] top_k_out1;
-  logic [31:0] top_k_out2;
-  logic [31:0] top_k_out3;
+  // logic [31:0] top_k_out0;
+  // logic [31:0] top_k_out1;
+  // logic [31:0] top_k_out2;
+  // logic [31:0] top_k_out3;
   logic [31:0] query_pos_in2;
   logic [31:0] query_pos_in3;
 //   logic [31:0] query_pos_in4;
@@ -33,14 +33,15 @@ module bfis_tb();
   bfis #(.DIM(4), .PQ_LENGTH(8)) bfis_m (
     .clk_in(clk_in),
     .rst_in(rst_in),
-    .vertex_in(vertex_in),
-    .vertex_addr_in(vertex_addr_in),
-    .vertex_valid_in(vertex_valid_in),
+    // .vertex_in(vertex_in),
+    .vertex_id_in(vertex_id_in),
+    // .vertex_addr_in(vertex_addr_in),
+    // .vertex_valid_in(vertex_valid_in),
     .query_in(query_in),
     .k_in(k_in),
     .top_k_out(top_k_out),
-    .valid_out(valid_out)
-    // .state(state)
+    .valid_out(valid_out),
+    .state(state)
   );
 
 
@@ -76,39 +77,41 @@ module bfis_tb();
 
     #10;
     rst_in = 1;
-    #10;
-    rst_in = 0;
     query_in[0] = 5;//23;
     query_in[1] = 7;//67;
     query_in[2] = 1;//67;
     query_in[3] = 1;//67;
-    vertex_addr_in = 1;
-    vertex_in = 32'h348;//84018776;
-    vertex_valid_in = 1;
     k_in = 16'd4;
+    vertex_id_in  = 1;
     #10;
-    vertex_valid_in = 0;
-    #10;
+    rst_in = 0;
+
+    // vertex_addr_in = 1;
+    // vertex_in = 32'h348;//84018776;
+    // vertex_valid_in = 1;
+    // #10;
+    // vertex_valid_in = 0;
+    // #10;
     
 
 
 
-    vertex_in = 32'h18a; //39438292;
-    vertex_valid_in = 1;
-    #10;
-    vertex_valid_in = 0;
-    #10;
-    vertex_in = 32'h30f;//78309920;
-    vertex_valid_in = 1;
-    #10;
-    vertex_valid_in = 0;
-    #10;
-    vertex_addr_in = 1;
-    vertex_in = 32'h31e; //79844000;
-    vertex_valid_in = 1;
-    #10;
-    vertex_valid_in = 0;
-      #10;
+    // vertex_in = 32'h18a; //39438292;
+    // vertex_valid_in = 1;
+    // #10;
+    // vertex_valid_in = 0;
+    // #10;
+    // vertex_in = 32'h30f;//78309920;
+    // vertex_valid_in = 1;
+    // #10;
+    // vertex_valid_in = 0;
+    // #10;
+    // vertex_addr_in = 1;
+    // vertex_in = 32'h31e; //79844000;
+    // vertex_valid_in = 1;
+    // #10;
+    // vertex_valid_in = 0;
+    //   #10;
     // vertex_in = 2;
     // vertex_valid_in = 1;
     // #10;

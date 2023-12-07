@@ -47,8 +47,7 @@ module graph_memory #(parameter DIM = 2, parameter PROC_BITS = 4)(
     // else cta <= cta+1;
     // if (data_validinb) ctb <= 0;
     // else ctb <= ctb+1;
-    if (idx_validin) ctc <= 0;
-    else ctc <= ctc+1;
+
 
     // count 2 cycles to get BRAM values
     if (data_validina) begin
@@ -83,8 +82,18 @@ module graph_memory #(parameter DIM = 2, parameter PROC_BITS = 4)(
     // else data_valid_outa <= 0;
     // if (ctb == 2) data_valid_outb <= 1;
     // else data_valid_outb <= 0;
-    if (ctc == 2) rowidx_valid_out <= 1;
-    else rowidx_valid_out <= 0;
+
+
+    if (idx_validin) begin
+      ctc <= 1;
+      rowidx_valid_out <= 0;
+    end 
+    else ctc <= 0;
+
+    if (ctc) begin
+      rowidx_valid_out <= 1;
+      if (!idx_validin) ctc <= 0;
+    end else rowidx_valid_out <= 0;
   end
 
   xilinx_true_dual_port_read_first_2_clock_ram #(

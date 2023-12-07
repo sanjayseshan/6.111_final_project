@@ -4,17 +4,18 @@
 module bfis #(parameter DIM = 2, parameter PQ_LENGTH = 8)(
   input wire clk_in,
   input wire rst_in,
-  input wire [31:0] vertex_in,
-  input wire [31:0] vertex_addr_in,
-  input wire vertex_valid_in,
+  // input wire [31:0] vertex_in,
+  // input wire [31:0] vertex_addr_in,
+  input wire [31:0] vertex_id_in,
+  // input wire vertex_valid_in,
   input wire [31:0] query_in [DIM-1:0],
   // input wire [15:0] pq_length_in,
   input wire [15:0] k_in,
   output logic [31:0] top_k_out,
-  output logic valid_out
+  output logic valid_out,
+  output logic [2:0] state
   );
 
-  logic [2:0] state;
 
   logic [31:0] point_addr;
 
@@ -40,6 +41,7 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH = 8)(
 
   logic mem_valid_in2, mem_valid_out2;
   logic [31:0] mem_data_in2, mem_req_out2;
+
 
 
   logic data_valid_out;
@@ -68,6 +70,31 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH = 8)(
 
   logic [3:0] k_count;
 
+  logic initial_lookup;
+
+  logic [31:0] idx_lookup_addr;
+  logic idx_lookup_addr_valid;
+  logic [31:0] idxaddr_out;
+  logic idxaddr_out_valid;
+
+  logic vertex_addr_in;
+  logic [31:0] vertex_in, first_pos_lookup_addr, mem_req_out2_route, mem_data_in2_route;
+  logic vertex_valid_in, first_pos_lookup_addr_valid, mem_valid_out2_route, mem_valid_in2_route;
+
+  always_comb begin
+    if (state == 0 || state==3'b101) begin
+      mem_req_out2_route = first_pos_lookup_addr;
+      mem_valid_out2_route = first_pos_lookup_addr_valid;
+      vertex_in = mem_data_in2_route;
+      vertex_valid_in = mem_valid_in2_route;
+    end else begin
+      mem_req_out2_route = mem_req_out2;
+      mem_valid_out2_route = mem_valid_out2;
+      mem_data_in2 = mem_data_in2_route;
+      mem_valid_in2 = mem_valid_in2_route;
+    end
+  end
+
 
   always_ff @ (posedge clk_in) begin
     if (rst_in) begin
@@ -75,6 +102,7 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH = 8)(
         valid_out <= 1'b0;
 
         state <= 3'b0;
+        initial_lookup <= 1'b1;
 
         ct_dist <= 0;
         pq_deq_in <= 1'b0;
@@ -90,9 +118,34 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH = 8)(
     end
 
     // state 0: computes distance between P and Q and adds P to S
-    else if (state==3'b0) begin
+    else if (initial_lookup == 1'b1 && state ==  0) begin
+        idx_lookup_addr <= vertex_id_in;
+        idx_lookup_addr_valid <= 1;
+
+        // top_k_out <= idxaddr_out_valid;
+        // top_k_out[2] <= idx_lookup_addr_valid;
+        // top_k_out[2] <= idxaddr_out_valid;
+        // top_k_out[3] <= idxaddr_out;
+
+        
+
+        if (idxaddr_out_valid) begin
+          idx_lookup_addr_valid <= 0;
+          vertex_addr_in <= idxaddr_out;
+          initial_lookup <= 0;
+
+        end
+
+
+    end else if (state==3'b0 && initial_lookup == 1'b0) begin
       // compute distance between the two
       point_addr <= vertex_addr_in;
+
+
+        // top_k_out <= dist_valid_out;
+
+      first_pos_lookup_addr <= vertex_addr_in+1+ct_dist;
+      first_pos_lookup_addr_valid <= 1;
 
       if (vertex_valid_in) begin
         pos_vec[ct_dist] <= vertex_in;
@@ -109,9 +162,11 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH = 8)(
       end
 
       // add vertex to priority queue
-      else if (dist_valid_out) begin
+      if (dist_valid_out) begin
           // if (pq_size >= 1) begin
             ct_dist <= 0;
+            first_pos_lookup_addr_valid <= 0;
+            first_pos_lookup_addr <= 0;
 
             pos_valid[DIM-1] <= 0;
             pos_valid[DIM-2] <= 0;
@@ -251,6 +306,7 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH = 8)(
     end
 
     else if (state==3'b101) begin
+      // top_k_out <= k_in;
       if (k_count < k_in) begin
         checked_min_deq <= 1'b1;
         k_count <= k_count + 1;
@@ -260,10 +316,18 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH = 8)(
       end
 
       if (checked_valid_out) begin
-        top_k_out <= checked_data_out;
-        valid_out <= 1'b1;
+        first_pos_lookup_addr <= checked_data_out;
+       first_pos_lookup_addr_valid <= 1'b1;
+      // vertex_in ;
+      // vertex_valid_in;
+        // valid_out <= 1'b1;
+        // top_k_out <= checked_data_out;//checked_data_out;
       end
-      else valid_out <= 1'b0;
+      else first_pos_lookup_addr_valid <= 1'b0;
+
+      top_k_out <= vertex_in;//checked_data_out;
+      valid_out <= vertex_valid_in;
+
     end
   end
 
@@ -337,13 +401,18 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH = 8)(
     .clk_in(clk_in),
     .rst_in(rst_in),
     .data_addra(mem_req_out),
-    .data_addrb(mem_req_out2),
+    .data_addrb(mem_req_out2_route),
     .data_validina(mem_valid_out),
-    .data_validinb(mem_valid_out2),
+    .data_validinb(mem_valid_out2_route),
     .data_outa(mem_data_in),
-    .data_outb(mem_data_in2),
+    .data_outb(mem_data_in2_route),
     .data_valid_outa(mem_valid_in),
-    .data_valid_outb(mem_valid_in2)
+    .data_valid_outb(mem_valid_in2_route),
+
+    .idx_addr(idx_lookup_addr),
+    .idx_validin(idx_lookup_addr_valid),
+    .rowidx_out(idxaddr_out),
+    .rowidx_valid_out(idxaddr_out_valid)
   );
 
 
