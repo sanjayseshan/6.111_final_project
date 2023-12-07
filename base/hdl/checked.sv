@@ -84,9 +84,9 @@ module CheckedQueue #(parameter DATA_WIDTH = 32, parameter TAG_WIDTH = 32, param
                 queue[i] <= 0;
                 Q_data[i] <= 0;
                 valid[i] <= 0;
-                read_ptr <= 0;
-                prev_read_ptr <= 0;
             end
+            // read_ptr <= 0;
+            // prev_read_ptr <= 0;
             data_out <= 0;
             valid_out <= 0;
             size_out <= 0;

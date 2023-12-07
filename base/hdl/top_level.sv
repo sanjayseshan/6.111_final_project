@@ -15,6 +15,8 @@ module top_level(
   // assign rgb1= 0;
   // assign rgb0 = 0;
 
+  //logic [2:0] state;
+
   logic sys_rst;
   assign sys_rst = btn[0];
 
@@ -45,9 +47,11 @@ module top_level(
   .k_in(4),
   .top_k_out(top_k_out),
   .valid_out(valid_out)
+//  .state(state)
   );
 
   //   input wire clk_in,
+//  assign led = state;
   // input wire rst_in,
   // input wire [31:0] vertex_id_in,
   // input wire [31:0] query_in [DIM-1:0],
@@ -72,10 +76,10 @@ module top_level(
       .clk(clk_100mhz),
       .rx(uart_rxd),
       .tx(uart_txd),
-      .val1_in(vertex_in),
-      .val2_in(query_in[i]),
-      .val3_out(valid_out),
-      .val4_out(top_k_out)
+      .val1_in(top_k_out),
+      .val2_in(valid_out),
+      .val3_out(0),
+      .val4_out(0)
     );
 
 

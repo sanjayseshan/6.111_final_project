@@ -1,7 +1,7 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
 ---------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2023.1 (lin64) Build 3865809 Sun May  7 15:04:56 MDT 2023
-| Date         : Wed Dec  6 19:14:57 2023
+| Date         : Wed Dec  6 20:54:19 2023
 | Host         : seshanpc running 64-bit Debian GNU/Linux 12 (bookworm)
 | Command      : report_timing -file obj/post_synth_timing.rpt
 | Design       : top_level
@@ -12,16 +12,16 @@ Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2023 Advanc
 
 Timing Report
 
-Slack (MET) :             5.192ns  (required time - arrival time)
-  Source:                 man/brx/FSM_onehot_state_reg[1]/C
+Slack (VIOLATED) :        -18.856ns  (required time - arrival time)
+  Source:                 main/checked_min_deq_reg_rep/C
                             (rising edge-triggered cell FDRE clocked by gclk  {rise@0.000ns fall@4.000ns period=10.000ns})
-  Destination:            man/brx/addr_o_reg[0]/R
+  Destination:            main/checked/max_tag_out_reg[0]/D
                             (rising edge-triggered cell FDRE clocked by gclk  {rise@0.000ns fall@4.000ns period=10.000ns})
   Path Group:             gclk
   Path Type:              Setup (Max at Slow Process Corner)
   Requirement:            10.000ns  (gclk rise@10.000ns - gclk rise@0.000ns)
-  Data Path Delay:        4.195ns  (logic 0.999ns (23.814%)  route 3.196ns (76.186%))
-  Logic Levels:           3  (LUT6=3)
+  Data Path Delay:        28.705ns  (logic 10.276ns (35.799%)  route 18.429ns (64.201%))
+  Logic Levels:           54  (CARRY4=32 LUT2=5 LUT3=1 LUT4=3 LUT5=2 LUT6=11)
   Clock Path Skew:        -0.145ns (DCD - SCD + CPR)
     Destination Clock Delay (DCD):    2.660ns = ( 12.660 - 10.000 ) 
     Source Clock Delay      (SCD):    2.920ns
@@ -40,18 +40,152 @@ Slack (MET) :             5.192ns  (required time - arrival time)
     N15                  IBUF (Prop_ibuf_I_O)         1.440     1.440 r  clk_100mhz_IBUF_inst/O
                          net (fo=1, unplaced)         0.800     2.240    clk_100mhz_IBUF
                          BUFG (Prop_bufg_I_O)         0.096     2.336 r  clk_100mhz_IBUF_BUFG_inst/O
-                         net (fo=258, unplaced)       0.584     2.920    man/brx/clk_100mhz_IBUF_BUFG
-                         FDRE                                         r  man/brx/FSM_onehot_state_reg[1]/C
+                         net (fo=1753, unplaced)      0.584     2.920    main/clk_100mhz_IBUF_BUFG
+                         FDRE                                         r  main/checked_min_deq_reg_rep/C
   -------------------------------------------------------------------    -------------------
-                         FDRE (Prop_fdre_C_Q)         0.456     3.376 f  man/brx/FSM_onehot_state_reg[1]/Q
-                         net (fo=5, unplaced)         0.993     4.369    man/brx/FSM_onehot_state_reg_n_0_[1]
-                         LUT6 (Prop_lut6_I0_O)        0.295     4.664 f  man/brx/FSM_onehot_state[0]_i_3/O
-                         net (fo=4, unplaced)         0.926     5.590    man/urx/valid_o_reg_0
-                         LUT6 (Prop_lut6_I0_O)        0.124     5.714 f  man/urx/valid_o_i_1/O
-                         net (fo=5, unplaced)         0.477     6.191    man/brx/valid_o_reg_1
-                         LUT6 (Prop_lut6_I5_O)        0.124     6.315 r  man/brx/addr_o[3]_i_1/O
-                         net (fo=4, unplaced)         0.800     7.115    man/brx/addr_o[3]_i_1_n_0
-                         FDRE                                         r  man/brx/addr_o_reg[0]/R
+                         FDRE (Prop_fdre_C_Q)         0.456     3.376 r  main/checked_min_deq_reg_rep/Q
+                         net (fo=188, unplaced)       0.856     4.232    main/checked/push_lru_reg_0
+                         LUT3 (Prop_lut3_I0_O)        0.295     4.527 r  main/checked/read_ptr_reg[3]__0_i_307/O
+                         net (fo=1, unplaced)         0.000     4.527    main/checked/read_ptr_reg[3]__0_i_307_n_0
+                         CARRY4 (Prop_carry4_S[1]_CO[3])
+                                                      0.550     5.077 r  main/checked/read_ptr_reg[3]__0_i_160/CO[3]
+                         net (fo=1, unplaced)         0.009     5.086    main/checked/read_ptr_reg[3]__0_i_160_n_0
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     5.200 r  main/checked/read_ptr_reg[3]__0_i_54/CO[3]
+                         net (fo=1, unplaced)         0.000     5.200    main/checked/read_ptr_reg[3]__0_i_54_n_0
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     5.314 r  main/checked/read_ptr_reg[3]__0_i_19/CO[3]
+                         net (fo=1, unplaced)         0.000     5.314    main/checked/read_ptr_reg[3]__0_i_19_n_0
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     5.428 r  main/checked/read_ptr_reg[3]__0_i_4/CO[3]
+                         net (fo=19, unplaced)        0.977     6.405    main/checked/curval2
+                         LUT2 (Prop_lut2_I1_O)        0.124     6.529 r  main/checked/read_ptr_reg[2]__0_i_28/O
+                         net (fo=67, unplaced)        0.539     7.068    main/checked/p_1_in
+                         LUT6 (Prop_lut6_I4_O)        0.124     7.192 r  main/checked/read_ptr_reg[3]__0_i_514/O
+                         net (fo=1, unplaced)         0.639     7.831    main/checked/read_ptr_reg[3]__0_i_514_n_0
+                         CARRY4 (Prop_carry4_DI[1]_CO[3])
+                                                      0.507     8.338 r  main/checked/read_ptr_reg[3]__0_i_388/CO[3]
+                         net (fo=1, unplaced)         0.009     8.347    main/checked/read_ptr_reg[3]__0_i_388_n_0
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     8.461 r  main/checked/read_ptr_reg[3]__0_i_245/CO[3]
+                         net (fo=1, unplaced)         0.000     8.461    main/checked/read_ptr_reg[3]__0_i_245_n_0
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     8.575 r  main/checked/read_ptr_reg[3]__0_i_115/CO[3]
+                         net (fo=1, unplaced)         0.000     8.575    main/checked/read_ptr_reg[3]__0_i_115_n_0
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     8.689 r  main/checked/read_ptr_reg[3]__0_i_41/CO[3]
+                         net (fo=101, unplaced)       1.018     9.707    main/checked/curval240_in
+                         LUT6 (Prop_lut6_I5_O)        0.124     9.831 r  main/checked/read_ptr_reg[3]__0_i_588/O
+                         net (fo=4, unplaced)         0.473    10.304    main/checked/read_ptr_reg[3]__0_i_588_n_0
+                         LUT4 (Prop_lut4_I2_O)        0.124    10.428 r  main/checked/read_ptr_reg[1]__0_i_87/O
+                         net (fo=1, unplaced)         0.000    10.428    main/checked/read_ptr_reg[1]__0_i_87_n_0
+                         CARRY4 (Prop_carry4_S[1]_CO[3])
+                                                      0.550    10.978 r  main/checked/read_ptr_reg[1]__0_i_60/CO[3]
+                         net (fo=1, unplaced)         0.009    10.987    main/checked/read_ptr_reg[1]__0_i_60_n_0
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114    11.101 r  main/checked/read_ptr_reg[1]__0_i_38/CO[3]
+                         net (fo=1, unplaced)         0.000    11.101    main/checked/read_ptr_reg[1]__0_i_38_n_0
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114    11.215 r  main/checked/read_ptr_reg[1]__0_i_20/CO[3]
+                         net (fo=1, unplaced)         0.000    11.215    main/checked/read_ptr_reg[1]__0_i_20_n_0
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114    11.329 r  main/checked/read_ptr_reg[1]__0_i_10/CO[3]
+                         net (fo=51, unplaced)        1.001    12.330    main/checked/curval242_in
+                         LUT2 (Prop_lut2_I1_O)        0.124    12.454 r  main/checked/read_ptr_reg[1]__0_i_6/O
+                         net (fo=69, unplaced)        0.509    12.963    main/checked/curval144_out
+                         LUT6 (Prop_lut6_I2_O)        0.124    13.087 r  main/checked/read_ptr_reg[3]__0_i_498/O
+                         net (fo=1, unplaced)         0.639    13.726    main/checked/read_ptr_reg[3]__0_i_498_n_0
+                         CARRY4 (Prop_carry4_DI[1]_CO[3])
+                                                      0.507    14.233 r  main/checked/read_ptr_reg[3]__0_i_371/CO[3]
+                         net (fo=1, unplaced)         0.009    14.242    main/checked/read_ptr_reg[3]__0_i_371_n_0
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114    14.356 r  main/checked/read_ptr_reg[3]__0_i_228/CO[3]
+                         net (fo=1, unplaced)         0.000    14.356    main/checked/read_ptr_reg[3]__0_i_228_n_0
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114    14.470 r  main/checked/read_ptr_reg[3]__0_i_106/CO[3]
+                         net (fo=1, unplaced)         0.000    14.470    main/checked/read_ptr_reg[3]__0_i_106_n_0
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114    14.584 r  main/checked/read_ptr_reg[3]__0_i_40/CO[3]
+                         net (fo=20, unplaced)        0.978    15.562    main/checked/curval245_in
+                         LUT2 (Prop_lut2_I1_O)        0.124    15.686 r  main/checked/read_ptr_reg[2]__0_i_27/O
+                         net (fo=51, unplaced)        0.502    16.188    main/checked/curval147_out
+                         LUT6 (Prop_lut6_I2_O)        0.124    16.312 r  main/checked/read_ptr_reg[2]__0_i_198/O
+                         net (fo=1, unplaced)         0.639    16.951    main/checked/read_ptr_reg[2]__0_i_198_n_0
+                         CARRY4 (Prop_carry4_DI[1]_CO[3])
+                                                      0.507    17.458 r  main/checked/read_ptr_reg[2]__0_i_133/CO[3]
+                         net (fo=1, unplaced)         0.009    17.467    main/checked/read_ptr_reg[2]__0_i_133_n_0
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114    17.581 r  main/checked/read_ptr_reg[2]__0_i_73/CO[3]
+                         net (fo=1, unplaced)         0.000    17.581    main/checked/read_ptr_reg[2]__0_i_73_n_0
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114    17.695 r  main/checked/read_ptr_reg[2]__0_i_29/CO[3]
+                         net (fo=1, unplaced)         0.000    17.695    main/checked/read_ptr_reg[2]__0_i_29_n_0
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114    17.809 r  main/checked/read_ptr_reg[2]__0_i_15/CO[3]
+                         net (fo=52, unplaced)        1.001    18.810    main/checked/curval248_in
+                         LUT6 (Prop_lut6_I2_O)        0.124    18.934 r  main/checked/read_ptr_reg[2]__0_i_264/O
+                         net (fo=5, unplaced)         0.477    19.411    main/checked/read_ptr_reg[2]__0_i_264_n_0
+                         LUT4 (Prop_lut4_I2_O)        0.124    19.535 r  main/checked/read_ptr_reg[2]__0_i_222/O
+                         net (fo=1, unplaced)         0.000    19.535    main/checked/read_ptr_reg[2]__0_i_222_n_0
+                         CARRY4 (Prop_carry4_S[1]_CO[3])
+                                                      0.550    20.085 r  main/checked/read_ptr_reg[2]__0_i_154/CO[3]
+                         net (fo=1, unplaced)         0.009    20.094    main/checked/read_ptr_reg[2]__0_i_154_n_0
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114    20.208 r  main/checked/read_ptr_reg[2]__0_i_90/CO[3]
+                         net (fo=1, unplaced)         0.000    20.208    main/checked/read_ptr_reg[2]__0_i_90_n_0
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114    20.322 r  main/checked/read_ptr_reg[2]__0_i_38/CO[3]
+                         net (fo=1, unplaced)         0.000    20.322    main/checked/read_ptr_reg[2]__0_i_38_n_0
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114    20.436 r  main/checked/read_ptr_reg[2]__0_i_16/CO[3]
+                         net (fo=53, unplaced)        1.002    21.438    main/checked/curval251_in
+                         LUT2 (Prop_lut2_I1_O)        0.124    21.562 r  main/checked/read_ptr_reg[2]__0_i_5/O
+                         net (fo=51, unplaced)        0.532    22.094    main/checked/curval153_out
+                         LUT6 (Prop_lut6_I1_O)        0.124    22.218 f  main/checked/read_ptr_reg[2]__0_i_245/O
+                         net (fo=4, unplaced)         0.473    22.691    main/checked/read_ptr_reg[2]__0_i_245_n_0
+                         LUT6 (Prop_lut6_I4_O)        0.124    22.815 r  main/checked/read_ptr_reg[2]__0_i_234/O
+                         net (fo=1, unplaced)         0.639    23.454    main/checked/read_ptr_reg[2]__0_i_234_n_0
+                         CARRY4 (Prop_carry4_DI[1]_CO[3])
+                                                      0.507    23.961 r  main/checked/read_ptr_reg[2]__0_i_171/CO[3]
+                         net (fo=1, unplaced)         0.009    23.970    main/checked/read_ptr_reg[2]__0_i_171_n_0
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114    24.084 r  main/checked/read_ptr_reg[2]__0_i_107/CO[3]
+                         net (fo=1, unplaced)         0.000    24.084    main/checked/read_ptr_reg[2]__0_i_107_n_0
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114    24.198 r  main/checked/read_ptr_reg[2]__0_i_47/CO[3]
+                         net (fo=1, unplaced)         0.000    24.198    main/checked/read_ptr_reg[2]__0_i_47_n_0
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114    24.312 r  main/checked/read_ptr_reg[2]__0_i_17/CO[3]
+                         net (fo=5, unplaced)         0.946    25.258    main/checked/curval254_in
+                         LUT2 (Prop_lut2_I1_O)        0.124    25.382 r  main/checked/read_ptr_reg[2]__0_i_6/O
+                         net (fo=52, unplaced)        0.532    25.914    main/checked/curval156_out
+                         LUT6 (Prop_lut6_I1_O)        0.124    26.038 r  main/checked/read_ptr_reg[2]__0_i_244/O
+                         net (fo=2, unplaced)         0.460    26.498    main/checked/read_ptr_reg[2]__0_i_244_n_0
+                         LUT6 (Prop_lut6_I0_O)        0.124    26.622 r  main/checked/read_ptr_reg[2]__0_i_182/O
+                         net (fo=1, unplaced)         0.639    27.261    main/checked/read_ptr_reg[2]__0_i_182_n_0
+                         CARRY4 (Prop_carry4_DI[1]_CO[3])
+                                                      0.507    27.768 r  main/checked/read_ptr_reg[2]__0_i_116/CO[3]
+                         net (fo=1, unplaced)         0.009    27.777    main/checked/read_ptr_reg[2]__0_i_116_n_0
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114    27.891 r  main/checked/read_ptr_reg[2]__0_i_56/CO[3]
+                         net (fo=1, unplaced)         0.000    27.891    main/checked/read_ptr_reg[2]__0_i_56_n_0
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114    28.005 r  main/checked/read_ptr_reg[2]__0_i_18/CO[3]
+                         net (fo=1, unplaced)         0.000    28.005    main/checked/read_ptr_reg[2]__0_i_18_n_0
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114    28.119 f  main/checked/read_ptr_reg[2]__0_i_7/CO[3]
+                         net (fo=9, unplaced)         0.959    29.078    main/checked/read_ptr2
+                         LUT5 (Prop_lut5_I2_O)        0.124    29.202 f  main/checked/max_tag_out[31]_i_40/O
+                         net (fo=3, unplaced)         0.467    29.669    main/checked/max_tag_out[31]_i_40_n_0
+                         LUT6 (Prop_lut6_I1_O)        0.124    29.793 r  main/checked/max_tag_out[31]_i_13/O
+                         net (fo=33, unplaced)        0.521    30.314    main/checked/max_tag_out[31]_i_13_n_0
+                         LUT6 (Prop_lut6_I0_O)        0.124    30.438 r  main/checked/max_tag_out[31]_i_6/O
+                         net (fo=32, unplaced)        0.490    30.928    main/checked/max_tag_out[31]_i_6_n_0
+                         LUT5 (Prop_lut5_I0_O)        0.124    31.052 r  main/checked/max_tag_out[0]_i_2/O
+                         net (fo=1, unplaced)         0.449    31.501    main/checked/max_tag_out[0]_i_2_n_0
+                         LUT4 (Prop_lut4_I0_O)        0.124    31.625 r  main/checked/max_tag_out[0]_i_1/O
+                         net (fo=1, unplaced)         0.000    31.625    main/checked/max_tag_out[0]_i_1_n_0
+                         FDRE                                         r  main/checked/max_tag_out_reg[0]/D
   -------------------------------------------------------------------    -------------------
 
                          (clock gclk rise edge)      10.000    10.000 r  
@@ -60,16 +194,16 @@ Slack (MET) :             5.192ns  (required time - arrival time)
     N15                  IBUF (Prop_ibuf_I_O)         1.370    11.370 r  clk_100mhz_IBUF_inst/O
                          net (fo=1, unplaced)         0.760    12.130    clk_100mhz_IBUF
                          BUFG (Prop_bufg_I_O)         0.091    12.221 r  clk_100mhz_IBUF_BUFG_inst/O
-                         net (fo=258, unplaced)       0.439    12.660    man/brx/clk_100mhz_IBUF_BUFG
-                         FDRE                                         r  man/brx/addr_o_reg[0]/C
+                         net (fo=1753, unplaced)      0.439    12.660    main/checked/clk_100mhz_IBUF_BUFG
+                         FDRE                                         r  main/checked/max_tag_out_reg[0]/C
                          clock pessimism              0.115    12.775    
                          clock uncertainty           -0.035    12.740    
-                         FDRE (Setup_fdre_C_R)       -0.433    12.307    man/brx/addr_o_reg[0]
+                         FDRE (Setup_fdre_C_D)        0.029    12.769    main/checked/max_tag_out_reg[0]
   -------------------------------------------------------------------
-                         required time                         12.307    
-                         arrival time                          -7.115    
+                         required time                         12.769    
+                         arrival time                         -31.625    
   -------------------------------------------------------------------
-                         slack                                  5.192    
+                         slack                                -18.856    
 
 
 
