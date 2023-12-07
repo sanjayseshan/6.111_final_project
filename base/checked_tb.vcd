@@ -1,5 +1,5 @@
 $date
-	Wed Dec  6 01:44:32 2023
+	Wed Dec  6 21:03:56 2023
 $end
 $version
 	Icarus Verilog
@@ -10,7 +10,7 @@ $end
 $scope module checked_tb $end
 $var wire 1 ! valid_out $end
 $var wire 16 " tag_out [15:0] $end
-$var wire 4 # size_out [3:0] $end
+$var wire 3 # size_out [2:0] $end
 $var wire 16 $ max_tag_out [15:0] $end
 $var wire 1 % full_out $end
 $var wire 1 & empty_out $end
@@ -30,7 +30,7 @@ $var wire 32 / enq_data_in [31:0] $end
 $var wire 1 , enq_in $end
 $var wire 16 0 enq_tag_in [15:0] $end
 $var wire 1 . rst_in $end
-$var wire 4 1 write_ptr [3:0] $end
+$var wire 3 1 write_ptr [2:0] $end
 $var parameter 32 2 DATA_WIDTH $end
 $var parameter 32 3 DEPTH $end
 $var parameter 32 4 TAG_WIDTH $end
@@ -40,27 +40,27 @@ $var reg 1 & empty_out $end
 $var reg 1 % full_out $end
 $var reg 16 7 max_tag_out [15:0] $end
 $var reg 32 8 maxval [31:0] $end
-$var reg 4 9 prev_read_ptr [3:0] $end
+$var reg 3 9 prev_read_ptr [2:0] $end
 $var reg 1 : push_lru $end
-$var reg 4 ; read_ptr [3:0] $end
+$var reg 3 ; read_ptr [2:0] $end
 $var reg 1 < rem_lru $end
-$var reg 4 = size_out [3:0] $end
+$var reg 3 = size_out [2:0] $end
 $var reg 16 > tag_out [15:0] $end
 $var reg 1 ! valid_out $end
 $scope module lru_cache $end
 $var wire 1 ( clk_in $end
 $var wire 1 < deq_in $end
-$var wire 4 ? enq_data_in [3:0] $end
+$var wire 3 ? enq_data_in [2:0] $end
 $var wire 1 : enq_in $end
 $var wire 1 . rst_in $end
 $var parameter 33 @ DATA_WIDTH $end
 $var parameter 32 A DEPTH $end
-$var reg 4 B data_out [3:0] $end
+$var reg 3 B data_out [2:0] $end
 $var reg 1 C empty_out $end
 $var reg 1 D full_out $end
-$var reg 4 E read_ptr [3:0] $end
+$var reg 3 E read_ptr [2:0] $end
 $var reg 1 F valid_out $end
-$var reg 4 G write_ptr [3:0] $end
+$var reg 3 G write_ptr [2:0] $end
 $scope begin $ivl_for_loop3 $end
 $var integer 32 H i [31:0] $end
 $upscope $end
@@ -79,16 +79,16 @@ $upscope $end
 $enddefinitions $end
 $comment Show the parameter values. $end
 $dumpall
-b1000 A
-b100 @
+b11 A
+b11 @
 b10000 4
-b1000 3
+b11 3
 b100000 2
 $end
 #0
 $dumpvars
 b0 K
-b1000 J
+b11 J
 b0 I
 b0 H
 bx G
@@ -142,7 +142,7 @@ b0 1
 b0 B
 1D
 0C
-b1000 J
+b11 J
 0%
 1&
 b0 G
@@ -153,9 +153,8 @@ b0 '
 b0 6
 b0 9
 b0 ?
-b0 ;
-b1000 H
-b1000 K
+b11 H
+b11 K
 1(
 #20000
 0(
@@ -170,7 +169,8 @@ b1110 0
 #35000
 b1110 8
 b1110 5
-b1000 J
+b0 ;
+b11 J
 0&
 1<
 b1 #
@@ -205,7 +205,7 @@ b1 +
 b1 /
 #75000
 b1 ;
-b1000 J
+b11 J
 b100011 8
 b100011 5
 1<
@@ -240,9 +240,10 @@ b10 +
 b10 /
 #115000
 b1 ;
-b1000 J
+b11 J
 b100011 8
 b100011 5
+1%
 1<
 b11 #
 b11 =
@@ -251,23 +252,26 @@ b11 =
 0(
 0,
 #125000
-b11 1
-b11 B
+0F
+b0 1
+b0 B
+1C
 0<
-b11 E
+b0 E
 1(
 #130000
 0(
 1)
 #135000
-b1000 J
+b0 ;
+b11 J
 b1110 8
 b1110 5
+0%
 b10 #
 b10 =
 b1 9
 b1 ?
-b0 ;
 1!
 1:
 b100011 "
@@ -279,6 +283,10 @@ b1 6
 0(
 0)
 #145000
+1F
+b1 1
+b1 B
+0C
 b1110 $
 b1110 7
 0:
@@ -293,10 +301,11 @@ b1001011 0
 b11 +
 b11 /
 #155000
-b11 ;
-b1000 J
+b1 ;
+b11 J
 b1001011 8
 b1001011 5
+1%
 1<
 b11 #
 b11 =
@@ -305,12 +314,12 @@ b11 =
 0(
 0,
 #165000
-b100 1
-b100 B
+0F
+1C
 b1001011 $
 b1001011 7
 0<
-b100 E
+b1 E
 1(
 #170000
 0(
@@ -320,22 +329,11 @@ b1100 0
 b100 +
 b100 /
 #175000
-b11 ;
-b1000 J
-b1001011 8
-b1001011 5
-1<
-b100 #
-b100 =
 1(
 #180000
 0(
 0,
 #185000
-b101 1
-b101 B
-0<
-b101 E
 1(
 #190000
 0(
@@ -345,35 +343,23 @@ b11011 0
 b101 +
 b101 /
 #195000
-b11 ;
-b1000 J
-b1001011 8
-b1001011 5
-1<
-b101 #
-b101 =
 1(
 #200000
 0(
 0,
 #205000
-b110 1
-b110 B
-0<
-b110 E
 1(
 #210000
 0(
 1)
 #215000
-b1000 J
-b11011 8
-b11011 5
-b100 #
-b100 =
-b11 9
-b11 ?
-b101 ;
+b0 ;
+b11 J
+b1110 8
+b1110 5
+0%
+b10 #
+b10 =
 1!
 1:
 b1001011 "
@@ -385,8 +371,10 @@ b11 6
 0(
 0)
 #225000
-b11011 $
-b11011 7
+1F
+0C
+b1110 $
+b1110 7
 0:
 0!
 b10 G
@@ -395,47 +383,46 @@ b10 G
 0(
 1)
 #235000
-b1000 J
-b1110 8
-b1110 5
-b11 #
-b11 =
-b101 9
-b101 ?
-b0 ;
+b10 ;
+b11 J
+b11 8
+b11 5
+b1 #
+b1 =
+b0 9
+b0 ?
 1!
 1:
-b11011 "
-b11011 >
-b101 '
-b101 6
+b1110 "
+b1110 >
+b0 '
+b0 6
 1(
 #240000
 0(
 0)
 #245000
-b1110 $
-b1110 7
+b11 $
+b11 7
 0:
 0!
-b11 G
+b0 G
 1(
 #250000
-b10 ;
-b1000 I
-b1110 8
+b11 I
+b11 8
 b11 5
 0(
 1*
 #255000
-b1000 I
-b1110 8
-b1100 5
-b10 #
-b10 =
+b11 I
+b0 8
+b11111111111111111111111111111111 5
+1&
+b0 #
+b0 =
 b10 9
 b10 ?
-b100 ;
 1!
 1:
 b11 "
@@ -444,81 +431,41 @@ b10 '
 b10 6
 1(
 #260000
-b0 ;
-b1000 J
-b1110 8
-b1110 5
-0(
-0*
-#265000
-0:
-0!
-b100 G
-1(
-#270000
-0(
-1)
-#275000
-b1000 J
-b1100 8
-b1100 5
-b1 #
-b1 =
-b0 9
-b0 ?
-b100 ;
-1!
-1:
-b1110 "
-b1110 >
-b0 '
-b0 6
-1(
-#280000
-0(
-0)
-#285000
-b1100 $
-b1100 7
-0:
-0!
-b101 G
-1(
-#290000
-b1000 I
-b1100 8
-b1100 5
-0(
-1*
-#295000
-b1000 I
-b0 8
-b11111111111111111111111111111111 5
-1&
-b0 #
-b0 =
-b100 9
-b100 ?
-b101 ;
-1!
-1:
-b1100 "
-b1100 >
-b100 '
-b100 6
-1(
-#300000
-b1000 J
+b11 J
 b0 5
 0(
 0*
-#305000
+#265000
 1D
 b0 $
 b0 7
 0:
 0!
-b110 G
+b1 G
+1(
+#270000
+0(
+1)
+#275000
+1(
+#280000
+0(
+0)
+#285000
+1(
+#290000
+b11 I
+b11111111111111111111111111111111 5
+0(
+1*
+#295000
+1(
+#300000
+b11 J
+b0 5
+0(
+0*
+#305000
 1(
 #310000
 0(
@@ -530,8 +477,8 @@ b110 /
 #315000
 b1111 8
 b1111 5
-b110 ;
-b1000 J
+b1 ;
+b11 J
 0&
 1<
 b1 #
@@ -541,27 +488,26 @@ b1 =
 0(
 0,
 #325000
-b111 1
-b111 B
+b0 1
+b0 B
 0D
 b1111 $
 b1111 7
 0<
-b111 E
+b10 E
 1(
 #330000
 0(
 1)
 #335000
-b1000 J
+b11 J
 b0 8
 b0 5
 1&
 b0 #
 b0 =
-b110 9
-b110 ?
-b111 ;
+b1 9
+b1 ?
 1!
 1:
 b1111 "
@@ -578,7 +524,7 @@ b0 $
 b0 7
 0:
 0!
-b111 G
+b10 G
 1(
 #350000
 0(
@@ -590,7 +536,8 @@ b111 /
 #355000
 b10111101 8
 b10111101 5
-b1000 J
+b0 ;
+b11 J
 0&
 1<
 b1 #
@@ -600,8 +547,8 @@ b1 =
 0(
 0,
 #365000
-b1 1
-b1 B
+b10 1
+b10 B
 0D
 b10111101 $
 b10111101 7
@@ -616,8 +563,8 @@ b1011010000 0
 b1000 +
 b1000 /
 #375000
-b1 ;
-b1000 J
+b10 ;
+b11 J
 b1011010000 8
 b1011010000 5
 1<
@@ -628,29 +575,29 @@ b10 =
 0(
 0,
 #385000
-b11 1
-b11 B
+b1 1
+b1 B
 b1011010000 $
 b1011010000 7
 0<
 b1 E
 1(
 #390000
-b111 ;
-b1000 I
+b0 ;
+b11 I
 b1011010000 8
 b10111101 5
 0(
 1*
 #395000
-b1000 I
+b10 ;
+b11 I
 b1011010000 8
 b1011010000 5
 b1 #
 b1 =
-b111 9
-b111 ?
-b1 ;
+b0 9
+b0 ?
 1!
 1:
 b10111101 "
@@ -659,7 +606,7 @@ b111 '
 b111 6
 1(
 #400000
-b1000 J
+b11 J
 b1011010000 8
 b1011010000 5
 0(
@@ -673,15 +620,14 @@ b0 G
 0(
 1)
 #415000
-b1000 J
+b11 J
 b0 8
 b0 5
 1&
 b0 #
 b0 =
-b1 9
-b1 ?
-b10 ;
+b10 9
+b10 ?
 1!
 1:
 b1011010000 "

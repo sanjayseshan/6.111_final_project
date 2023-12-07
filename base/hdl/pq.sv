@@ -49,7 +49,7 @@ module PriorityQueue #(parameter DATA_WIDTH = 32, parameter TAG_WIDTH = 32, para
         .clk_in(clk_in),
         .rst_in(rst_in),
         .deq_in(rem_lru),
-        .enq_data_in(read_ptr),
+        .enq_data_in(prev_read_ptr),
         .enq_in(push_lru),
         .full_out(),
         .data_out(write_ptr),
@@ -64,10 +64,9 @@ module PriorityQueue #(parameter DATA_WIDTH = 32, parameter TAG_WIDTH = 32, para
                 Q_data[i] <= 0;
                 valid[i] <= 0;
                 // curval <= 32'hFFFFFFFF;
-                read_ptr <= 0;
-                prev_read_ptr <= 0;
                 // write_ptr <= 0;
             end
+            prev_read_ptr <= 0;
             data_out <= 0;
             // full_out <= 0;
             // empty_out <= 0;
@@ -83,7 +82,7 @@ module PriorityQueue #(parameter DATA_WIDTH = 32, parameter TAG_WIDTH = 32, para
                 push_lru <= 1'b1;
                 valid_out <= 1'b1;
                 valid[read_ptr] <= 1'b0;
-                read_ptr <= (read_ptr < DEPTH-1) ? read_ptr +1 : 0;
+                // read_ptr <= (read_ptr < DEPTH-1) ? read_ptr +1 : 0;
                 prev_read_ptr <= read_ptr;
                 size_out <= size_out -1;
             end else begin
