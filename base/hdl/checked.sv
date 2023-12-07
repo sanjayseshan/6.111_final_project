@@ -32,41 +32,61 @@ module CheckedQueue #(parameter DATA_WIDTH = 32, parameter TAG_WIDTH = 32, param
     
     logic deq_in;
 
+    logic [$clog2(DEPTH):0] i;
+    logic ready;
 
-    // finds largest value in queue (supposedly)
-    always_comb begin
-        empty_out = (size_out == 0);
-        full_out = (size_out == DEPTH);
-        // deq_in = deq_smallest_in || deq_largest_in;
+    always_ff @( posedge clk_in ) begin
+        if (rst_in) begin
+            empty_out <= 0;
+            full_out <= 0;
+        end else begin
+            empty_out = (size_out == 0);
+            full_out = (size_out == DEPTH);
+            // deq_in = deq_smallest_in || deq_largest_in;
 
-        curval = deq_smallest_in ? 32'hFFFFFFFF : 32'h0;
-        maxval = 32'h0;
+            curval = deq_smallest_in ? 32'hFFFFFFFF : 32'h0;
+            maxval = 32'h0;
+            
+            if (i == DEPTH) begin
+                i <= 0;
+                ready <= 1;
+            end
+            else begin
+                i <= i + 1;
+                ready <= 0;
+            end
+            if (deq_smallest_in) begin
+                // for (int i = 0; i<DEPTH; i=i+1) begin
+                    if (valid[i] && queue[i] <= curval) begin
+                        read_ptr = i;
+                        curval = queue[i];
+                    end
+
+                    if (valid[i] && queue[i] >= maxval) begin
+                        maxval = queue[i];
+                    end
+                // end
+            end
+            else begin
+                // for (int i = 0; i<DEPTH; i=i+1) begin
+                    if (valid[i] && queue[i] >= curval) begin
+                        read_ptr = i;
+                        curval = queue[i];
+                        maxval = queue[i];
+                    end
+                // end
+            end
+        end
         
-        if (deq_smallest_in) begin
-            for (int i = 0; i<DEPTH; i=i+1) begin
-                if (valid[i] && queue[i] <= curval) begin
-                    read_ptr = i;
-                    curval = queue[i];
-                end
-
-                if (valid[i] && queue[i] >= maxval) begin
-                    maxval = queue[i];
-                end
-            end
-        end
-        else begin
-            for (int i = 0; i<DEPTH; i=i+1) begin
-                if (valid[i] && queue[i] >= curval) begin
-                    read_ptr = i;
-                    curval = queue[i];
-                    maxval = queue[i];
-                end
-            end
-        end
     end
 
+    // // finds largest value in queue (supposedly)
+    // always_comb begin
+     
+    // end
+
     // find lru index to write next element
-    PQ_FIFO #(.DATA_WIDTH($clog2(DEPTH)+1), .DEPTH(DEPTH)) lru_cache (
+    PQ_FIFO_CH #(.DATA_WIDTH($clog2(DEPTH)+1), .DEPTH(DEPTH)) lru_cache (
         .clk_in(clk_in),
         .rst_in(rst_in),
         .deq_in(rem_lru),
@@ -93,7 +113,7 @@ module CheckedQueue #(parameter DATA_WIDTH = 32, parameter TAG_WIDTH = 32, param
         end 
         else begin
             // dequeue largest element
-            if ((deq_smallest_in || deq_largest_in) && ~empty_out && valid[read_ptr]) begin
+            if ((deq_smallest_in || deq_largest_in) && ~empty_out && valid[read_ptr] && ready) begin
                 data_out <= Q_data[read_ptr];
                 tag_out <= queue[read_ptr];
                 push_lru <= 1'b1;
@@ -123,7 +143,7 @@ endmodule
 
 
 // fifo for finding earliest dequeued index
-module PQ_FIFO #(parameter DATA_WIDTH = 32, parameter DEPTH = 8)(
+module PQ_FIFO_CH #(parameter DATA_WIDTH = 32, parameter DEPTH = 8)(
   input wire clk_in,
   input wire rst_in,
   input wire deq_in,
