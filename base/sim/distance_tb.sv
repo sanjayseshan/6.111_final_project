@@ -156,7 +156,7 @@ module distance_tb();
 // result should be 959 or 0x3bf
 
 // result should be 69161 or 0x10e29
-    #5000;
+    #500;
 
       query_pos_in[0] = 23; //5;
     query_pos_in[1] = 67; //7;
@@ -206,7 +206,7 @@ module distance_tb();
     #10;
     data_valid_in[8] = 0;
 
-    #5000
+    #500
     $display("Simulation finished");
     $finish;
   end
