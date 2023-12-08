@@ -37,6 +37,9 @@ module top_level(
     
   end
 
+  logic [15:0] k_in;
+
+  assign k_in = 16'd4;
 
   bfis #(.DIM(4), .PQ_LENGTH(5)) main(
   .clk_in(clk_100mhz),
@@ -44,10 +47,10 @@ module top_level(
   .vertex_id_in(1),
   // .vertex_valid_in(1),
   .query_in(query_in_real),
-  .k_in(4),
+  .k_in(k_in),
   .top_k_out(top_k_out),
   .valid_out(valid_out),
- .state(state)
+  .state(state)
   );
 
   logic [31:0] val_3, last_val_3, buf_k_out;
@@ -72,7 +75,7 @@ module top_level(
   );
 
   //   input wire clk_in,
- assign led = buf_k_out[15:0];//state;//buf_k_out[15:0];
+//  assign led = buf_k_out[15:0]; //state;//buf_k_out[15:0];
   // input wire rst_in,
   // input wire [31:0] vertex_id_in,
   // input wire [31:0] query_in [DIM-1:0],
@@ -80,6 +83,14 @@ module top_level(
   // output logic [31:0] top_k_out,
   // output logic valid_out,
   // output logic [2:0] state
+
+logic [2:0] count;
+
+
+assign led = state;
+// always_ff @ (posedge clk_100mhz) begin
+//   if (valid_out) led <= 1'b1;
+// end
 
   logic [2:0] i;
 
@@ -100,7 +111,7 @@ module top_level(
       .val1_in(buf_k_out),
       .val2_in(buf_valid_out),
       .val3_out(val_3),
-      .val4_out(0)
+      .val4_out(32'b0)
     );
 
 

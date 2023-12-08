@@ -322,8 +322,8 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH = 8)(
     end
 
     else if (state==3'b101) begin
-      // if (pq_size > 3) state <= 3'b111;
-      if (pq_empty_out && ~checked_empty_out) begin
+      if (pq_size > 3) state <= 3'b111;
+      else if (pq_empty_out && ~checked_empty_out) begin
         state <= 3'b110;
         k_count <= 4'b0;
       end
@@ -418,10 +418,10 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH = 8)(
 
 
 
-  PriorityQueue #(.DATA_WIDTH(32), .TAG_WIDTH(32), .DEPTH(16'd8)) s (
+  CheckedQueue #(.DATA_WIDTH(32), .TAG_WIDTH(32), .DEPTH(16'd8)) s (
     .clk_in(clk_in),
     .rst_in(rst_in),
-    .deq_in(pq_deq_in),
+    .deq_smallest_in(pq_deq_in),
     .enq_data_in(point_addr),
     .enq_tag_in(dist_out),
     .enq_in(dist_valid_out),
