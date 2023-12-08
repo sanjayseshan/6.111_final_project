@@ -1,8 +1,8 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
 ---------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2023.1 (lin64) Build 3865809 Sun May  7 15:04:56 MDT 2023
-| Date         : Fri Dec  8 17:50:10 2023
-| Host         : worker running 64-bit Ubuntu 20.04.6 LTS
+| Date         : Fri Dec  8 18:50:14 2023
+| Host         : seshanpc running 64-bit Debian GNU/Linux 12 (bookworm)
 | Command      : report_timing -file obj/post_place_timing.rpt
 | Design       : top_level
 | Device       : 7s50-csga324
@@ -12,20 +12,20 @@ Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2023 Advanc
 
 Timing Report
 
-Slack (MET) :             2.381ns  (required time - arrival time)
-  Source:                 main/pos_vec_reg[3][3]/C
+Slack (MET) :             6.767ns  (required time - arrival time)
+  Source:                 new_clk_reg[19]/C
                             (rising edge-triggered cell FDRE clocked by gclk  {rise@0.000ns fall@4.000ns period=10.000ns})
-  Destination:            main/distance_calc/intermediate_subs_out_reg[1][5]/D
+  Destination:            new_clk_reg[19]/D
                             (rising edge-triggered cell FDRE clocked by gclk  {rise@0.000ns fall@4.000ns period=10.000ns})
   Path Group:             gclk
   Path Type:              Setup (Max at Slow Process Corner)
   Requirement:            10.000ns  (gclk rise@10.000ns - gclk rise@0.000ns)
-  Data Path Delay:        7.248ns  (logic 2.818ns (38.880%)  route 4.430ns (61.120%))
-  Logic Levels:           7  (CARRY4=4 LUT2=1 LUT3=1 LUT6=1)
-  Clock Path Skew:        -0.109ns (DCD - SCD + CPR)
+  Data Path Delay:        3.282ns  (logic 0.993ns (30.256%)  route 2.289ns (69.744%))
+  Logic Levels:           2  (BUFG=1 CARRY4=1)
+  Clock Path Skew:        -0.025ns (DCD - SCD + CPR)
     Destination Clock Delay (DCD):    4.782ns = ( 14.782 - 10.000 ) 
-    Source Clock Delay      (SCD):    5.143ns
-    Clock Pessimism Removal (CPR):    0.253ns
+    Source Clock Delay      (SCD):    5.074ns
+    Clock Pessimism Removal (CPR):    0.268ns
   Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
     Total System Jitter     (TSJ):    0.071ns
     Total Input Jitter      (TIJ):    0.000ns
@@ -39,31 +39,18 @@ Slack (MET) :             2.381ns  (required time - arrival time)
                          net (fo=0)                   0.000     0.000    clk_100mhz
     N15                  IBUF (Prop_ibuf_I_O)         1.440     1.440 r  clk_100mhz_IBUF_inst/O
                          net (fo=1, estimated)        1.972     3.412    clk_100mhz_IBUF
-    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.096     3.508 r  clk_100mhz_IBUF_BUFG_inst/O
-                         net (fo=2032, estimated)     1.635     5.143    main/clk_100mhz_IBUF_BUFG
-    SLICE_X3Y36          FDRE                                         r  main/pos_vec_reg[3][3]/C
+    BUFGCTRL_X0Y1        BUFG (Prop_bufg_I_O)         0.096     3.508 r  clk_100mhz_IBUF_BUFG_inst/O
+                         net (fo=20, estimated)       1.566     5.074    clk_100mhz_IBUF_BUFG
+    SLICE_X34Y46         FDRE                                         r  new_clk_reg[19]/C
   -------------------------------------------------------------------    -------------------
-    SLICE_X3Y36          FDRE (Prop_fdre_C_Q)         0.456     5.599 f  main/pos_vec_reg[3][3]/Q
-                         net (fo=1, estimated)        0.994     6.593    main/distance_calc/intermediate_subs_out[3][16]_i_3_1[3]
-    SLICE_X2Y35          LUT6 (Prop_lut6_I0_O)        0.124     6.717 r  main/distance_calc/intermediate_subs_out[3][3]_i_10/O
-                         net (fo=4, estimated)        0.665     7.382    main/distance_calc/intermediate_subs_out[3][3]_i_10_n_0
-    SLICE_X1Y35          LUT3 (Prop_lut3_I0_O)        0.124     7.506 r  main/distance_calc/intermediate_subs_out[3][16]_i_12/O
-                         net (fo=1, estimated)        0.380     7.886    main/distance_calc/intermediate_subs_out[3][16]_i_12_n_0
-    SLICE_X0Y35          CARRY4 (Prop_carry4_DI[1]_CO[3])
-                                                      0.507     8.393 r  main/distance_calc/intermediate_subs_out_reg[3][16]_i_10/CO[3]
-                         net (fo=1, estimated)        0.000     8.393    main/distance_calc/intermediate_subs_out_reg[3][16]_i_10_n_0
-    SLICE_X0Y36          CARRY4 (Prop_carry4_CI_CO[0])
-                                                      0.271     8.664 f  main/distance_calc/intermediate_subs_out_reg[3][16]_i_8/CO[0]
-                         net (fo=10, estimated)       0.986     9.650    main/distance_calc/p_0_in
-    SLICE_X1Y35          LUT2 (Prop_lut2_I1_O)        0.401    10.051 r  main/distance_calc/intermediate_subs_out[3][3]_i_2/O
-                         net (fo=1, estimated)        0.327    10.378    main/distance_calc/intermediate_subs_out[3][3]_i_2_n_0
-    SLICE_X2Y35          CARRY4 (Prop_carry4_DI[3]_CO[3])
-                                                      0.598    10.976 r  main/distance_calc/intermediate_subs_out_reg[3][3]_i_1/CO[3]
-                         net (fo=1, estimated)        0.000    10.976    main/distance_calc/intermediate_subs_out_reg[3][3]_i_1_n_0
-    SLICE_X2Y36          CARRY4 (Prop_carry4_CI_O[1])
-                                                      0.337    11.313 r  main/distance_calc/intermediate_subs_out_reg[3][7]_i_1/O[1]
-                         net (fo=4, estimated)        1.078    12.391    main/distance_calc/intermediate_subs_out0_in[5]
-    SLICE_X12Y34         FDRE                                         r  main/distance_calc/intermediate_subs_out_reg[1][5]/D
+    SLICE_X34Y46         FDRE (Prop_fdre_C_Q)         0.518     5.592 r  new_clk_reg[19]/Q
+                         net (fo=1, estimated)        0.701     6.293    new_clk_reg[19]__0
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.096     6.389 r  new_clk_reg_BUFG[19]_inst/O
+                         net (fo=1611, estimated)     1.588     7.977    new_clk_reg_BUFG[19]
+    SLICE_X34Y46         CARRY4 (Prop_carry4_S[3]_O[3])
+                                                      0.379     8.356 r  new_clk_reg[16]_i_1/O[3]
+                         net (fo=1, routed)           0.000     8.356    new_clk_reg[16]_i_1_n_4
+    SLICE_X34Y46         FDRE                                         r  new_clk_reg[19]/D
   -------------------------------------------------------------------    -------------------
 
                          (clock gclk rise edge)      10.000    10.000 r  
@@ -71,17 +58,17 @@ Slack (MET) :             2.381ns  (required time - arrival time)
                          net (fo=0)                   0.000    10.000    clk_100mhz
     N15                  IBUF (Prop_ibuf_I_O)         1.370    11.370 r  clk_100mhz_IBUF_inst/O
                          net (fo=1, estimated)        1.873    13.244    clk_100mhz_IBUF
-    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.091    13.335 r  clk_100mhz_IBUF_BUFG_inst/O
-                         net (fo=2032, estimated)     1.447    14.782    main/distance_calc/clk_100mhz_IBUF_BUFG
-    SLICE_X12Y34         FDRE                                         r  main/distance_calc/intermediate_subs_out_reg[1][5]/C
-                         clock pessimism              0.253    15.034    
-                         clock uncertainty           -0.035    14.999    
-    SLICE_X12Y34         FDRE (Setup_fdre_C_D)       -0.227    14.772    main/distance_calc/intermediate_subs_out_reg[1][5]
+    BUFGCTRL_X0Y1        BUFG (Prop_bufg_I_O)         0.091    13.335 r  clk_100mhz_IBUF_BUFG_inst/O
+                         net (fo=20, estimated)       1.447    14.782    clk_100mhz_IBUF_BUFG
+    SLICE_X34Y46         FDRE                                         r  new_clk_reg[19]/C
+                         clock pessimism              0.268    15.049    
+                         clock uncertainty           -0.035    15.014    
+    SLICE_X34Y46         FDRE (Setup_fdre_C_D)        0.109    15.123    new_clk_reg[19]
   -------------------------------------------------------------------
-                         required time                         14.772    
-                         arrival time                         -12.391    
+                         required time                         15.123    
+                         arrival time                          -8.356    
   -------------------------------------------------------------------
-                         slack                                  2.381    
+                         slack                                  6.767    
 
 
 

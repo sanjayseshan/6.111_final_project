@@ -322,8 +322,8 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH = 8)(
     end
 
     else if (state==3'b101) begin
-      if (pq_size > 3) state <= 3'b111;
-      else if (pq_empty_out && ~checked_empty_out) begin
+      // if (pq_size > 3) state <= 3'b111;
+      if (pq_empty_out && ~checked_empty_out) begin
         state <= 3'b110;
         k_count <= 4'b0;
       end

@@ -27,22 +27,29 @@ module top_level(
   logic [31:0] query_in_real [4-1:0];
   logic [31:0] top_k_out;
 
+  logic [19:0] new_clk;
+
   always_ff @( posedge clk_100mhz ) begin 
     if (sys_rst) begin 
-      query_in_real[0] = 5;
-      query_in_real[1] = 7;
-      query_in_real[2] = 1;
-      query_in_real[3] = 1;
+      new_clk <= 0;
+    end
+    else begin
+      new_clk <= new_clk + 1;
     end
     
   end
+
+  assign    query_in_real[0] = 5;
+  assign    query_in_real[1] = 7;
+  assign    query_in_real[2] = 1;
+  assign    query_in_real[3] = 1;
 
   logic [15:0] k_in;
 
   assign k_in = 16'd4;
 
   bfis #(.DIM(4), .PQ_LENGTH(5)) main(
-  .clk_in(clk_100mhz),
+  .clk_in(new_clk[19]),
   .rst_in(sys_rst),
   .vertex_id_in(1),
   // .vertex_valid_in(1),
@@ -62,17 +69,17 @@ module top_level(
 
   logic [31:0] buf_valid_out;
 
-  FIFO #(.DATA_WIDTH(32),.DEPTH(4)) buf_out (
-  .clk_in(clk_100mhz),
-  .rst_in(sys_rst),
-  .enq_data_in(top_k_out),
-  .enq_in(valid_out),
-  .deq_in(val_3 != last_val_3 && val_3 == 1),
-  .full_out(),
-  .data_out(buf_k_out),
-  .empty_out(),
-  .valid_out(buf_valid_out)
-  );
+  // FIFO #(.DATA_WIDTH(32),.DEPTH(4)) buf_out (
+  // .clk_in(clk_100mhz),
+  // .rst_in(sys_rst),
+  // .enq_data_in(top_k_out),
+  // .enq_in(valid_out),
+  // .deq_in(val_3 != last_val_3 && val_3 == 1),
+  // .full_out(),
+  // .data_out(buf_k_out),
+  // .empty_out(),
+  // .valid_out(buf_valid_out)
+  // );
 
   //   input wire clk_in,
 //  assign led = buf_k_out[15:0]; //state;//buf_k_out[15:0];
@@ -87,7 +94,9 @@ module top_level(
 logic [2:0] count;
 
 
-assign led = state;
+assign led = state;//top_k_out;//state;
+// assign led[15] = valid_out;//state;
+// assign led[14:12] = state;//state;
 // always_ff @ (posedge clk_100mhz) begin
 //   if (valid_out) led <= 1'b1;
 // end
@@ -103,16 +112,17 @@ assign led = state;
     
   // end
 
+  logic [31:0] tmp;
 
-  manta man (
-      .clk(clk_100mhz),
-      .rx(uart_rxd),
-      .tx(uart_txd),
-      .val1_in(buf_k_out),
-      .val2_in(buf_valid_out),
-      .val3_out(val_3),
-      .val4_out(32'b0)
-    );
+  // manta man (
+  //     .clk(clk_100mhz),
+  //     .rx(uart_rxd),
+  //     .tx(uart_txd),
+  //     .val1_in(buf_k_out),
+  //     .val2_in(buf_valid_out),
+  //     .val3_out(val_3),
+  //     .val4_out(tmp)
+  //   );
 
 
   //   //lots of stuff
