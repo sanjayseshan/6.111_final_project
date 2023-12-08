@@ -12,5 +12,9 @@
 *.vcd
 *.fdb_latexmk
 *.synctex.gz
+<<<<<<< HEAD
 base/manta.yaml
 base/xsim.dir
+=======
+base/manta.yaml
+>>>>>>> b3281aca0f20a6289b51b1f38404ea0119427234
