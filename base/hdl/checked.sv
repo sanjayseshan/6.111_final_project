@@ -48,6 +48,8 @@ module CheckedQueue #(parameter DATA_WIDTH = 32, parameter TAG_WIDTH = 32, param
 
             deq_high <= 1'b0;
 
+            max_tag_out <= 0;
+
         end else begin
             empty_out = (size_out == 0);
             full_out = (size_out == DEPTH);
@@ -82,7 +84,9 @@ module CheckedQueue #(parameter DATA_WIDTH = 32, parameter TAG_WIDTH = 32, param
             if (valid[i] && queue[i] >= maxval) begin
                 read_ptr_max = i;
                 // curval = queue[i];
-                maxval <= queue[i];
+                if (~(deq_high && valid_out)) begin
+                    maxval <= queue[i];
+                end
             end
                 // end
             // end
@@ -157,7 +161,6 @@ module CheckedQueue #(parameter DATA_WIDTH = 32, parameter TAG_WIDTH = 32, param
             data_out <= 0;
             valid_out <= 0;
             size_out <= 0;
-            max_tag_out <= 0;
         end 
         else begin
             // dequeue smallest element
