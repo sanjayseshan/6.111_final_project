@@ -1,7 +1,7 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
 ---------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2023.1 (lin64) Build 3865809 Sun May  7 15:04:56 MDT 2023
-| Date         : Fri Dec  8 14:29:44 2023
+| Date         : Fri Dec  8 16:50:49 2023
 | Host         : worker running 64-bit Ubuntu 20.04.6 LTS
 | Command      : report_timing_summary -file obj/post_synth_timing_summary.rpt
 | Design       : top_level
@@ -48,12 +48,12 @@ check_timing report
 
 Table of Contents
 -----------------
-1. checking no_clock (792)
+1. checking no_clock (0)
 2. checking constant_clock (0)
 3. checking pulse_width_clock (0)
-4. checking unconstrained_internal_endpoints (3)
+4. checking unconstrained_internal_endpoints (0)
 5. checking no_input_delay (2)
-6. checking no_output_delay (1)
+6. checking no_output_delay (4)
 7. checking multiple_clock (0)
 8. checking generated_clocks (0)
 9. checking loops (0)
@@ -61,535 +61,9 @@ Table of Contents
 11. checking partial_output_delay (0)
 12. checking latch_loops (0)
 
-1. checking no_clock (792)
---------------------------
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[0][0]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[0][10]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[0][11]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[0][12]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[0][13]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[0][14]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[0][15]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[0][16]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[0][17]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[0][18]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[0][19]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[0][1]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[0][20]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[0][21]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[0][22]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[0][23]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[0][24]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[0][25]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[0][26]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[0][27]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[0][28]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[0][29]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[0][2]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[0][30]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[0][31]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[0][3]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[0][4]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[0][5]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[0][6]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[0][7]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[0][8]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[0][9]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[1][0]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[1][10]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[1][11]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[1][12]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[1][13]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[1][14]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[1][15]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[1][16]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[1][17]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[1][18]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[1][19]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[1][1]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[1][20]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[1][21]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[1][22]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[1][23]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[1][24]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[1][25]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[1][26]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[1][27]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[1][28]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[1][29]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[1][2]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[1][30]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[1][31]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[1][3]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[1][4]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[1][5]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[1][6]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[1][7]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[1][8]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[1][9]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[2][0]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[2][10]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[2][11]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[2][12]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[2][13]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[2][14]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[2][15]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[2][16]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[2][17]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[2][18]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[2][19]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[2][1]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[2][20]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[2][21]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[2][22]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[2][23]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[2][24]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[2][25]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[2][26]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[2][27]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[2][28]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[2][29]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[2][2]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[2][30]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[2][31]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[2][3]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[2][4]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[2][5]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[2][6]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[2][7]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[2][8]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[2][9]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[3][0]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[3][10]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[3][11]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[3][12]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[3][13]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[3][14]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[3][15]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[3][16]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[3][17]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[3][18]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[3][19]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[3][1]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[3][20]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[3][21]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[3][22]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[3][23]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[3][24]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[3][25]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[3][26]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[3][27]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[3][28]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[3][29]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[3][2]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[3][30]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[3][31]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[3][3]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[3][4]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[3][5]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[3][6]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[3][7]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[3][8]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[3][9]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[4][0]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[4][10]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[4][11]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[4][12]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[4][13]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[4][14]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[4][15]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[4][16]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[4][17]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[4][18]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[4][19]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[4][1]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[4][20]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[4][21]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[4][22]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[4][23]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[4][24]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[4][25]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[4][26]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[4][27]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[4][28]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[4][29]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[4][2]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[4][30]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[4][31]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[4][3]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[4][4]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[4][5]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[4][6]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[4][7]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[4][8]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[4][9]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[5][0]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[5][10]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[5][11]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[5][12]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[5][13]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[5][14]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[5][15]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[5][16]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[5][17]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[5][18]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[5][19]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[5][1]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[5][20]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[5][21]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[5][22]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[5][23]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[5][24]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[5][25]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[5][26]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[5][27]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[5][28]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[5][29]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[5][2]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[5][30]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[5][31]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[5][3]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[5][4]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[5][5]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[5][6]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[5][7]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[5][8]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[5][9]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[6][0]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[6][10]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[6][11]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[6][12]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[6][13]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[6][14]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[6][15]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[6][16]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[6][17]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[6][18]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[6][19]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[6][1]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[6][20]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[6][21]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[6][22]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[6][23]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[6][24]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[6][25]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[6][26]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[6][27]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[6][28]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[6][29]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[6][2]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[6][30]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[6][31]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[6][3]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[6][4]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[6][5]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[6][6]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[6][7]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[6][8]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[6][9]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[7][0]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[7][10]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[7][11]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[7][12]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[7][13]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[7][14]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[7][15]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[7][16]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[7][17]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[7][18]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[7][19]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[7][1]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[7][20]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[7][21]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[7][22]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[7][23]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[7][24]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[7][25]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[7][26]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[7][27]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[7][28]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[7][29]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[7][2]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[7][30]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[7][31]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[7][3]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[7][4]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[7][5]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[7][6]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[7][7]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[7][8]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/queue_reg[7][9]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/valid_reg[0]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/valid_reg[1]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/valid_reg[2]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/valid_reg[3]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/valid_reg[4]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/valid_reg[5]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/valid_reg[6]/Q (HIGH)
-
- There are 3 register/latch pins with no clock driven by root clock pin: main/s/valid_reg[7]/Q (HIGH)
+1. checking no_clock (0)
+------------------------
+ There are 0 register/latch pins with no clock.
 
 
 2. checking constant_clock (0)
@@ -602,9 +76,9 @@ Table of Contents
  There are 0 register/latch pins which need pulse_width check
 
 
-4. checking unconstrained_internal_endpoints (3)
+4. checking unconstrained_internal_endpoints (0)
 ------------------------------------------------
- There are 3 pins that are not constrained for maximum delay. (HIGH)
+ There are 0 pins that are not constrained for maximum delay.
 
  There are 0 pins that are not constrained for maximum delay due to constant clock.
 
@@ -616,9 +90,9 @@ Table of Contents
  There are 0 input ports with no input delay but user has a false path constraint.
 
 
-6. checking no_output_delay (1)
+6. checking no_output_delay (4)
 -------------------------------
- There is 1 port with no output delay specified. (HIGH)
+ There are 4 ports with no output delay specified. (HIGH)
 
  There are 0 ports with no output delay but user has a false path constraint
 
@@ -663,10 +137,10 @@ Table of Contents
 
     WNS(ns)      TNS(ns)  TNS Failing Endpoints  TNS Total Endpoints      WHS(ns)      THS(ns)  THS Failing Endpoints  THS Total Endpoints     WPWS(ns)     TPWS(ns)  TPWS Failing Endpoints  TPWS Total Endpoints  
     -------      -------  ---------------------  -------------------      -------      -------  ---------------------  -------------------     --------     --------  ----------------------  --------------------  
-      2.495        0.000                      0                 3812        0.074        0.000                      0                 3812        3.500        0.000                       0                  1920  
+    -16.488    -1573.069                     98                 3815        0.074        0.000                      0                 3815        3.500        0.000                       0                  1920  
 
 
-All user specified timing constraints are met.
+Timing constraints are not met.
 
 
 ------------------------------------------------------------------------------------------------
@@ -686,7 +160,7 @@ gclk   {0.000 4.000}      10.000          100.000
 
 Clock             WNS(ns)      TNS(ns)  TNS Failing Endpoints  TNS Total Endpoints      WHS(ns)      THS(ns)  THS Failing Endpoints  THS Total Endpoints     WPWS(ns)     TPWS(ns)  TPWS Failing Endpoints  TPWS Total Endpoints  
 -----             -------      -------  ---------------------  -------------------      -------      -------  ---------------------  -------------------     --------     --------  ----------------------  --------------------  
-gclk                2.495        0.000                      0                 3812        0.074        0.000                      0                 3812        3.500        0.000                       0                  1920  
+gclk              -16.488    -1573.069                     98                 3815        0.074        0.000                      0                 3815        3.500        0.000                       0                  1920  
 
 
 ------------------------------------------------------------------------------------------------
@@ -717,7 +191,7 @@ Path Group    From Clock    To Clock          WNS(ns)      TNS(ns)  TNS Failing 
 From Clock:  gclk
   To Clock:  gclk
 
-Setup :            0  Failing Endpoints,  Worst Slack        2.495ns,  Total Violation        0.000ns
+Setup :           98  Failing Endpoints,  Worst Slack      -16.488ns,  Total Violation    -1573.069ns
 Hold  :            0  Failing Endpoints,  Worst Slack        0.074ns,  Total Violation        0.000ns
 PW    :            0  Failing Endpoints,  Worst Slack        3.500ns,  Total Violation        0.000ns
 ---------------------------------------------------------------------------------------------------
@@ -725,16 +199,16 @@ PW    :            0  Failing Endpoints,  Worst Slack        3.500ns,  Total Vio
 
 Max Delay Paths
 --------------------------------------------------------------------------------------
-Slack (MET) :             2.495ns  (required time - arrival time)
-  Source:                 main/gmem/data_mem/output_register.doutb_reg_reg[4]/C
+Slack (VIOLATED) :        -16.488ns  (required time - arrival time)
+  Source:                 main/s/valid_reg[0]/C
                             (rising edge-triggered cell FDRE clocked by gclk  {rise@0.000ns fall@4.000ns period=10.000ns})
-  Destination:            main/graph/mem_req_out_reg[8]/D
+  Destination:            main/s/tag_out_reg[0]/CE
                             (rising edge-triggered cell FDRE clocked by gclk  {rise@0.000ns fall@4.000ns period=10.000ns})
   Path Group:             gclk
   Path Type:              Setup (Max at Slow Process Corner)
   Requirement:            10.000ns  (gclk rise@10.000ns - gclk rise@0.000ns)
-  Data Path Delay:        7.354ns  (logic 3.936ns (53.522%)  route 3.418ns (46.478%))
-  Logic Levels:           10  (CARRY4=7 LUT3=1 LUT4=1 LUT5=1)
+  Data Path Delay:        26.106ns  (logic 9.041ns (34.632%)  route 17.065ns (65.368%))
+  Logic Levels:           47  (CARRY4=28 LUT2=6 LUT4=2 LUT5=2 LUT6=9)
   Clock Path Skew:        -0.145ns (DCD - SCD + CPR)
     Destination Clock Delay (DCD):    2.660ns = ( 12.660 - 10.000 ) 
     Source Clock Delay      (SCD):    2.920ns
@@ -753,39 +227,134 @@ Slack (MET) :             2.495ns  (required time - arrival time)
     N15                  IBUF (Prop_ibuf_I_O)         1.440     1.440 r  clk_100mhz_IBUF_inst/O
                          net (fo=1, unplaced)         0.800     2.240    clk_100mhz_IBUF
                          BUFG (Prop_bufg_I_O)         0.096     2.336 r  clk_100mhz_IBUF_BUFG_inst/O
-                         net (fo=1919, unplaced)      0.584     2.920    main/gmem/data_mem/clk_100mhz_IBUF_BUFG
-                         FDRE                                         r  main/gmem/data_mem/output_register.doutb_reg_reg[4]/C
+                         net (fo=1919, unplaced)      0.584     2.920    main/s/clk_100mhz_IBUF_BUFG
+                         FDRE                                         r  main/s/valid_reg[0]/C
   -------------------------------------------------------------------    -------------------
-                         FDRE (Prop_fdre_C_Q)         0.456     3.376 r  main/gmem/data_mem/output_register.doutb_reg_reg[4]/Q
-                         net (fo=10, unplaced)        1.026     4.402    main/gmem/data_mem/Q[4]
-                         CARRY4 (Prop_carry4_S[3]_CO[3])
-                                                      0.697     5.099 r  main/gmem/data_mem/mem_req_out_reg[0]_i_30/CO[3]
-                         net (fo=1, unplaced)         0.009     5.108    main/gmem/data_mem/mem_req_out_reg[0]_i_30_n_0
-                         CARRY4 (Prop_carry4_CI_O[3])
-                                                      0.329     5.437 r  main/gmem/data_mem/mem_req_out_reg[0]_i_29/O[3]
-                         net (fo=2, unplaced)         0.432     5.869    main/gmem/data_mem/mem_valid_out3[7]
-                         LUT4 (Prop_lut4_I2_O)        0.333     6.202 r  main/gmem/data_mem/mem_req_out[0]_i_15/O
-                         net (fo=1, unplaced)         0.000     6.202    main/graph/DI[0]
+                         FDRE (Prop_fdre_C_Q)         0.456     3.376 f  main/s/valid_reg[0]/Q
+                         net (fo=149, unplaced)       0.851     4.227    main/s/valid_reg[0]__1
+                         LUT5 (Prop_lut5_I2_O)        0.321     4.548 r  main/s/prev_read_ptr[0]_i_34/O
+                         net (fo=1, unplaced)         0.000     4.548    main/s/prev_read_ptr[0]_i_34_n_0
                          CARRY4 (Prop_carry4_DI[0]_CO[3])
-                                                      0.553     6.755 r  main/graph/mem_req_out_reg[0]_i_8/CO[3]
-                         net (fo=1, unplaced)         0.000     6.755    main/graph/mem_req_out_reg[0]_i_8_n_0
+                                                      0.553     5.101 r  main/s/prev_read_ptr_reg[0]_i_22/CO[3]
+                         net (fo=1, unplaced)         0.009     5.110    main/s/prev_read_ptr_reg[0]_i_22_n_0
                          CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.114     6.869 r  main/graph/mem_req_out_reg[0]_i_3/CO[3]
-                         net (fo=1, unplaced)         0.000     6.869    main/graph/mem_req_out_reg[0]_i_3_n_0
+                                                      0.114     5.224 r  main/s/prev_read_ptr_reg[0]_i_13/CO[3]
+                         net (fo=1, unplaced)         0.000     5.224    main/s/prev_read_ptr_reg[0]_i_13_n_0
                          CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.114     6.983 r  main/graph/mem_req_out_reg[0]_i_2/CO[3]
-                         net (fo=34, unplaced)        0.991     7.974    main/graph/mem_valid_out232_in
-                         LUT5 (Prop_lut5_I2_O)        0.124     8.098 r  main/graph/mem_req_out[4]_i_3/O
-                         net (fo=1, unplaced)         0.333     8.431    main/graph/mem_req_out[4]_i_3_n_0
-                         CARRY4 (Prop_carry4_CYINIT_CO[3])
-                                                      0.580     9.011 r  main/graph/mem_req_out_reg[4]_i_2/CO[3]
-                         net (fo=1, unplaced)         0.009     9.020    main/graph/mem_req_out_reg[4]_i_2_n_0
-                         CARRY4 (Prop_carry4_CI_O[3])
-                                                      0.329     9.349 r  main/graph/mem_req_out_reg[8]_i_2/O[3]
-                         net (fo=1, unplaced)         0.618     9.967    main/gmem/data_mem/mem_req_out_reg[8][3]
-                         LUT3 (Prop_lut3_I2_O)        0.307    10.274 r  main/gmem/data_mem/mem_req_out[8]_i_1/O
-                         net (fo=1, unplaced)         0.000    10.274    main/graph/mem_req_out_reg[9]_2[7]
-                         FDRE                                         r  main/graph/mem_req_out_reg[8]/D
+                                                      0.114     5.338 r  main/s/prev_read_ptr_reg[0]_i_4/CO[3]
+                         net (fo=1, unplaced)         0.000     5.338    main/s/prev_read_ptr_reg[0]_i_4_n_0
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     5.452 r  main/s/prev_read_ptr_reg[0]_i_3/CO[3]
+                         net (fo=66, unplaced)        1.007     6.459    main/s/curval2
+                         LUT5 (Prop_lut5_I1_O)        0.124     6.583 f  main/s/valid[2]_i_81/O
+                         net (fo=2, unplaced)         0.460     7.043    main/s/valid[2]_i_81_n_0
+                         LUT4 (Prop_lut4_I3_O)        0.124     7.167 r  main/s/valid[2]_i_58/O
+                         net (fo=1, unplaced)         0.639     7.806    main/s/valid[2]_i_58_n_0
+                         CARRY4 (Prop_carry4_DI[1]_CO[3])
+                                                      0.507     8.313 r  main/s/valid_reg[2]_i_35/CO[3]
+                         net (fo=1, unplaced)         0.009     8.322    main/s/valid_reg[2]_i_35_n_0
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     8.436 r  main/s/valid_reg[2]_i_13/CO[3]
+                         net (fo=1, unplaced)         0.000     8.436    main/s/valid_reg[2]_i_13_n_0
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     8.550 r  main/s/valid_reg[2]_i_4/CO[3]
+                         net (fo=1, unplaced)         0.000     8.550    main/s/valid_reg[2]_i_4_n_0
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     8.664 r  main/s/valid_reg[2]_i_2/CO[3]
+                         net (fo=37, unplaced)        0.993     9.657    main/s/curval240_in
+                         LUT2 (Prop_lut2_I0_O)        0.124     9.781 r  main/s/valid[3]_i_4/O
+                         net (fo=68, unplaced)        0.539    10.320    main/s/valid[3]_i_4_n_0
+                         LUT6 (Prop_lut6_I1_O)        0.124    10.444 r  main/s/valid[4]_i_93/O
+                         net (fo=4, unplaced)         0.473    10.917    main/s/valid[4]_i_93_n_0
+                         LUT4 (Prop_lut4_I2_O)        0.124    11.041 r  main/s/valid[3]_i_39/O
+                         net (fo=1, unplaced)         0.000    11.041    main/s/valid[3]_i_39_n_0
+                         CARRY4 (Prop_carry4_S[1]_CO[3])
+                                                      0.550    11.591 r  main/s/valid_reg[3]_i_24/CO[3]
+                         net (fo=1, unplaced)         0.009    11.600    main/s/valid_reg[3]_i_24_n_0
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114    11.714 r  main/s/valid_reg[3]_i_15/CO[3]
+                         net (fo=1, unplaced)         0.000    11.714    main/s/valid_reg[3]_i_15_n_0
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114    11.828 r  main/s/valid_reg[3]_i_6/CO[3]
+                         net (fo=1, unplaced)         0.000    11.828    main/s/valid_reg[3]_i_6_n_0
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114    11.942 r  main/s/valid_reg[3]_i_5/CO[3]
+                         net (fo=53, unplaced)        1.002    12.944    main/s/curval243_in
+                         LUT2 (Prop_lut2_I0_O)        0.124    13.068 r  main/s/valid[2]_i_3/O
+                         net (fo=52, unplaced)        0.532    13.600    main/s/valid[2]_i_3_n_0
+                         LUT6 (Prop_lut6_I4_O)        0.124    13.724 r  main/s/valid[4]_i_66/O
+                         net (fo=1, unplaced)         0.639    14.363    main/s/valid[4]_i_66_n_0
+                         CARRY4 (Prop_carry4_DI[1]_CO[3])
+                                                      0.507    14.870 r  main/s/valid_reg[4]_i_39/CO[3]
+                         net (fo=1, unplaced)         0.009    14.879    main/s/valid_reg[4]_i_39_n_0
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114    14.993 r  main/s/valid_reg[4]_i_14/CO[3]
+                         net (fo=1, unplaced)         0.000    14.993    main/s/valid_reg[4]_i_14_n_0
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114    15.107 r  main/s/valid_reg[4]_i_5/CO[3]
+                         net (fo=1, unplaced)         0.000    15.107    main/s/valid_reg[4]_i_5_n_0
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114    15.221 r  main/s/valid_reg[4]_i_3/CO[3]
+                         net (fo=2, unplaced)         0.929    16.150    main/s/curval246_in
+                         LUT2 (Prop_lut2_I0_O)        0.124    16.274 r  main/s/prev_read_ptr[2]_i_3__0/O
+                         net (fo=103, unplaced)       0.549    16.823    main/s/prev_read_ptr[2]_i_3__0_n_0
+                         LUT6 (Prop_lut6_I1_O)        0.124    16.947 f  main/s/valid[6]_i_184/O
+                         net (fo=4, unplaced)         0.473    17.420    main/s/valid[6]_i_184_n_0
+                         LUT6 (Prop_lut6_I5_O)        0.124    17.544 r  main/s/prev_read_ptr[2]_i_34/O
+                         net (fo=1, unplaced)         0.639    18.183    main/s/prev_read_ptr[2]_i_34_n_0
+                         CARRY4 (Prop_carry4_DI[1]_CO[3])
+                                                      0.507    18.690 r  main/s/prev_read_ptr_reg[2]_i_23/CO[3]
+                         net (fo=1, unplaced)         0.009    18.699    main/s/prev_read_ptr_reg[2]_i_23_n_0
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114    18.813 r  main/s/prev_read_ptr_reg[2]_i_14/CO[3]
+                         net (fo=1, unplaced)         0.000    18.813    main/s/prev_read_ptr_reg[2]_i_14_n_0
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114    18.927 r  main/s/prev_read_ptr_reg[2]_i_5/CO[3]
+                         net (fo=1, unplaced)         0.000    18.927    main/s/prev_read_ptr_reg[2]_i_5_n_0
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114    19.041 r  main/s/prev_read_ptr_reg[2]_i_4/CO[3]
+                         net (fo=54, unplaced)        1.002    20.043    main/s/curval249_in
+                         LUT2 (Prop_lut2_I0_O)        0.124    20.167 r  main/s/valid[4]_i_4/O
+                         net (fo=51, unplaced)        0.532    20.699    main/s/valid[4]_i_4_n_0
+                         LUT6 (Prop_lut6_I4_O)        0.124    20.823 r  main/s/valid[6]_i_137/O
+                         net (fo=1, unplaced)         0.639    21.462    main/s/valid[6]_i_137_n_0
+                         CARRY4 (Prop_carry4_DI[1]_CO[3])
+                                                      0.507    21.969 r  main/s/valid_reg[6]_i_86/CO[3]
+                         net (fo=1, unplaced)         0.009    21.978    main/s/valid_reg[6]_i_86_n_0
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114    22.092 r  main/s/valid_reg[6]_i_44/CO[3]
+                         net (fo=1, unplaced)         0.000    22.092    main/s/valid_reg[6]_i_44_n_0
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114    22.206 r  main/s/valid_reg[6]_i_14/CO[3]
+                         net (fo=1, unplaced)         0.000    22.206    main/s/valid_reg[6]_i_14_n_0
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114    22.320 r  main/s/valid_reg[6]_i_4/CO[3]
+                         net (fo=19, unplaced)        0.977    23.297    main/s/curval252_in
+                         LUT2 (Prop_lut2_I0_O)        0.124    23.421 r  main/s/prev_read_ptr[2]_i_2__0/O
+                         net (fo=53, unplaced)        0.533    23.954    main/s/prev_read_ptr[2]_i_2__0_n_0
+                         LUT6 (Prop_lut6_I1_O)        0.124    24.078 f  main/s/valid[6]_i_155/O
+                         net (fo=1, unplaced)         0.449    24.527    main/s/valid[6]_i_155_n_0
+                         LUT6 (Prop_lut6_I1_O)        0.124    24.651 r  main/s/valid[6]_i_105/O
+                         net (fo=1, unplaced)         0.639    25.290    main/s/valid[6]_i_105_n_0
+                         CARRY4 (Prop_carry4_DI[1]_CO[3])
+                                                      0.507    25.797 r  main/s/valid_reg[6]_i_61/CO[3]
+                         net (fo=1, unplaced)         0.009    25.806    main/s/valid_reg[6]_i_61_n_0
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114    25.920 r  main/s/valid_reg[6]_i_23/CO[3]
+                         net (fo=1, unplaced)         0.000    25.920    main/s/valid_reg[6]_i_23_n_0
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114    26.034 r  main/s/valid_reg[6]_i_5/CO[3]
+                         net (fo=1, unplaced)         0.000    26.034    main/s/valid_reg[6]_i_5_n_0
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114    26.148 r  main/s/valid_reg[6]_i_3/CO[3]
+                         net (fo=8, unplaced)         0.956    27.104    main/s/read_ptr2
+                         LUT6 (Prop_lut6_I1_O)        0.124    27.228 f  main/s/valid[3]_i_3__0/O
+                         net (fo=46, unplaced)        0.529    27.757    main/s/valid[3]_i_3__0_n_0
+                         LUT6 (Prop_lut6_I2_O)        0.124    27.881 f  main/s/valid[5]_i_3/O
+                         net (fo=5, unplaced)         0.477    28.358    main/s/valid[5]_i_3_n_0
+                         LUT2 (Prop_lut2_I1_O)        0.124    28.482 r  main/s/tag_out[31]_i_1/O
+                         net (fo=32, unplaced)        0.544    29.026    main/s/tag_out[31]_i_1_n_0
+                         FDRE                                         r  main/s/tag_out_reg[0]/CE
   -------------------------------------------------------------------    -------------------
 
                          (clock gclk rise edge)      10.000    10.000 r  
@@ -794,16 +363,16 @@ Slack (MET) :             2.495ns  (required time - arrival time)
     N15                  IBUF (Prop_ibuf_I_O)         1.370    11.370 r  clk_100mhz_IBUF_inst/O
                          net (fo=1, unplaced)         0.760    12.130    clk_100mhz_IBUF
                          BUFG (Prop_bufg_I_O)         0.091    12.221 r  clk_100mhz_IBUF_BUFG_inst/O
-                         net (fo=1919, unplaced)      0.439    12.660    main/graph/clk_100mhz_IBUF_BUFG
-                         FDRE                                         r  main/graph/mem_req_out_reg[8]/C
+                         net (fo=1919, unplaced)      0.439    12.660    main/s/clk_100mhz_IBUF_BUFG
+                         FDRE                                         r  main/s/tag_out_reg[0]/C
                          clock pessimism              0.115    12.775    
                          clock uncertainty           -0.035    12.740    
-                         FDRE (Setup_fdre_C_D)        0.029    12.769    main/graph/mem_req_out_reg[8]
+                         FDRE (Setup_fdre_C_CE)      -0.202    12.538    main/s/tag_out_reg[0]
   -------------------------------------------------------------------
-                         required time                         12.769    
-                         arrival time                         -10.274    
+                         required time                         12.538    
+                         arrival time                         -29.026    
   -------------------------------------------------------------------
-                         slack                                  2.495    
+                         slack                                -16.488    
 
 
 

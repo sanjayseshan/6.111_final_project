@@ -36,6 +36,8 @@ module PriorityQueue #(parameter DATA_WIDTH = 32, parameter TAG_WIDTH = 32, para
 
         curval = 32'hFFFFFFFF;
         
+        read_ptr = 0;
+
         for (int i = 0; i<DEPTH; i=i+1) begin
             if (valid[i] && queue[i] <= curval) begin
                 read_ptr = i;
