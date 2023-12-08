@@ -13,3 +13,4 @@
 *.fdb_latexmk
 *.synctex.gz
 base/manta.yaml
+base/xsim.dir
