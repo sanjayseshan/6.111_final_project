@@ -33,7 +33,7 @@ module CheckedQueue #(parameter DATA_WIDTH = 32, parameter TAG_WIDTH = 32, param
     logic rem_lru;
     logic push_lru;
     
-    logic deq_in;
+    logic deq_high;
 
     logic [$clog2(DEPTH)+1:0] i;
     logic ready;
@@ -46,28 +46,30 @@ module CheckedQueue #(parameter DATA_WIDTH = 32, parameter TAG_WIDTH = 32, param
             curval <= 32'hFFFFFFFF;//deq_smallest_in ? 32'hFFFFFFFF : 32'h0;
             maxval <= 32'h0;
 
+            deq_high <= 1'b0;
+
         end else begin
             empty_out = (size_out == 0);
             full_out = (size_out == DEPTH);
             // deq_in = deq_smallest_in || deq_largest_in;
 
             
-            if (i == DEPTH) begin
+            if (i==DEPTH) begin
                 i <= 0;
-                ready <= 1;
+                ready <= 1'b1;
             end
-            else begin
+            else if (i <= DEPTH) begin
                 i <= i + 1;
-                ready <= 0;
-                curval <= 32'hFFFFFFFF;//deq_smallest_in ? 32'hFFFFFFFF : 32'h0;
-                maxval <= 32'h0;
+                ready <= 1'b0;
+                // curval <= 32'hFFFFFFFF;//deq_smallest_in ? 32'hFFFFFFFF : 32'h0;
+                // maxval <= 32'h0;
             end
 
             // if (deq_smallest_in) begin
                 // for (int i = 0; i<DEPTH; i=i+1) begin
-            if (valid[i] && queue[i] <= curval) begin
+            if (valid[i] && queue[i] < curval) begin
                 read_ptr_min = i;
-                curval = queue[i];
+                curval <= queue[i];
             end
 
             // if (valid[i] && queue[i] >= maxval) begin
@@ -80,12 +82,25 @@ module CheckedQueue #(parameter DATA_WIDTH = 32, parameter TAG_WIDTH = 32, param
             if (valid[i] && queue[i] >= maxval) begin
                 read_ptr_max = i;
                 // curval = queue[i];
-                maxval = queue[i];
+                maxval <= queue[i];
             end
                 // end
             // end
 
             // max_tag_out <= queue[i];
+            // if (enq_in) begin
+            //     max_tag_out <= (enq_data_in > max_tag_out) ? enq_data_in : max_tag_out;
+            // end
+            if (deq_largest_in || deq_smallest_in) begin
+                deq_high <= 1'b1;
+            end
+            else if (deq_high && valid_out) begin
+                maxval <= 0;
+                curval <= 32'hFFFFFFFF;
+                deq_high <= 1'b0;
+            end
+
+            
             max_tag_out <= maxval;
 
         end
@@ -145,7 +160,7 @@ module CheckedQueue #(parameter DATA_WIDTH = 32, parameter TAG_WIDTH = 32, param
             max_tag_out <= 0;
         end 
         else begin
-            // dequeue largest element
+            // dequeue smallest element
             if ((in_req_out[1] && in_req_valid_out) && ~empty_out && valid[read_ptr_min]) begin
                 data_out <= Q_data[read_ptr_min];
                 tag_out <= queue[read_ptr_min];
@@ -155,6 +170,7 @@ module CheckedQueue #(parameter DATA_WIDTH = 32, parameter TAG_WIDTH = 32, param
                 // read_ptr <= (read_ptr < DEPTH-1) ? read_ptr + 1 : 0;
                 prev_read_ptr <= read_ptr_min;
                 size_out <= size_out -1;
+            // dequeue largest element
             end else if ((in_req_out[0] && in_req_valid_out) && ~empty_out && valid[read_ptr_max]) begin
                 data_out <= Q_data[read_ptr_max];
                 tag_out <= queue[read_ptr_max];

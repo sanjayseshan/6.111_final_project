@@ -84,7 +84,7 @@ module PriorityQueue #(parameter DATA_WIDTH = 32, parameter TAG_WIDTH = 32, para
                 valid[read_ptr] <= 1'b0;
                 // read_ptr <= (read_ptr < DEPTH-1) ? read_ptr +1 : 0;
                 prev_read_ptr <= read_ptr;
-                size_out <= size_out -1;
+                size_out <= (size_out>0) ? size_out -1 : 0;
             end else begin
                 valid_out <=1'b0;
                 push_lru <= 1'b0;

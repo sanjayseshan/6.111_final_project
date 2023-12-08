@@ -124,7 +124,7 @@ module graph_memory #(parameter DIM = 2, parameter PROC_BITS = 4)(
     .RAM_WIDTH(32),                       // Specify RAM data width
     .RAM_DEPTH(1024),                     // Specify RAM depth (number of entries)
     .RAM_PERFORMANCE("HIGH_PERFORMANCE"), // Select "HIGH_PERFORMANCE" or "LOW_LATENCY" 
-    .INIT_FILE(`FPATH(out_ids2.mem))          // Specify name/location of RAM initialization file if using one (leave blank if not)
+    .INIT_FILE(`FPATH(out_vidx2.mem))          // Specify name/location of RAM initialization file if using one (leave blank if not)
   ) ptr_mem (
     .addra(idx_addr[9:0]),     // Address bus, width determined from RAM_DEPTH
     .dina(0),       // RAM input data, width determined from RAM_WIDTH
