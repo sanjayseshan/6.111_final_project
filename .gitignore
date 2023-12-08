@@ -6,5 +6,10 @@
 .vscode
 *.aux
 *.fls
+*.rpt
+*.dcp
+*.out
+*.vcd
 *.fdb_latexmk
 *.synctex.gz
+base/manta.yaml
