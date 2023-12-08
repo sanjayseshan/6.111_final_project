@@ -72,7 +72,7 @@ module top_level(
   );
 
   //   input wire clk_in,
- assign led = state;//buf_k_out[15:0];
+ assign led = buf_k_out[15:0];//state;//buf_k_out[15:0];
   // input wire rst_in,
   // input wire [31:0] vertex_id_in,
   // input wire [31:0] query_in [DIM-1:0],
