@@ -35,7 +35,7 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH = 8)(
   logic [31:0] pq_out, pq_dist_out;
   logic pq_valid_out;
   logic [3:0] pq_size;
-  logic pq_deq_in;
+  logic pq_deq_in, pq_stall_out;
   logic pq_empty_out;
 
 
@@ -87,6 +87,7 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH = 8)(
 
   logic add_checked;
   logic [$clog2(PQ_LENGTH):0] prev_checked_size;
+  logic checked_enq_in;
 
   // always_comb begin
   //   if (state == 3'b1 || state==3'b110) begin
@@ -105,7 +106,7 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH = 8)(
 
   // assign debug = pq_size | (dist_valid_out << 30);
   assign debug = v_addr_in;
-  assign debug2 = checked_valid_in;
+  assign debug2 = checked_size;
 
 
   always_ff @ (posedge clk_in) begin
@@ -231,11 +232,12 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH = 8)(
 
       // top_k_out <= checked_valid_out;
 
-      // if (prev_checked_size < checked_size) begin
-      //     state <= 3'b11;
-      //     // add_checked <= 1'b0;
-      // end
-      if (pq_valid_out) begin
+      if (add_checked && ~pq_stall_out) begin
+          checked_valid_in <= 1'b1;
+          state <= 3'b11;
+          add_checked <= 1'b0;
+      end
+      else if (pq_valid_out) begin
         if ((checked_full_out && checked_max_tag < pq_dist_out)) begin
           state <= 3'b110;
           k_count <= 4'b0;
@@ -245,20 +247,21 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH = 8)(
         // end else if (~checked_proc_deq) begin
         //   checked_max_deq <= 1'b0;
         end else if (~checked_full_out) begin
-          checked_valid_in <= 1'b1;
-          state <= 3'b11;
-          // add_checked <= 1'b1;
+          // checked_valid_in <= 1'b1;
+          // state <= 3'b11;
+          add_checked <= 1'b1;
 
-          checked_counter <= 2'b0;
+          // checked_counter <= 2'b0;
           k_count <= 4'b0;
           // if (checked_max_deq) checked_max_deq <= 1'b0;
         end
       end
       else if (checked_valid_out) begin
-        checked_valid_in <= 1'b1;
+        // checked_valid_in <= 1'b1;
         checked_max_deq <= 1'b0;
-        state <= 3'b11;
-        // add_checked <= 1'b1;
+        // state <= 3'b11;
+        add_checked <= 1'b1;
+
         prev_checked_size <= checked_size;
       end
       else if (checked_max_deq) checked_max_deq <= 1'b0;
@@ -451,12 +454,12 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH = 8)(
     .empty_out(checked_empty_out),
     .valid_out(checked_valid_out),
     .max_tag_out(checked_max_tag),
-    .proc_deq_ready(checked_proc_deq)
+    .proc_deq_ready(checked_proc_deq),
+    .checked_enq_in(checked_enq_in)
   );
 
 
-
-  CheckedQueue #(.DATA_WIDTH(32), .TAG_WIDTH(32), .DEPTH(16'd8)) pq (
+    CheckedQueue #(.DATA_WIDTH(32), .TAG_WIDTH(32), .DEPTH(16'd8)) pq (
     .clk_in(clk_in),
     .rst_in(rst_in),
     .deq_smallest_in(pq_deq_in),
@@ -470,8 +473,28 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH = 8)(
     .size_out(pq_size),
     .empty_out(pq_empty_out),
     // .size_out(debug),
-    .valid_out(pq_valid_out)
+    .valid_out(pq_valid_out),
+    .deq_stall_out(pq_stall_out)
   );
+
+
+  // PriorityQueue #(.DATA_WIDTH(32), .TAG_WIDTH(32), .DEPTH(16'd8)) pq (
+  //   .clk_in(clk_in),
+  //   .rst_in(rst_in),
+  //   .deq_smallest_in(pq_deq_in),
+  //   .deq_largest_in(1'b0),
+  //   .enq_data_in(point_addr),
+  //   .enq_tag_in(dist_out),
+  //   .enq_in(dist_valid_out),
+  //   // .full_out(),
+  //   .data_out(v_addr_in),
+  //   .tag_out(pq_dist_out),
+  //   .size_out(pq_size),
+  //   .empty_out(pq_empty_out),
+  //   // .size_out(debug),
+  //   .valid_out(pq_valid_out),
+  //   .deq_stall_out(pq_stall_out)
+  // );
 
 
   // always_ff @( posedge clk_in ) begin

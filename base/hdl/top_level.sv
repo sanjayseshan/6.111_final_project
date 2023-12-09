@@ -75,7 +75,7 @@ module top_level(
   logic [31:0] buf_valid_out;
 
   FIFO #(.DATA_WIDTH(22),.DEPTH(4)) buf_out (
-  .clk_in(new_clk[24]),
+  .clk_in(new_clk[20]),
   .rst_in(sys_rst),
   .enq_data_in(top_k_out),
   .enq_in(valid_out),
@@ -123,8 +123,8 @@ assign led = state;//top_k_out;//state;
       .clk(clk_100mhz),
       .rx(uart_rxd),
       .tx(uart_txd),
-      .val1_in(debug),
-      .val2_in(debug2),
+      .val1_in(debug2),
+      .val2_in(state),
       .val3_out(val_3),
       .val4_out(tmp)
     );

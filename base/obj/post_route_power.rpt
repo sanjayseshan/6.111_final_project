@@ -1,7 +1,7 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
 -------------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version     : Vivado v.2023.1 (lin64) Build 3865809 Sun May  7 15:04:56 MDT 2023
-| Date             : Sat Dec  9 08:55:26 2023
+| Date             : Sat Dec  9 18:40:12 2023
 | Host             : worker running 64-bit Ubuntu 20.04.6 LTS
 | Command          : report_power -file obj/post_route_power.rpt
 | Design           : top_level
@@ -30,10 +30,10 @@ Table of Contents
 ----------
 
 +--------------------------+--------------+
-| Total On-Chip Power (W)  | 0.090        |
+| Total On-Chip Power (W)  | 0.088        |
 | Design Power Budget (W)  | Unspecified* |
 | Power Budget Margin (W)  | NA           |
-| Dynamic (W)              | 0.018        |
+| Dynamic (W)              | 0.016        |
 | Device Static (W)        | 0.072        |
 | Effective TJA (C/W)      | 4.9          |
 | Max Ambient (C)          | 84.6         |
@@ -52,19 +52,19 @@ Table of Contents
 +----------------+-----------+----------+-----------+-----------------+
 | On-Chip        | Power (W) | Used     | Available | Utilization (%) |
 +----------------+-----------+----------+-----------+-----------------+
-| Clocks         |     0.001 |        3 |       --- |             --- |
-| Slice Logic    |     0.007 |     4503 |       --- |             --- |
-|   LUT as Logic |     0.006 |     1863 |     32600 |            5.71 |
-|   CARRY4       |    <0.001 |      128 |      8150 |            1.57 |
-|   Register     |    <0.001 |     1836 |     65200 |            2.82 |
-|   F7/F8 Muxes  |    <0.001 |      214 |     32600 |            0.66 |
+| Clocks         |     0.002 |        3 |       --- |             --- |
+| Slice Logic    |     0.007 |     4952 |       --- |             --- |
+|   LUT as Logic |     0.006 |     1924 |     32600 |            5.90 |
+|   CARRY4       |    <0.001 |      121 |      8150 |            1.48 |
+|   Register     |    <0.001 |     2324 |     65200 |            3.56 |
+|   F7/F8 Muxes  |    <0.001 |      101 |     32600 |            0.31 |
 |   BUFG         |    <0.001 |        1 |        32 |            3.13 |
 |   Others       |     0.000 |       46 |       --- |             --- |
-| Signals        |     0.006 |     2892 |       --- |             --- |
+| Signals        |     0.006 |     3587 |       --- |             --- |
 | Block RAM      |    <0.001 |      1.5 |        75 |            2.00 |
-| I/O            |     0.003 |       20 |       210 |            9.52 |
+| I/O            |     0.002 |       20 |       210 |            9.52 |
 | Static Power   |     0.072 |          |           |                 |
-| Total          |     0.090 |          |           |                 |
+| Total          |     0.088 |          |           |                 |
 +----------------+-----------+----------+-----------+-----------------+
 
 
@@ -74,7 +74,7 @@ Table of Contents
 +-----------+-------------+-----------+-------------+------------+-------------+-------------+------------+
 | Source    | Voltage (V) | Total (A) | Dynamic (A) | Static (A) | Powerup (A) | Budget (A)  | Margin (A) |
 +-----------+-------------+-----------+-------------+------------+-------------+-------------+------------+
-| Vccint    |       1.000 |     0.024 |       0.015 |      0.010 |       NA    | Unspecified | NA         |
+| Vccint    |       1.000 |     0.024 |       0.014 |      0.010 |       NA    | Unspecified | NA         |
 | Vccaux    |       1.800 |     0.013 |       0.000 |      0.013 |       NA    | Unspecified | NA         |
 | Vcco33    |       3.300 |     0.002 |       0.001 |      0.001 |       NA    | Unspecified | NA         |
 | Vcco25    |       2.500 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
@@ -141,14 +141,12 @@ Table of Contents
 +-------------------+-----------+
 | Name              | Power (W) |
 +-------------------+-----------+
-| top_level         |     0.018 |
-|   main            |     0.013 |
-|     checked       |     0.002 |
-|     distance_calc |     0.004 |
-|     gmem          |     0.001 |
-|       data_mem    |     0.001 |
+| top_level         |     0.016 |
+|   main            |     0.012 |
+|     checked       |     0.003 |
+|     distance_calc |     0.003 |
 |     graph         |     0.002 |
-|     pq            |     0.004 |
+|     pq            |     0.003 |
 |   man             |     0.002 |
 +-------------------+-----------+
 

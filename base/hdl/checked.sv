@@ -16,7 +16,9 @@ module CheckedQueue #(parameter DATA_WIDTH = 32, parameter TAG_WIDTH = 32, param
   output logic empty_out,
   output logic valid_out,
   output logic [TAG_WIDTH-1:0] max_tag_out,
-  output logic proc_deq_ready
+  output logic proc_deq_ready,
+  output logic deq_stall_out,
+  output logic checked_enq_in
 );
     
 
@@ -41,6 +43,7 @@ module CheckedQueue #(parameter DATA_WIDTH = 32, parameter TAG_WIDTH = 32, param
 
     logic [32:0] tmp_out;
 
+
     // always_comb begin
     //     empty_out = (size_out == 0);
     //     full_out = (size_out == DEPTH);
@@ -61,6 +64,8 @@ module CheckedQueue #(parameter DATA_WIDTH = 32, parameter TAG_WIDTH = 32, param
             cal_min_max <= 1'b0;
             ready <= 1'b0;
 
+            deq_stall_out <= 1'b0;
+
         end else begin
 
             // tmp_out <= queue[i];
@@ -70,7 +75,10 @@ module CheckedQueue #(parameter DATA_WIDTH = 32, parameter TAG_WIDTH = 32, param
             if (i==DEPTH) begin
                 // i <= 0;
                 ready <= 1'b1;
-                cal_min_max <= 1'b0;
+                if (cal_min_max) begin
+                    deq_stall_out <= 1'b0;
+                    cal_min_max <= 1'b0;
+                end
             end
             else if (cal_min_max && i < DEPTH) begin
                 i <= i + 1;
@@ -120,6 +128,7 @@ module CheckedQueue #(parameter DATA_WIDTH = 32, parameter TAG_WIDTH = 32, param
             else if (deq_largest_in || deq_smallest_in) begin
                 deq_high <= 1'b1;
                 ready <= 1'b1;
+                deq_stall_out <= 1'b1;
             end
             else if (deq_high && valid_out) begin
                 // maxval <= 0;
@@ -194,8 +203,8 @@ module CheckedQueue #(parameter DATA_WIDTH = 32, parameter TAG_WIDTH = 32, param
                 data_out <= Q_data[read_ptr_min];
                 tag_out <= queue[read_ptr_min];
                 push_lru <= 1'b1;
-                valid_out <= 1;
-                valid[read_ptr_min] <= 0;
+                valid_out <= 1'b1;
+                valid[read_ptr_min] <= 1'b0;
                 // read_ptr <= (read_ptr < DEPTH-1) ? read_ptr + 1 : 0;
                 prev_read_ptr <= read_ptr_min;
                 size_out <= size_out -1;
@@ -204,23 +213,28 @@ module CheckedQueue #(parameter DATA_WIDTH = 32, parameter TAG_WIDTH = 32, param
                 data_out <= Q_data[read_ptr_max];
                 tag_out <= queue[read_ptr_max];
                 push_lru <= 1'b1;
-                valid_out <= 1;
+                valid_out <= 1'b1;
                 valid[read_ptr_max] <= 0;
                 // read_ptr <= (read_ptr < DEPTH-1) ? read_ptr + 1 : 0;
                 prev_read_ptr <= read_ptr_max;
                 size_out <= size_out -1;
             end else begin
-                valid_out <= 0;
+                valid_out <= 1'b0;
                 push_lru <= 1'b0;
             end
             // enqueue element
-            if (enq_in && ~full_out && ~valid[write_ptr]) begin
+             //&& ~valid[write_ptr
+            if (enq_in && ~full_out) begin
                 size_out <= size_out +1;
                 Q_data[write_ptr] <= enq_data_in;
                 queue[write_ptr] <= enq_tag_in;
                 rem_lru <= 1;
-                valid[write_ptr] <= 1;
-            end else rem_lru <= 0;
+                valid[write_ptr] <= 1'b1;
+                checked_enq_in <= 1'b1;
+            end else begin
+                rem_lru <= 0;
+                checked_enq_in <= 1'b0;
+            end
             
             empty_out <= (size_out==32'b0);
             full_out <= (size_out==DEPTH);
