@@ -48,19 +48,21 @@ module top_level(
 
   assign k_in = 16'd4;
 
-  logic [31:0] debug;
+  logic [31:0] debug, debug2;
 
   bfis #(.DIM(4), .PQ_LENGTH(5)) main(
-  .clk_in(new_clk[24]),
+  // .clk_in(new_clk[24]),
+  .clk_in(new_clk[20]),
   .rst_in(sys_rst),
   .vertex_id_in(1),
-  // .vertex_valid_in(1),
+  .valid_in(tmp),
   .query_in(query_in_real),
   .k_in(k_in),
   .top_k_out(top_k_out),
   .valid_out(valid_out),
   .state(state),
-  .debug(debug)
+  .debug(debug),
+  .debug2(debug2)
   );
 
   logic [31:0] val_3, last_val_3, buf_k_out;
@@ -72,17 +74,17 @@ module top_level(
 
   logic [31:0] buf_valid_out;
 
-  // FIFO #(.DATA_WIDTH(32),.DEPTH(4)) buf_out (
-  // .clk_in(clk_100mhz),
-  // .rst_in(sys_rst),
-  // .enq_data_in(top_k_out),
-  // .enq_in(valid_out),
-  // .deq_in(val_3 != last_val_3 && val_3 == 1),
-  // .full_out(),
-  // .data_out(buf_k_out),
-  // .empty_out(),
-  // .valid_out(buf_valid_out)
-  // );
+  FIFO #(.DATA_WIDTH(22),.DEPTH(4)) buf_out (
+  .clk_in(new_clk[24]),
+  .rst_in(sys_rst),
+  .enq_data_in(top_k_out),
+  .enq_in(valid_out),
+  .deq_in(val_3 != last_val_3 && val_3 == 1),
+  .full_out(),
+  .data_out(buf_k_out),
+  .empty_out(),
+  .valid_out(buf_valid_out)
+  );
 
   //   input wire clk_in,
 //  assign led = buf_k_out[15:0]; //state;//buf_k_out[15:0];
@@ -122,7 +124,7 @@ assign led = state;//top_k_out;//state;
       .rx(uart_rxd),
       .tx(uart_txd),
       .val1_in(debug),
-      .val2_in(state),
+      .val2_in(debug2),
       .val3_out(val_3),
       .val4_out(tmp)
     );

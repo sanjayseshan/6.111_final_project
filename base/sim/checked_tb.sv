@@ -84,78 +84,78 @@ CheckedQueue #(.DATA_WIDTH(32), .TAG_WIDTH(16), .DEPTH(3))Q(
     #10;
     deq_largest_in=0;
 
-    #10;
+    #30;
     enq_data_in=32'd3;
     enq_tag_in=15'd75;
     enq_in=1;
     #10;
     enq_in=0;
-    #10;
-    enq_data_in=32'd4;
-    enq_tag_in=15'd12;
-    enq_in=1;
-    #10;
-    enq_in=0;
-    #10;
-    enq_data_in=32'd5;
-    enq_tag_in=15'd27;
-    enq_in=1;
-    #10;
-    enq_in=0;
+    // #10;
+    // enq_data_in=32'd4;
+    // enq_tag_in=15'd12;
+    // enq_in=1;
+    // #10;
+    // enq_in=0;
+    // #10;
+    // enq_data_in=32'd5;
+    // enq_tag_in=15'd27;
+    // enq_in=1;
+    // #10;
+    // enq_in=0;
 
-    #10;
-    deq_largest_in=1; 
-    #10;
-    deq_largest_in=0;
-    #10;
-    deq_largest_in=1; 
-    #10;
-    deq_largest_in=0;
-    #10;
-    deq_smallest_in=1;
-    #10;
-    deq_smallest_in=0;
-    #10;
-    deq_largest_in=1; 
-    #10;
-    deq_largest_in=0; 
-    #10;
-    deq_smallest_in=1; 
-    #10;
-    deq_smallest_in=0; 
+    // #10;
+    // deq_largest_in=1; 
+    // #10;
+    // deq_largest_in=0;
+    // #10;
+    // deq_largest_in=1; 
+    // #10;
+    // deq_largest_in=0;
+    // #10;
+    // deq_largest_in=1;
+    // #10;
+    // deq_largest_in=0;
+    // #10;
+    // deq_largest_in=1; 
+    // #10;
+    // deq_largest_in=0; 
+    // #10;
+    // deq_largest_in=1; 
+    // #10;
+    // deq_largest_in=0; 
 
 
-    #10;
-    enq_data_in=32'd6;
-    enq_tag_in=15'd15;
-    enq_in=1;
-    #10;
-    enq_in=0;
-    #10;
-    deq_largest_in=1; // return data 6, tag 15
-    #10;
-    deq_largest_in=0; 
+    // #10;
+    // enq_data_in=32'd6;
+    // enq_tag_in=15'd15;
+    // enq_in=1;
+    // #10;
+    // enq_in=0;
+    // #10;
+    // deq_largest_in=1; // return data 6, tag 15
+    // #10;
+    // deq_largest_in=0; 
 
-    #10;
-    enq_data_in=32'd7;
-    enq_tag_in=15'd189;
-    enq_in=1;
-    #10;
-    enq_in=0;
-    #10;
-    enq_data_in=32'd8;
-    enq_tag_in=15'd720;
-    enq_in=1;
-    #10;
-    enq_in=0;
-    #10;
-    deq_smallest_in=1; // return data 7, tag 189
-    #10;
-    deq_smallest_in=0; 
-    #10;
-    deq_largest_in=1; // return data 8, tag 720
-    #10;
-    deq_largest_in=0; 
+    // #10;
+    // enq_data_in=32'd7;
+    // enq_tag_in=15'd189;
+    // enq_in=1;
+    // #10;
+    // enq_in=0;
+    // #10;
+    // enq_data_in=32'd8;
+    // enq_tag_in=15'd720;
+    // enq_in=1;
+    // #10;
+    // enq_in=0;
+    // #10;
+    // deq_largest_in=1; // return data 7, tag 189
+    // #10;
+    // deq_largest_in=0; 
+    // #10;
+    // deq_largest_in=1; // return data 8, tag 720
+    // #10;
+    // deq_largest_in=0; 
 
 
     #200

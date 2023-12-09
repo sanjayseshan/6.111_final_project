@@ -8,6 +8,7 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH = 8)(
   // input wire [31:0] vertex_addr_in,
   input wire [31:0] vertex_id_in,
   // input wire vertex_valid_in,
+  input wire valid_in,
   input wire [31:0] query_in [DIM-1:0],
   // input wire [15:0] pq_length_in,
   input wire [15:0] k_in,
@@ -15,7 +16,8 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH = 8)(
   output logic valid_out,
   output logic [2:0] state,
 
-  output logic [31:0] debug
+  output logic [31:0] debug,
+  output logic [31:0] debug2
   );
 
 
@@ -27,7 +29,7 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH = 8)(
   logic [31:0] pos_vec [DIM-1:0];
 
   logic [31:0] neigh_fifo_out, data_out, v_addr_in;
-  logic pos_empty_out, pos_full_out, fetch_data_valid_out, pos_deq_in, valid_in, ready_out;
+  logic pos_empty_out, pos_full_out, fetch_data_valid_out, pos_deq_in, ready_out;
   logic neigh_full_out, neigh_empty_out, neigh_valid_out, reached_neigh_end_out;
 
   logic [31:0] pq_out, pq_dist_out;
@@ -83,6 +85,9 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH = 8)(
   logic [31:0] vertex_in, first_pos_lookup_addr, mem_req_out2_route, mem_data_in2_route;
   logic vertex_valid_in, first_pos_lookup_addr_valid, mem_valid_out2_route, mem_valid_in2_route;
 
+  logic add_checked;
+  logic [$clog2(PQ_LENGTH):0] prev_checked_size;
+
   // always_comb begin
   //   if (state == 3'b1 || state==3'b110) begin
   //     // mem_req_out2_route = first_pos_lookup_addr;
@@ -98,7 +103,9 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH = 8)(
   // end
 
 
-  assign debug = pq_size | (dist_valid_out << 30);
+  // assign debug = pq_size | (dist_valid_out << 30);
+  assign debug = v_addr_in;
+  assign debug2 = checked_valid_in;
 
 
   always_ff @ (posedge clk_in) begin
@@ -107,7 +114,8 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH = 8)(
         valid_out <= 1'b0;
 
         state <= 3'b0;
-        initial_lookup <= 1'b1;
+        // initial_lookup <= 1'b1;
+        initial_lookup <= 1'b0;
 
         ct_dist <= 0;
         pq_deq_in <= 1'b0;
@@ -121,12 +129,18 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH = 8)(
         checked_min_deq <= 1'b0;
 
         k_count <= 0;
+
+        add_checked <= 1'b0;
+
+        prev_checked_size <= 0;
     end
 
     //initial_lookup == 1'b1 && state ==  3'b0
 
     // state 0: computes distance between P and Q and adds P to S
     else if (state ==  3'b0) begin
+        if (valid_in) initial_lookup <= 1'b1;
+
         if (initial_lookup) begin
           idx_lookup_addr <= vertex_id_in;
           idx_lookup_addr_valid <= 1'b1;
@@ -216,29 +230,40 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH = 8)(
       // top_k_out[3] <= fetch_data_valid_out ;//fetch_data_valid_out;//mem_valid_in2;//dist_valid_out;// mem_valid_in; //mem_req_out;
 
       // top_k_out <= checked_valid_out;
+
+      // if (prev_checked_size < checked_size) begin
+      //     state <= 3'b11;
+      //     // add_checked <= 1'b0;
+      // end
       if (pq_valid_out) begin
         if ((checked_full_out && checked_max_tag < pq_dist_out)) begin
           state <= 3'b110;
           k_count <= 4'b0;
         end
-        else if (checked_full_out && pq_dist_out < checked_max_tag && checked_proc_deq) begin
+        else if (checked_full_out && pq_dist_out < checked_max_tag) begin
           checked_max_deq <= 1'b1;
-        end else if (!checked_proc_deq) begin
-          checked_max_deq <= 1'b0;
-        end else if (~checked_full_out && checked_proc_deq) begin
+        // end else if (~checked_proc_deq) begin
+        //   checked_max_deq <= 1'b0;
+        end else if (~checked_full_out) begin
           checked_valid_in <= 1'b1;
           state <= 3'b11;
+          // add_checked <= 1'b1;
+
           checked_counter <= 2'b0;
           k_count <= 4'b0;
           // if (checked_max_deq) checked_max_deq <= 1'b0;
         end
       end
-      else if (checked_valid_out && checked_proc_deq) begin
+      else if (checked_valid_out) begin
         checked_valid_in <= 1'b1;
         checked_max_deq <= 1'b0;
         state <= 3'b11;
+        // add_checked <= 1'b1;
+        prev_checked_size <= checked_size;
       end
       else if (checked_max_deq) checked_max_deq <= 1'b0;
+
+      // if (checked_valid_in) checked_valid_in <= 1'b0;
 
     end
 
@@ -317,12 +342,17 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH = 8)(
       // end
 
       // added neigh_empty_out
-      if (reached_neigh_end_out && pos_empty_out && neigh_empty_out) begin
-        if (dist_valid_out) state <= 3'b101;
-        else if (distance_complete) begin
+      if (distance_complete && ~pq_empty_out) begin
           distance_complete <= 1'b0;
           state <= 3'b101;
-        end
+      end
+      else if (reached_neigh_end_out && pos_empty_out && neigh_empty_out) begin
+        if (dist_valid_out) distance_complete <= 1'b1;
+        // if (dist_valid_out) state <= 3'b101;
+        // else if (distance_complete) begin
+        //   distance_complete <= 1'b0;
+        //   state <= 3'b101;
+        // end
       end
     end
 
@@ -335,6 +365,7 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH = 8)(
       else begin
         pq_deq_in <= 1'b1;
         state <= 3'b10;
+        prev_checked_size <= checked_size;
       end
     end
 
@@ -355,8 +386,8 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH = 8)(
       else if (checked_min_deq) checked_min_deq <= 1'b0;
 
       if (checked_valid_out) begin
-        first_pos_lookup_addr <= checked_data_out;
-        first_pos_lookup_addr_valid <= 1'b1;
+        // first_pos_lookup_addr <= checked_data_out;
+        // first_pos_lookup_addr_valid <= 1'b1;
           
         if (k_count < k_in) begin
           checked_min_deq <= 1'b1;
@@ -370,13 +401,15 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH = 8)(
       // vertex_valid_in;
         // valid_out <= 1'b1;
         // top_k_out <= checked_data_out;//checked_data_out;
+        top_k_out <= checked_data_out;
       end
       else first_pos_lookup_addr_valid <= 1'b0;
 
-      top_k_out <= mem_data_in2_route;//checked_data_out;
-      valid_out <= mem_valid_in2_route;
+      // top_k_out <= mem_data_in2_route;//checked_data_out;
+      //valid_out <= mem_valid_in2_route;
+      valid_out <= checked_valid_out;
 
-      // if (checked_size > 3) state <= 3'b111;
+      // if (k_count >= k_in) state <= 3'b111;
 
     end
 
@@ -427,6 +460,7 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH = 8)(
     .clk_in(clk_in),
     .rst_in(rst_in),
     .deq_smallest_in(pq_deq_in),
+    .deq_largest_in(1'b0),
     .enq_data_in(point_addr),
     .enq_tag_in(dist_out),
     .enq_in(dist_valid_out),

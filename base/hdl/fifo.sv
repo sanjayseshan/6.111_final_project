@@ -17,10 +17,10 @@ module FIFO #(parameter DATA_WIDTH = 32, parameter DEPTH = 8)(
     logic [$clog2(DEPTH):0] read_ptr;
     logic [$clog2(DEPTH):0] write_ptr;
 
-    always_comb begin
-        empty_out = (read_ptr == write_ptr && !valid[read_ptr]);
-        full_out = (read_ptr==write_ptr && valid[read_ptr]);
-    end
+    // always_comb begin
+    //     empty_out = (read_ptr == write_ptr && !valid[read_ptr]);
+    //     full_out = (read_ptr==write_ptr && valid[read_ptr]);
+    // end
 
     always_ff @( posedge clk_in ) begin
         if (rst_in) begin
@@ -38,18 +38,21 @@ module FIFO #(parameter DATA_WIDTH = 32, parameter DEPTH = 8)(
             valid_out <= 0;
         end else begin
             // dequeue value
-            if (deq_in && !empty_out && valid[read_ptr]) begin
+            if (deq_in && ~empty_out && valid[read_ptr]) begin
                 data_out <= queue[read_ptr];
                 valid_out <= 1;
                 valid[read_ptr] <= 0;
                 read_ptr <= (read_ptr < DEPTH-1) ? read_ptr +1 : 0;
             end else valid_out <= 0;
             // enqeue value
-            if (enq_in && !full_out && valid[write_ptr] == 0) begin
+            if (enq_in && ~full_out && valid[write_ptr] == 0) begin
                 queue[write_ptr] <= enq_data_in;
                 valid[write_ptr] <= 1;
                 write_ptr <= (write_ptr < DEPTH-1) ? write_ptr +1 : 0;
             end
+
+            empty_out <= (read_ptr == write_ptr && ~valid[read_ptr]);
+            full_out <= (read_ptr==write_ptr && valid[read_ptr]);
 
         end
     end

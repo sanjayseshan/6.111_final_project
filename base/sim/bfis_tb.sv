@@ -8,6 +8,7 @@ module bfis_tb();
   logic [31:0] vertex_in;
   logic [31:0] vertex_id_in;//vertex_addr_in;
 //  logic vertex_valid_in;
+  logic valid_in;
   logic [31:0] query_in [3:0];
   logic [15:0] k_in;
   logic [31:0] top_k_out;
@@ -37,6 +38,7 @@ module bfis_tb();
     .vertex_id_in(vertex_id_in),
     // .vertex_addr_in(vertex_addr_in),
     // .vertex_valid_in(vertex_valid_in),
+    .valid_in(valid_in),
     .query_in(query_in),
     .k_in(k_in),
     .top_k_out(top_k_out),
@@ -83,6 +85,7 @@ module bfis_tb();
     query_in[3] = 1;//67;
     k_in = 16'd4;
     vertex_id_in  = 1;
+    valid_in = 1;
     #10;
     rst_in = 0;
 
