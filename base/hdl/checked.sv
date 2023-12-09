@@ -89,7 +89,7 @@ module CheckedQueue #(parameter DATA_WIDTH = 32, parameter TAG_WIDTH = 32, param
             // else begin
                 // for (int i = 0; i<DEPTH; i=i+1) begin
             if (valid[i] && queue[i] >= maxval) begin
-                read_ptr_max = i; // problematic line
+                read_ptr_max <= i; // problematic line
                 // curval = queue[i];
                 if (~(deq_high && valid_out)) begin
                     maxval <= queue[i];

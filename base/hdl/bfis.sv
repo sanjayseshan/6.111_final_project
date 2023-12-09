@@ -13,7 +13,9 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH = 8)(
   input wire [15:0] k_in,
   output logic [31:0] top_k_out,
   output logic valid_out,
-  output logic [2:0] state
+  output logic [2:0] state,
+
+  output logic [31:0] debug
   );
 
 
@@ -94,6 +96,9 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH = 8)(
   //     // mem_valid_in2 = mem_valid_in2_route;
   //   end
   // end
+
+
+  assign debug = pq_size | (dist_valid_out << 30);
 
 
   always_ff @ (posedge clk_in) begin
@@ -418,7 +423,7 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH = 8)(
 
 
 
-  CheckedQueue #(.DATA_WIDTH(32), .TAG_WIDTH(32), .DEPTH(16'd8)) s (
+  CheckedQueue #(.DATA_WIDTH(32), .TAG_WIDTH(32), .DEPTH(16'd8)) pq (
     .clk_in(clk_in),
     .rst_in(rst_in),
     .deq_smallest_in(pq_deq_in),
@@ -430,6 +435,7 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH = 8)(
     .tag_out(pq_dist_out),
     .size_out(pq_size),
     .empty_out(pq_empty_out),
+    // .size_out(debug),
     .valid_out(pq_valid_out)
   );
 

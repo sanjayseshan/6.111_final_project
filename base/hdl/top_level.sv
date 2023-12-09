@@ -27,7 +27,7 @@ module top_level(
   logic [31:0] query_in_real [4-1:0];
   logic [31:0] top_k_out;
 
-  logic [19:0] new_clk;
+  logic [24:0] new_clk;
 
   always_ff @( posedge clk_100mhz ) begin 
     if (sys_rst) begin 
@@ -48,8 +48,10 @@ module top_level(
 
   assign k_in = 16'd4;
 
+  logic [31:0] debug;
+
   bfis #(.DIM(4), .PQ_LENGTH(5)) main(
-  .clk_in(new_clk[19]),
+  .clk_in(new_clk[24]),
   .rst_in(sys_rst),
   .vertex_id_in(1),
   // .vertex_valid_in(1),
@@ -57,7 +59,8 @@ module top_level(
   .k_in(k_in),
   .top_k_out(top_k_out),
   .valid_out(valid_out),
-  .state(state)
+  .state(state),
+  .debug(debug)
   );
 
   logic [31:0] val_3, last_val_3, buf_k_out;
@@ -114,15 +117,15 @@ assign led = state;//top_k_out;//state;
 
   logic [31:0] tmp;
 
-  // manta man (
-  //     .clk(clk_100mhz),
-  //     .rx(uart_rxd),
-  //     .tx(uart_txd),
-  //     .val1_in(buf_k_out),
-  //     .val2_in(buf_valid_out),
-  //     .val3_out(val_3),
-  //     .val4_out(tmp)
-  //   );
+  manta man (
+      .clk(clk_100mhz),
+      .rx(uart_rxd),
+      .tx(uart_txd),
+      .val1_in(debug),
+      .val2_in(state),
+      .val3_out(val_3),
+      .val4_out(tmp)
+    );
 
 
   //   //lots of stuff

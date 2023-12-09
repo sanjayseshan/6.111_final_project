@@ -1,7 +1,7 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
 ---------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2023.1 (lin64) Build 3865809 Sun May  7 15:04:56 MDT 2023
-| Date         : Fri Dec  8 18:50:24 2023
+| Date         : Fri Dec  8 22:41:41 2023
 | Host         : seshanpc running 64-bit Debian GNU/Linux 12 (bookworm)
 | Command      : report_timing -file obj/post_route_timing.rpt
 | Design       : top_level
@@ -12,20 +12,20 @@ Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2023 Advanc
 
 Timing Report
 
-Slack (MET) :             6.791ns  (required time - arrival time)
-  Source:                 new_clk_reg[19]/C
+Slack (MET) :             4.695ns  (required time - arrival time)
+  Source:                 man/brx/addr_o_reg[9]/C
                             (rising edge-triggered cell FDRE clocked by gclk  {rise@0.000ns fall@4.000ns period=10.000ns})
-  Destination:            new_clk_reg[19]/D
+  Destination:            man/lab8_io_core_inst/val4_out_buf_reg[15]/CE
                             (rising edge-triggered cell FDRE clocked by gclk  {rise@0.000ns fall@4.000ns period=10.000ns})
   Path Group:             gclk
   Path Type:              Setup (Max at Slow Process Corner)
   Requirement:            10.000ns  (gclk rise@10.000ns - gclk rise@0.000ns)
-  Data Path Delay:        3.282ns  (logic 0.993ns (30.254%)  route 2.289ns (69.746%))
-  Logic Levels:           2  (BUFG=1 CARRY4=1)
-  Clock Path Skew:        0.000ns (DCD - SCD + CPR)
-    Destination Clock Delay (DCD):    4.774ns = ( 14.774 - 10.000 ) 
-    Source Clock Delay      (SCD):    5.072ns
-    Clock Pessimism Removal (CPR):    0.299ns
+  Data Path Delay:        5.017ns  (logic 1.379ns (27.485%)  route 3.638ns (72.515%))
+  Logic Levels:           4  (LUT2=1 LUT4=1 LUT6=2)
+  Clock Path Skew:        -0.047ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    4.839ns = ( 14.839 - 10.000 ) 
+    Source Clock Delay      (SCD):    5.144ns
+    Clock Pessimism Removal (CPR):    0.259ns
   Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
     Total System Jitter     (TSJ):    0.071ns
     Total Input Jitter      (TIJ):    0.000ns
@@ -40,17 +40,20 @@ Slack (MET) :             6.791ns  (required time - arrival time)
     N15                  IBUF (Prop_ibuf_I_O)         1.440     1.440 r  clk_100mhz_IBUF_inst/O
                          net (fo=1, routed)           1.972     3.412    clk_100mhz_IBUF
     BUFGCTRL_X0Y1        BUFG (Prop_bufg_I_O)         0.096     3.508 r  clk_100mhz_IBUF_BUFG_inst/O
-                         net (fo=20, routed)          1.564     5.072    clk_100mhz_IBUF_BUFG
-    SLICE_X34Y46         FDRE                                         r  new_clk_reg[19]/C
+                         net (fo=291, routed)         1.636     5.144    man/brx/clk_100mhz_IBUF_BUFG
+    SLICE_X2Y39          FDRE                                         r  man/brx/addr_o_reg[9]/C
   -------------------------------------------------------------------    -------------------
-    SLICE_X34Y46         FDRE (Prop_fdre_C_Q)         0.518     5.590 r  new_clk_reg[19]/Q
-                         net (fo=1, routed)           0.557     6.147    new_clk_reg[19]__0
-    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.096     6.243 r  new_clk_reg_BUFG[19]_inst/O
-                         net (fo=1611, routed)        1.732     7.975    new_clk_reg_BUFG[19]
-    SLICE_X34Y46         CARRY4 (Prop_carry4_S[3]_O[3])
-                                                      0.379     8.354 r  new_clk_reg[16]_i_1/O[3]
-                         net (fo=1, routed)           0.000     8.354    new_clk_reg[16]_i_1_n_4
-    SLICE_X34Y46         FDRE                                         r  new_clk_reg[19]/D
+    SLICE_X2Y39          FDRE (Prop_fdre_C_Q)         0.478     5.622 f  man/brx/addr_o_reg[9]/Q
+                         net (fo=1, routed)           0.862     6.484    man/brx/brx_lab8_io_core_addr[9]
+    SLICE_X2Y39          LUT4 (Prop_lut4_I1_O)        0.301     6.785 f  man/brx/val3_out_buf[31]_i_6/O
+                         net (fo=1, routed)           0.291     7.076    man/brx/val3_out_buf[31]_i_6_n_0
+    SLICE_X3Y39          LUT6 (Prop_lut6_I5_O)        0.124     7.200 f  man/brx/val3_out_buf[31]_i_4/O
+                         net (fo=4, routed)           0.983     8.183    man/brx/val3_out_buf[31]_i_4_n_0
+    SLICE_X4Y36          LUT2 (Prop_lut2_I1_O)        0.150     8.333 r  man/brx/val3_out_buf[31]_i_2/O
+                         net (fo=3, routed)           0.471     8.805    man/brx/val3_out_buf[31]_i_2_n_0
+    SLICE_X5Y36          LUT6 (Prop_lut6_I1_O)        0.326     9.131 r  man/brx/val4_out_buf[15]_i_1/O
+                         net (fo=16, routed)          1.031    10.162    man/lab8_io_core_inst/val4_out_buf_reg[16]_0[0]
+    SLICE_X5Y32          FDRE                                         r  man/lab8_io_core_inst/val4_out_buf_reg[15]/CE
   -------------------------------------------------------------------    -------------------
 
                          (clock gclk rise edge)      10.000    10.000 r  
@@ -59,16 +62,16 @@ Slack (MET) :             6.791ns  (required time - arrival time)
     N15                  IBUF (Prop_ibuf_I_O)         1.370    11.370 r  clk_100mhz_IBUF_inst/O
                          net (fo=1, routed)           1.868    13.238    clk_100mhz_IBUF
     BUFGCTRL_X0Y1        BUFG (Prop_bufg_I_O)         0.091    13.329 r  clk_100mhz_IBUF_BUFG_inst/O
-                         net (fo=20, routed)          1.444    14.774    clk_100mhz_IBUF_BUFG
-    SLICE_X34Y46         FDRE                                         r  new_clk_reg[19]/C
-                         clock pessimism              0.299    15.072    
-                         clock uncertainty           -0.035    15.037    
-    SLICE_X34Y46         FDRE (Setup_fdre_C_D)        0.109    15.146    new_clk_reg[19]
+                         net (fo=291, routed)         1.509    14.839    man/lab8_io_core_inst/clk_100mhz_IBUF_BUFG
+    SLICE_X5Y32          FDRE                                         r  man/lab8_io_core_inst/val4_out_buf_reg[15]/C
+                         clock pessimism              0.259    15.097    
+                         clock uncertainty           -0.035    15.062    
+    SLICE_X5Y32          FDRE (Setup_fdre_C_CE)      -0.205    14.857    man/lab8_io_core_inst/val4_out_buf_reg[15]
   -------------------------------------------------------------------
-                         required time                         15.146    
-                         arrival time                          -8.354    
+                         required time                         14.857    
+                         arrival time                         -10.162    
   -------------------------------------------------------------------
-                         slack                                  6.791    
+                         slack                                  4.695    
 
 
 
