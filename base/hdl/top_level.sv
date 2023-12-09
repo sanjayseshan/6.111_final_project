@@ -123,8 +123,8 @@ assign led = state;//top_k_out;//state;
       .clk(clk_100mhz),
       .rx(uart_rxd),
       .tx(uart_txd),
-      .val1_in(debug2),
-      .val2_in(state),
+      .val1_in(state),
+      .val2_in(top_k_out),
       .val3_out(val_3),
       .val4_out(tmp)
     );
