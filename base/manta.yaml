@@ -12,7 +12,8 @@ cores:
       val3_out: 32
       val4_out: 32
 uart:
-  port: "/dev/ttyUSB1"
+  # port: "/dev/ttyUSB1"
+  port: /dev/cu.usbserial-8874292302D01
   baudrate: 3000000
   clock_freq: 100000000
 

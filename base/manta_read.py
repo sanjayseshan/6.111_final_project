@@ -7,7 +7,9 @@ m = Manta('manta.yaml') # create manta python instance using yaml
 #for val3, val4 in [(11,9101), (5,10), (2,100),(25,100),(25,1000),(110,91010), (50,100), (20,1000),(250,1000),(250,10000)]:
 x = 0
 y = 1
-while True:
+prev_a = 0
+count = 0
+while count<10:
     x = not x
     m.lab8_io_core.val3_out.set(x) # set the value val3_out to be val3
     m.lab8_io_core.val4_out.set(y) # set the value val4_out to be val4
@@ -16,5 +18,11 @@ while True:
     a = m.lab8_io_core.val1_in.get() # read in the output from our divider
     b = m.lab8_io_core.val2_in.get() # read in the output from our divider
     #print(f"Values in were {val3} and {val4} with results {val4}//{val3}={val4//val3} and {val4}%{val3}={val4%val3}.")
-    print(f"Actual results were: {a} and {b}!")
+    
+    if a!=0 and a!=prev_a:
+        print(f"Actual results were: {a} and {b}!")
+        prev_a = a
+        
+    if a==prev_a:
+        count+=1
     y = 0

@@ -16,9 +16,13 @@ module CheckedQueue #(parameter DATA_WIDTH = 32, parameter TAG_WIDTH = 32, param
   output logic empty_out,
   output logic valid_out,
   output logic [TAG_WIDTH-1:0] max_tag_out,
+  output logic [TAG_WIDTH-1:0] curval,
   output logic proc_deq_ready,
   output logic deq_stall_out,
-  output logic checked_enq_in
+  output logic checked_enq_in,
+  output logic [$clog2(DEPTH):0] read_ptr_min,
+  output logic [$clog2(DEPTH):0] read_ptr_max,
+  output logic [$clog2(DEPTH):0] write_ptr2
 );
     
 
@@ -27,10 +31,12 @@ module CheckedQueue #(parameter DATA_WIDTH = 32, parameter TAG_WIDTH = 32, param
     logic [DATA_WIDTH-1:0] Q_data [DEPTH-1:0]; // point
     logic valid [DEPTH-1:0]; 
 
-    logic [$clog2(DEPTH):0] read_ptr_min, read_ptr_max, prev_read_ptr;
-    logic [$clog2(DEPTH):0] write_ptr;
-    logic [DATA_WIDTH-1:0] curval;
-    logic [DATA_WIDTH-1:0] maxval;
+    // logic [$clog2(DEPTH):0] read_ptr_min;
+    // logic [$clog2(DEPTH)+1:0] read_ptr_max, 
+    logic [$clog2(DEPTH)+1:0] prev_read_ptr;
+    // logic [$clog2(DEPTH)+1:0] write_ptr2;
+    // logic [TAG_WIDTH-1:0] curval;
+    logic [TAG_WIDTH-1:0] maxval;
 
     logic rem_lru;
     logic push_lru;
@@ -71,6 +77,12 @@ module CheckedQueue #(parameter DATA_WIDTH = 32, parameter TAG_WIDTH = 32, param
             // tmp_out <= queue[i];
             // deq_in = deq_smallest_in || deq_largest_in;
 
+            if (size_out==0 && ~enq_in) begin
+                curval <= 32'hFFFFFFFF;
+                max_tag_out <= 0;
+                read_ptr_min <= 0;
+                read_ptr_max <= 0;
+            end
 
             if (i==DEPTH) begin
                 // i <= 0;
@@ -116,12 +128,12 @@ module CheckedQueue #(parameter DATA_WIDTH = 32, parameter TAG_WIDTH = 32, param
             if (enq_in) begin
                 if (enq_tag_in > max_tag_out) begin
                     max_tag_out <= enq_tag_in;
-                    read_ptr_max <= write_ptr;
+                    read_ptr_max <= write_ptr2;
                 end
                 // max_tag_out <= (enq_tag_in > max_tag_out) ? enq_tag_in : max_tag_out;
                 if (enq_tag_in < curval) begin
                     curval <= enq_tag_in;
-                    read_ptr_min <= write_ptr;
+                    read_ptr_min <= write_ptr2;
                 end
                 // curval <= (enq_tag_in < curval) ? enq_tag_in : curval;
             end
@@ -180,7 +192,7 @@ module CheckedQueue #(parameter DATA_WIDTH = 32, parameter TAG_WIDTH = 32, param
         .enq_data_in(prev_read_ptr),
         .enq_in(push_lru),
         .full_out(),
-        .data_out(write_ptr),
+        .data_out(write_ptr2),
         .empty_out(),
         .valid_out()
     );
@@ -190,12 +202,16 @@ module CheckedQueue #(parameter DATA_WIDTH = 32, parameter TAG_WIDTH = 32, param
             for (int i=0; i<DEPTH; i=i+1) begin
                 queue[i] <= 0;
                 Q_data[i] <= 0;
-                valid[i] <= 0;
+                valid[i] <= 1'b0;
             end
             prev_read_ptr <= 0;
             data_out <= 0;
+            tag_out <= 0;
             valid_out <= 0;
             size_out <= 0;
+
+            empty_out <= 1'b1;
+            full_out <= 1'b0;
         end 
         else begin
             // dequeue smallest element
@@ -207,37 +223,47 @@ module CheckedQueue #(parameter DATA_WIDTH = 32, parameter TAG_WIDTH = 32, param
                 valid[read_ptr_min] <= 1'b0;
                 // read_ptr <= (read_ptr < DEPTH-1) ? read_ptr + 1 : 0;
                 prev_read_ptr <= read_ptr_min;
+                
                 size_out <= size_out -1;
+                if (size_out-1==0) empty_out <= 1'b1;
+                else if (size_out==DEPTH) full_out <= 1'b0;
             // dequeue largest element
             end else if ((in_req_out[0] && in_req_valid_out) && ~empty_out && valid[read_ptr_max]) begin
                 data_out <= Q_data[read_ptr_max];
                 tag_out <= queue[read_ptr_max];
                 push_lru <= 1'b1;
                 valid_out <= 1'b1;
-                valid[read_ptr_max] <= 0;
+                valid[read_ptr_max] <= 1'b0;
                 // read_ptr <= (read_ptr < DEPTH-1) ? read_ptr + 1 : 0;
                 prev_read_ptr <= read_ptr_max;
+
                 size_out <= size_out -1;
+                if (size_out-1==0) empty_out <= 1'b1;
+                else if (size_out==DEPTH) full_out <= 1'b0;
             end else begin
                 valid_out <= 1'b0;
                 push_lru <= 1'b0;
             end
             // enqueue element
-             //&& ~valid[write_ptr
+             //&& ~valid[write_ptr]
             if (enq_in && ~full_out) begin
                 size_out <= size_out +1;
-                Q_data[write_ptr] <= enq_data_in;
-                queue[write_ptr] <= enq_tag_in;
-                rem_lru <= 1;
-                valid[write_ptr] <= 1'b1;
+                if (size_out+1==DEPTH) full_out <= 1'b1;
+                else if (size_out==0) empty_out <= 1'b0;
+
+                Q_data[write_ptr2] <= enq_data_in;
+                queue[write_ptr2] <= enq_tag_in;
+                rem_lru <= 1'b1;
+                valid[write_ptr2] <= 1'b1;
                 checked_enq_in <= 1'b1;
-            end else begin
+            end else if (size_out==0) empty_out <= 1'b1;
+            else begin
                 rem_lru <= 0;
                 checked_enq_in <= 1'b0;
             end
             
-            empty_out <= (size_out==32'b0);
-            full_out <= (size_out==DEPTH);
+            // empty_out <= (size_out==32'b0);
+            // full_out <= (size_out==DEPTH);
         end
     end
         
@@ -260,6 +286,7 @@ module PQ_FIFO_CH #(parameter DATA_WIDTH = 32, parameter DEPTH = 8)(
     logic valid [DEPTH-1:0];
     logic [$clog2(DEPTH):0] read_ptr;
     logic [$clog2(DEPTH):0] write_ptr;
+    logic start;
 
     always_comb begin
         // empty_out = (read_ptr == write_ptr && !valid[read_ptr]);
@@ -275,12 +302,25 @@ module PQ_FIFO_CH #(parameter DATA_WIDTH = 32, parameter DEPTH = 8)(
             for (int i=0; i<DEPTH; i=i+1) begin
                 // init with x=i -- diff from FIFO
                 queue[i] <= i;
-                valid[i] <= 1;
+                valid[i] <= 1'b1;
             end
 
             read_ptr <= 0;
             write_ptr <= 0;
+            start <= 0;
         end else begin
+            if (~start) begin
+                for (int i=0; i<DEPTH; i=i+1) begin
+                // init with x=i -- diff from FIFO
+                    queue[i] <= i;
+                    valid[i] <= 1'b1;
+                end
+
+                read_ptr <= 0;
+                write_ptr <= 0;
+                start <= 1'b1;
+            end
+
             if (deq_in && ~(read_ptr == write_ptr && ~valid[read_ptr]) && valid[read_ptr]) begin
                 valid[read_ptr] <= 0; // reset valid bit
                 read_ptr <= (read_ptr < DEPTH-1) ? read_ptr +1 : 0; // move read ptr by 1

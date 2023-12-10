@@ -52,7 +52,7 @@ module top_level(
 
   bfis #(.DIM(4), .PQ_LENGTH(5)) main(
   // .clk_in(new_clk[24]),
-  .clk_in(new_clk[20]),
+  .clk_in(clk_100mhz),
   .rst_in(sys_rst),
   .vertex_id_in(1),
   .valid_in(tmp),
@@ -74,12 +74,12 @@ module top_level(
 
   logic [31:0] buf_valid_out;
 
-  FIFO #(.DATA_WIDTH(22),.DEPTH(4)) buf_out (
-  .clk_in(new_clk[20]),
+  FIFO #(.DATA_WIDTH(32),.DEPTH(4)) buf_out (
+  .clk_in(clk_100mhz),
   .rst_in(sys_rst),
   .enq_data_in(top_k_out),
-  .enq_in(valid_out),
-  .deq_in(val_3 != last_val_3 && val_3 == 1),
+  .enq_in((state==3'b110)&&valid_out),
+  .deq_in((state==3'b111)&&(count==0)),
   .full_out(),
   .data_out(buf_k_out),
   .empty_out(),
@@ -96,7 +96,14 @@ module top_level(
   // output logic valid_out,
   // output logic [2:0] state
 
-logic [2:0] count;
+logic [31:0] count;
+
+always_ff @ (posedge clk_100mhz) begin
+  if (sys_rst) count <= 0;
+  else begin
+    count <= (count > 10000000) ? 0 : count + 1;
+  end
+end
 
 
 assign led = state;//top_k_out;//state;
@@ -123,8 +130,8 @@ assign led = state;//top_k_out;//state;
       .clk(clk_100mhz),
       .rx(uart_rxd),
       .tx(uart_txd),
-      .val1_in(debug2),
-      .val2_in(state),
+      .val1_in(buf_k_out),
+      .val2_in(buf_valid_out),
       .val3_out(val_3),
       .val4_out(tmp)
     );

@@ -67,9 +67,11 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH = 8)(
   logic checked_max_deq, checked_min_deq;
   logic checked_full_out, checked_empty_out;
   logic [31:0] checked_data_in, checked_tag_in;
-  logic [31:0] checked_data_out, checked_tag_out, checked_max_tag;
+  logic [31:0] checked_data_out, checked_tag_out, checked_max_tag, curval;
   logic [$clog2(PQ_LENGTH):0] checked_size;
   logic [5:0] checked_counter;
+  logic checked_stall_out, remove_checked;
+  logic [$clog2(PQ_LENGTH):0] read_ptr_min, read_ptr_max, write_ptr;
 
 
   logic [15:0] k_count;
@@ -105,7 +107,7 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH = 8)(
 
 
   // assign debug = pq_size | (dist_valid_out << 30);
-  assign debug = v_addr_in;
+  assign debug = read_ptr_min;
   assign debug2 = checked_size;
 
 
@@ -132,6 +134,7 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH = 8)(
         k_count <= 0;
 
         add_checked <= 1'b0;
+        remove_checked <= 1'b0;
 
         prev_checked_size <= 0;
     end
@@ -389,30 +392,43 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH = 8)(
       else if (checked_min_deq) checked_min_deq <= 1'b0;
 
       if (checked_valid_out) begin
-        // first_pos_lookup_addr <= checked_data_out;
-        // first_pos_lookup_addr_valid <= 1'b1;
+        first_pos_lookup_addr <= checked_data_out;
+        first_pos_lookup_addr_valid <= 1'b1;
           
-        if (k_count < k_in) begin
-          checked_min_deq <= 1'b1;
-        end
-        else begin
-          checked_min_deq <= 1'b0;
-        end
+        if (k_count < k_in) remove_checked <= 1'b1;
+        // if (k_count < k_in) begin
+        //   checked_min_deq <= 1'b1;
+        // end
+        // else begin
+        //   checked_min_deq <= 1'b0;
+        // end
 
         k_count <= k_count + 1;
-      // vertex_in ;
-      // vertex_valid_in;
+
+        // top_k_out <= checked_data_out;
         // valid_out <= 1'b1;
+
         // top_k_out <= checked_data_out;//checked_data_out;
-        top_k_out <= checked_data_out;
       end
+      else if (remove_checked && ~checked_stall_out) begin
+
+        // if (k_count < k_in) begin
+          checked_min_deq <= 1'b1;
+        // end
+
+        remove_checked <= 1'b0;
+      end
+      else if (checked_min_deq) checked_min_deq <= 1'b0;
+
       else first_pos_lookup_addr_valid <= 1'b0;
 
-      // top_k_out <= mem_data_in2_route;//checked_data_out;
-      //valid_out <= mem_valid_in2_route;
-      valid_out <= checked_valid_out;
+      top_k_out <= mem_data_in2_route;//checked_data_out;
+      valid_out <= mem_valid_in2_route;
 
-      // if (k_count >= k_in) state <= 3'b111;
+
+      // valid_out <= checked_valid_out;
+
+      if (k_count > k_in && valid_out) state <= 3'b111;
 
     end
 
@@ -450,12 +466,17 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH = 8)(
     .full_out(checked_full_out),
     .data_out(checked_data_out),
     .tag_out(checked_tag_out),
+    .curval(curval),
     .size_out(checked_size),
     .empty_out(checked_empty_out),
     .valid_out(checked_valid_out),
     .max_tag_out(checked_max_tag),
     .proc_deq_ready(checked_proc_deq),
-    .checked_enq_in(checked_enq_in)
+    .checked_enq_in(checked_enq_in),
+    .deq_stall_out(checked_stall_out),
+    .read_ptr_min(read_ptr_min),
+    // .read_ptr_max(read_ptr_max)
+    .write_ptr2(write_ptr)
   );
 
 
@@ -494,6 +515,7 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH = 8)(
   //   // .size_out(debug),
   //   .valid_out(pq_valid_out),
   //   .deq_stall_out(pq_stall_out)
+  //   // .read_ptr_min(read_ptr_min)
   // );
 
 
