@@ -130,8 +130,13 @@ assign led = state;//top_k_out;//state;
       .clk(clk_100mhz),
       .rx(uart_rxd),
       .tx(uart_txd),
+<<<<<<< HEAD
       .val1_in(buf_k_out),
       .val2_in(buf_valid_out),
+=======
+      .val1_in(state),
+      .val2_in(top_k_out),
+>>>>>>> 72dab6fe6601fe79836acf26be93ce4699d459f8
       .val3_out(val_3),
       .val4_out(tmp)
     );

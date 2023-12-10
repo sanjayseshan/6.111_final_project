@@ -1,8 +1,13 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
 ---------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2023.1 (lin64) Build 3865809 Sun May  7 15:04:56 MDT 2023
+<<<<<<< HEAD
 | Date         : Sat Dec  9 23:54:59 2023
 | Host         : worker running 64-bit Ubuntu 20.04.6 LTS
+=======
+| Date         : Sat Dec  9 14:06:29 2023
+| Host         : seshanpc running 64-bit Debian GNU/Linux 12 (bookworm)
+>>>>>>> 72dab6fe6601fe79836acf26be93ce4699d459f8
 | Command      : report_timing -file obj/post_route_timing.rpt
 | Design       : top_level
 | Device       : 7s50-csga324
@@ -12,20 +17,36 @@ Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2023 Advanc
 
 Timing Report
 
+<<<<<<< HEAD
 Slack (MET) :             1.728ns  (required time - arrival time)
   Source:                 main/pq/i_reg[1]/C
+=======
+Slack (MET) :             4.328ns  (required time - arrival time)
+  Source:                 man/brx/addr_o_reg[1]/C
+                            (rising edge-triggered cell FDRE clocked by gclk  {rise@0.000ns fall@4.000ns period=10.000ns})
+  Destination:            man/lab8_io_core_inst/val4_out_buf_reg[10]/CE
+>>>>>>> 72dab6fe6601fe79836acf26be93ce4699d459f8
                             (rising edge-triggered cell FDRE clocked by gclk  {rise@0.000ns fall@4.000ns period=10.000ns})
   Destination:            main/pq/curval_reg[1]/CE
                             (rising edge-triggered cell FDSE clocked by gclk  {rise@0.000ns fall@4.000ns period=10.000ns})
   Path Group:             gclk
   Path Type:              Setup (Max at Slow Process Corner)
   Requirement:            10.000ns  (gclk rise@10.000ns - gclk rise@0.000ns)
+<<<<<<< HEAD
   Data Path Delay:        7.791ns  (logic 2.400ns (30.804%)  route 5.391ns (69.196%))
   Logic Levels:           9  (CARRY4=4 LUT2=1 LUT4=1 LUT5=1 LUT6=1 MUXF7=1)
   Clock Path Skew:        -0.038ns (DCD - SCD + CPR)
     Destination Clock Delay (DCD):    4.938ns = ( 14.938 - 10.000 ) 
     Source Clock Delay      (SCD):    5.242ns
     Clock Pessimism Removal (CPR):    0.266ns
+=======
+  Data Path Delay:        5.406ns  (logic 1.196ns (22.122%)  route 4.210ns (77.878%))
+  Logic Levels:           3  (LUT4=2 LUT6=1)
+  Clock Path Skew:        -0.025ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    4.847ns = ( 14.847 - 10.000 ) 
+    Source Clock Delay      (SCD):    5.143ns
+    Clock Pessimism Removal (CPR):    0.272ns
+>>>>>>> 72dab6fe6601fe79836acf26be93ce4699d459f8
   Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
     Total System Jitter     (TSJ):    0.071ns
     Total Input Jitter      (TIJ):    0.000ns
@@ -39,6 +60,7 @@ Slack (MET) :             1.728ns  (required time - arrival time)
                          net (fo=0)                   0.000     0.000    clk_100mhz
     N15                  IBUF (Prop_ibuf_I_O)         1.440     1.440 r  clk_100mhz_IBUF_inst/O
                          net (fo=1, routed)           1.972     3.412    clk_100mhz_IBUF
+<<<<<<< HEAD
     BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.096     3.508 r  clk_100mhz_IBUF_BUFG_inst/O
                          net (fo=1993, routed)        1.734     5.242    main/pq/clk_100mhz_IBUF_BUFG
     SLICE_X24Y112        FDRE                                         r  main/pq/i_reg[1]/C
@@ -68,6 +90,21 @@ Slack (MET) :             1.728ns  (required time - arrival time)
     SLICE_X28Y109        LUT5 (Prop_lut5_I1_O)        0.150    12.231 r  main/pq/curval[31]_i_1/O
                          net (fo=32, routed)          0.802    13.033    main/pq/curval[31]_i_1_n_0
     SLICE_X31Y104        FDSE                                         r  main/pq/curval_reg[1]/CE
+=======
+    BUFGCTRL_X0Y1        BUFG (Prop_bufg_I_O)         0.096     3.508 r  clk_100mhz_IBUF_BUFG_inst/O
+                         net (fo=315, routed)         1.635     5.143    man/brx/clk_100mhz_IBUF_BUFG
+    SLICE_X5Y5           FDRE                                         r  man/brx/addr_o_reg[1]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X5Y5           FDRE (Prop_fdre_C_Q)         0.419     5.562 r  man/brx/addr_o_reg[1]/Q
+                         net (fo=40, routed)          2.285     7.847    man/brx/addr_o_reg[2]_0[1]
+    SLICE_X12Y2          LUT4 (Prop_lut4_I2_O)        0.325     8.172 f  man/brx/val4_out_buf[15]_i_3/O
+                         net (fo=1, routed)           0.576     8.748    man/brx/val4_out_buf[15]_i_3_n_0
+    SLICE_X11Y0          LUT6 (Prop_lut6_I1_O)        0.328     9.076 f  man/brx/val4_out_buf[15]_i_2/O
+                         net (fo=1, routed)           0.594     9.669    man/brx/val4_out_buf[15]_i_2_n_0
+    SLICE_X10Y1          LUT4 (Prop_lut4_I3_O)        0.124     9.793 r  man/brx/val4_out_buf[15]_i_1/O
+                         net (fo=16, routed)          0.756    10.550    man/lab8_io_core_inst/val4_out_buf_reg[16]_0[0]
+    SLICE_X4Y4           FDRE                                         r  man/lab8_io_core_inst/val4_out_buf_reg[10]/CE
+>>>>>>> 72dab6fe6601fe79836acf26be93ce4699d459f8
   -------------------------------------------------------------------    -------------------
 
                          (clock gclk rise edge)      10.000    10.000 r  
@@ -75,6 +112,7 @@ Slack (MET) :             1.728ns  (required time - arrival time)
                          net (fo=0)                   0.000    10.000    clk_100mhz
     N15                  IBUF (Prop_ibuf_I_O)         1.370    11.370 r  clk_100mhz_IBUF_inst/O
                          net (fo=1, routed)           1.868    13.238    clk_100mhz_IBUF
+<<<<<<< HEAD
     BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.091    13.329 r  clk_100mhz_IBUF_BUFG_inst/O
                          net (fo=1993, routed)        1.609    14.938    main/pq/clk_100mhz_IBUF_BUFG
     SLICE_X31Y104        FDSE                                         r  main/pq/curval_reg[1]/C
@@ -86,6 +124,19 @@ Slack (MET) :             1.728ns  (required time - arrival time)
                          arrival time                         -13.033    
   -------------------------------------------------------------------
                          slack                                  1.728    
+=======
+    BUFGCTRL_X0Y1        BUFG (Prop_bufg_I_O)         0.091    13.329 r  clk_100mhz_IBUF_BUFG_inst/O
+                         net (fo=315, routed)         1.517    14.847    man/lab8_io_core_inst/clk_100mhz_IBUF_BUFG
+    SLICE_X4Y4           FDRE                                         r  man/lab8_io_core_inst/val4_out_buf_reg[10]/C
+                         clock pessimism              0.272    15.118    
+                         clock uncertainty           -0.035    15.083    
+    SLICE_X4Y4           FDRE (Setup_fdre_C_CE)      -0.205    14.878    man/lab8_io_core_inst/val4_out_buf_reg[10]
+  -------------------------------------------------------------------
+                         required time                         14.878    
+                         arrival time                         -10.550    
+  -------------------------------------------------------------------
+                         slack                                  4.328    
+>>>>>>> 72dab6fe6601fe79836acf26be93ce4699d459f8
 
 
 
