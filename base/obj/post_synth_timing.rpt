@@ -1,13 +1,8 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
 ---------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2023.1 (lin64) Build 3865809 Sun May  7 15:04:56 MDT 2023
-<<<<<<< HEAD
-| Date         : Sat Dec  9 23:54:38 2023
-| Host         : worker running 64-bit Ubuntu 20.04.6 LTS
-=======
-| Date         : Sat Dec  9 14:06:09 2023
+| Date         : Sat Dec  9 23:32:00 2023
 | Host         : seshanpc running 64-bit Debian GNU/Linux 12 (bookworm)
->>>>>>> 72dab6fe6601fe79836acf26be93ce4699d459f8
 | Command      : report_timing -file obj/post_synth_timing.rpt
 | Design       : top_level
 | Device       : 7s50-csga324
@@ -17,16 +12,16 @@ Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2023 Advanc
 
 Timing Report
 
-Slack (MET) :             2.495ns  (required time - arrival time)
-  Source:                 main/gmem/data_mem/output_register.doutb_reg_reg[4]/C
+Slack (MET) :             1.515ns  (required time - arrival time)
+  Source:                 main/graph/mem_req_out2_reg[12]/C
                             (rising edge-triggered cell FDRE clocked by gclk  {rise@0.000ns fall@4.000ns period=10.000ns})
-  Destination:            main/graph/mem_req_out_reg[8]/D
+  Destination:            main/gmem/data_mem/ram_data_b_reg[10]/D
                             (rising edge-triggered cell FDRE clocked by gclk  {rise@0.000ns fall@4.000ns period=10.000ns})
   Path Group:             gclk
   Path Type:              Setup (Max at Slow Process Corner)
   Requirement:            10.000ns  (gclk rise@10.000ns - gclk rise@0.000ns)
-  Data Path Delay:        7.354ns  (logic 3.936ns (53.522%)  route 3.418ns (46.478%))
-  Logic Levels:           10  (CARRY4=7 LUT3=1 LUT4=1 LUT5=1)
+  Data Path Delay:        8.334ns  (logic 1.907ns (22.882%)  route 6.427ns (77.118%))
+  Logic Levels:           8  (LUT3=1 LUT6=6 MUXF7=1)
   Clock Path Skew:        -0.145ns (DCD - SCD + CPR)
     Destination Clock Delay (DCD):    2.660ns = ( 12.660 - 10.000 ) 
     Source Clock Delay      (SCD):    2.920ns
@@ -45,44 +40,28 @@ Slack (MET) :             2.495ns  (required time - arrival time)
     N15                  IBUF (Prop_ibuf_I_O)         1.440     1.440 r  clk_100mhz_IBUF_inst/O
                          net (fo=1, unplaced)         0.800     2.240    clk_100mhz_IBUF
                          BUFG (Prop_bufg_I_O)         0.096     2.336 r  clk_100mhz_IBUF_BUFG_inst/O
-<<<<<<< HEAD
-                         net (fo=1992, unplaced)      0.584     2.920    main/gmem/data_mem/clk_100mhz_IBUF_BUFG
-                         FDRE                                         r  main/gmem/data_mem/output_register.doutb_reg_reg[4]/C
-=======
-                         net (fo=315, unplaced)       0.584     2.920    man/brx/clk_100mhz_IBUF_BUFG
-                         FDRE                                         r  man/brx/FSM_onehot_state_reg[1]/C
->>>>>>> 72dab6fe6601fe79836acf26be93ce4699d459f8
+                         net (fo=2413, unplaced)      0.584     2.920    main/graph/clk_100mhz_IBUF_BUFG
+                         FDRE                                         r  main/graph/mem_req_out2_reg[12]/C
   -------------------------------------------------------------------    -------------------
-                         FDRE (Prop_fdre_C_Q)         0.456     3.376 r  main/gmem/data_mem/output_register.doutb_reg_reg[4]/Q
-                         net (fo=10, unplaced)        1.026     4.402    main/gmem/data_mem/Q[4]
-                         CARRY4 (Prop_carry4_S[3]_CO[3])
-                                                      0.697     5.099 r  main/gmem/data_mem/mem_req_out_reg[0]_i_30/CO[3]
-                         net (fo=1, unplaced)         0.009     5.108    main/gmem/data_mem/mem_req_out_reg[0]_i_30_n_0
-                         CARRY4 (Prop_carry4_CI_O[3])
-                                                      0.329     5.437 r  main/gmem/data_mem/mem_req_out_reg[0]_i_29/O[3]
-                         net (fo=2, unplaced)         0.432     5.869    main/gmem/data_mem/mem_valid_out3[7]
-                         LUT4 (Prop_lut4_I2_O)        0.333     6.202 r  main/gmem/data_mem/mem_req_out[0]_i_15/O
-                         net (fo=1, unplaced)         0.000     6.202    main/graph/DI[0]
-                         CARRY4 (Prop_carry4_DI[0]_CO[3])
-                                                      0.553     6.755 r  main/graph/mem_req_out_reg[0]_i_8/CO[3]
-                         net (fo=1, unplaced)         0.000     6.755    main/graph/mem_req_out_reg[0]_i_8_n_0
-                         CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.114     6.869 r  main/graph/mem_req_out_reg[0]_i_3/CO[3]
-                         net (fo=1, unplaced)         0.000     6.869    main/graph/mem_req_out_reg[0]_i_3_n_0
-                         CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.114     6.983 r  main/graph/mem_req_out_reg[0]_i_2/CO[3]
-                         net (fo=34, unplaced)        0.991     7.974    main/graph/mem_valid_out232_in
-                         LUT5 (Prop_lut5_I2_O)        0.124     8.098 r  main/graph/mem_req_out[4]_i_3/O
-                         net (fo=1, unplaced)         0.333     8.431    main/graph/mem_req_out[4]_i_3_n_0
-                         CARRY4 (Prop_carry4_CYINIT_CO[3])
-                                                      0.580     9.011 r  main/graph/mem_req_out_reg[4]_i_2/CO[3]
-                         net (fo=1, unplaced)         0.009     9.020    main/graph/mem_req_out_reg[4]_i_2_n_0
-                         CARRY4 (Prop_carry4_CI_O[3])
-                                                      0.329     9.349 r  main/graph/mem_req_out_reg[8]_i_2/O[3]
-                         net (fo=1, unplaced)         0.618     9.967    main/gmem/data_mem/mem_req_out_reg[8][3]
-                         LUT3 (Prop_lut3_I2_O)        0.307    10.274 r  main/gmem/data_mem/mem_req_out[8]_i_1/O
-                         net (fo=1, unplaced)         0.000    10.274    main/graph/mem_req_out_reg[8]_1
-                         FDRE                                         r  main/graph/mem_req_out_reg[8]/D
+                         FDRE (Prop_fdre_C_Q)         0.456     3.376 r  main/graph/mem_req_out2_reg[12]/Q
+                         net (fo=82, unplaced)        1.060     4.436    main/graph/mem_req_out2[12]
+                         LUT6 (Prop_lut6_I0_O)        0.295     4.731 r  main/graph/ram_data_b[13]_i_629/O
+                         net (fo=84, unplaced)        0.997     5.728    main/graph/ram_data_b[13]_i_629_n_0
+                         LUT3 (Prop_lut3_I0_O)        0.124     5.852 r  main/graph/ram_data_b[13]_i_660/O
+                         net (fo=80, unplaced)        0.996     6.848    main/graph/ram_data_b[13]_i_660_n_0
+                         LUT6 (Prop_lut6_I1_O)        0.124     6.972 r  main/graph/ram_data_b[10]_i_343/O
+                         net (fo=1, unplaced)         0.902     7.874    main/graph/ram_data_b[10]_i_343_n_0
+                         LUT6 (Prop_lut6_I1_O)        0.124     7.998 r  main/graph/ram_data_b[10]_i_118/O
+                         net (fo=1, unplaced)         0.665     8.663    main/graph/ram_data_b[10]_i_118_n_0
+                         LUT6 (Prop_lut6_I1_O)        0.124     8.787 r  main/graph/ram_data_b[10]_i_35/O
+                         net (fo=1, unplaced)         0.000     8.787    main/graph/ram_data_b[10]_i_35_n_0
+                         MUXF7 (Prop_muxf7_I0_O)      0.238     9.025 r  main/graph/ram_data_b_reg[10]_i_10/O
+                         net (fo=1, unplaced)         0.905     9.930    main/graph/ram_data_b_reg[10]_i_10_n_0
+                         LUT6 (Prop_lut6_I0_O)        0.298    10.228 r  main/graph/ram_data_b[10]_i_3/O
+                         net (fo=1, unplaced)         0.902    11.130    main/graph/ram_data_b[10]_i_3_n_0
+                         LUT6 (Prop_lut6_I1_O)        0.124    11.254 r  main/graph/ram_data_b[10]_i_1/O
+                         net (fo=1, unplaced)         0.000    11.254    main/gmem/data_mem/ram_data_b_reg[14]_0[10]
+                         FDRE                                         r  main/gmem/data_mem/ram_data_b_reg[10]/D
   -------------------------------------------------------------------    -------------------
 
                          (clock gclk rise edge)      10.000    10.000 r  
@@ -91,21 +70,16 @@ Slack (MET) :             2.495ns  (required time - arrival time)
     N15                  IBUF (Prop_ibuf_I_O)         1.370    11.370 r  clk_100mhz_IBUF_inst/O
                          net (fo=1, unplaced)         0.760    12.130    clk_100mhz_IBUF
                          BUFG (Prop_bufg_I_O)         0.091    12.221 r  clk_100mhz_IBUF_BUFG_inst/O
-<<<<<<< HEAD
-                         net (fo=1992, unplaced)      0.439    12.660    main/graph/clk_100mhz_IBUF_BUFG
-                         FDRE                                         r  main/graph/mem_req_out_reg[8]/C
-=======
-                         net (fo=315, unplaced)       0.439    12.660    man/brx/clk_100mhz_IBUF_BUFG
-                         FDRE                                         r  man/brx/addr_o_reg[0]/C
->>>>>>> 72dab6fe6601fe79836acf26be93ce4699d459f8
+                         net (fo=2413, unplaced)      0.439    12.660    main/gmem/data_mem/clk_100mhz_IBUF_BUFG
+                         FDRE                                         r  main/gmem/data_mem/ram_data_b_reg[10]/C
                          clock pessimism              0.115    12.775    
                          clock uncertainty           -0.035    12.740    
-                         FDRE (Setup_fdre_C_D)        0.029    12.769    main/graph/mem_req_out_reg[8]
+                         FDRE (Setup_fdre_C_D)        0.029    12.769    main/gmem/data_mem/ram_data_b_reg[10]
   -------------------------------------------------------------------
                          required time                         12.769    
-                         arrival time                         -10.274    
+                         arrival time                         -11.254    
   -------------------------------------------------------------------
-                         slack                                  2.495    
+                         slack                                  1.515    
 
 
 

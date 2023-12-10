@@ -72,11 +72,11 @@ end
 
  xilinx_single_port_ram_read_first #(
     .RAM_WIDTH(1),                       // Specify RAM data width
-    .RAM_DEPTH(1024),                     // Specify RAM depth (number of entries)
+    .RAM_DEPTH(4096),                     // Specify RAM depth (number of entries)
     .RAM_PERFORMANCE("HIGH_PERFORMANCE"), // Select "HIGH_PERFORMANCE" or "LOW_LATENCY" 
     .INIT_FILE(`FPATH(empty.mem))          // Specify name/location of RAM initialization file if using one (leave blank if not)
  ) bram_3_2 (
-    .addra(v_addr_in[9:0]),     // Address bus, width determined from RAM_DEPTH
+    .addra(v_addr_in[11:0]),     // Address bus, width determined from RAM_DEPTH
     .dina(1'b1),       // RAM input data, width determined from RAM_WIDTH
     .clka(clk_in),       // Clock
     .wea(1'b1),         // Write enable

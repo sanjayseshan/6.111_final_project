@@ -98,12 +98,12 @@ module graph_memory #(parameter DIM = 2, parameter PROC_BITS = 4)(
 
   xilinx_true_dual_port_read_first_2_clock_ram #(
     .RAM_WIDTH(32),                       // Specify RAM data width
-    .RAM_DEPTH(1024),                     // Specify RAM depth (number of entries)
+    .RAM_DEPTH(16384),                     // Specify RAM depth (number of entries)
     .RAM_PERFORMANCE("HIGH_PERFORMANCE"), // Select "HIGH_PERFORMANCE" or "LOW_LATENCY"
-    .INIT_FILE(`FPATH(out_addrs2.mem))                        // Specify name/location of RAM initialization file if using one (leave blank if not)
+    .INIT_FILE(`FPATH(samples/tester_8/out_addrs.mem))                        // Specify name/location of RAM initialization file if using one (leave blank if not)
   ) data_mem (
-    .addra(data_addra[9:0]),   // Port A address bus, width determined from RAM_DEPTH
-    .addrb(data_addrb[9:0]),   // Port B address bus, width determined from RAM_DEPTH
+    .addra(data_addra[13:0]),   // Port A address bus, width determined from RAM_DEPTH
+    .addrb(data_addrb[13:0]),   // Port B address bus, width determined from RAM_DEPTH
     .dina(0),     // Port A RAM input data, width determined from RAM_WIDTH
     .dinb(0),     // Port B RAM input data, width determined from RAM_WIDTH
     .clka(clk_in),     // Port A clock
@@ -122,11 +122,11 @@ module graph_memory #(parameter DIM = 2, parameter PROC_BITS = 4)(
 
   xilinx_single_port_ram_read_first #(
     .RAM_WIDTH(32),                       // Specify RAM data width
-    .RAM_DEPTH(1024),                     // Specify RAM depth (number of entries)
+    .RAM_DEPTH(4096),                     // Specify RAM depth (number of entries)
     .RAM_PERFORMANCE("HIGH_PERFORMANCE"), // Select "HIGH_PERFORMANCE" or "LOW_LATENCY" 
-    .INIT_FILE(`FPATH(out_vidx2.mem))          // Specify name/location of RAM initialization file if using one (leave blank if not)
+    .INIT_FILE(`FPATH(samples/tester_8/out_vidx.mem))          // Specify name/location of RAM initialization file if using one (leave blank if not)
   ) ptr_mem (
-    .addra(idx_addr[9:0]),     // Address bus, width determined from RAM_DEPTH
+    .addra(idx_addr[11:0]),     // Address bus, width determined from RAM_DEPTH
     .dina(0),       // RAM input data, width determined from RAM_WIDTH
     .clka(clk_in),       // Clock
     .wea(1'b0),         // Write enable

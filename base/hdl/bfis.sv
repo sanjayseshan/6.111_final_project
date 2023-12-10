@@ -316,12 +316,14 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH = 8)(
           ct_dist <= ct_dist+1;
           pos_valid[ct_dist] <= 1'b1;
           if (ct_dist != 0) pos_valid[ct_dist-1] <= 1'b0;
-          if (ct_dist == DIM-1) pos_deq <= 1'b0;
+          if (ct_dist == DIM-2) pos_deq <= 1'b0;
 
         end else begin 
           pos_valid[DIM-1] <= 1'b0;
         end
-      end
+      end 
+      // else if (pos_deq) pos_deq <= 1'b0;
+
 
       // if distance calculated and not all neighbors visited, get next neighbor
       // if(dist_valid_out && ~reached_neigh_end_out && neigh_empty_out) begin

@@ -123,7 +123,7 @@ module bfis_tb();
 
 
 // result should be 959 or 0x3bf
-    #40000;
+    #400000;
     $display("Simulation finished");
     $finish;
   end
