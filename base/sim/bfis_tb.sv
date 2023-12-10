@@ -9,7 +9,7 @@ module bfis_tb();
   logic [31:0] vertex_id_in;//vertex_addr_in;
 //  logic vertex_valid_in;
   logic valid_in;
-  logic [31:0] query_in [3:0];
+  logic [31:0] query_in [7:0];
   logic [15:0] k_in;
   logic [31:0] top_k_out;
   logic valid_out;
@@ -23,15 +23,15 @@ module bfis_tb();
   // logic [31:0] top_k_out3;
   logic [31:0] query_pos_in2;
   logic [31:0] query_pos_in3;
-//   logic [31:0] query_pos_in4;
-//   logic [31:0] query_pos_in5;
-//   logic [31:0] query_pos_in6;
-//   logic [31:0] query_pos_in7;
+  logic [31:0] query_pos_in4;
+  logic [31:0] query_pos_in5;
+  logic [31:0] query_pos_in6;
+  logic [31:0] query_pos_in7;
 //   logic [31:0] query_pos_in8;
   logic [2:0] state;
 
 
-  bfis #(.DIM(4), .PQ_LENGTH(5)) bfis_m (
+  bfis #(.DIM(8), .PQ_LENGTH(5)) bfis_m (
     .clk_in(clk_in),
     .rst_in(rst_in),
     // .vertex_in(vertex_in),
@@ -56,7 +56,13 @@ module bfis_tb();
       query_pos_in1 = query_in[1];
       query_pos_in2 = query_in[2];
       query_pos_in3 = query_in[3];
-      // top_k_out0 = top_k_out[0];
+
+      query_pos_in4 = query_in[4];
+      query_pos_in5 = query_in[5];
+      query_pos_in6 = query_in[6];
+      query_pos_in7 = query_in[7];
+      
+          // top_k_out0 = top_k_out[0];
       // top_k_out1 = top_k_out[1];
       // top_k_out2 = top_k_out[2];
       // top_k_out3 = top_k_out[3];
@@ -83,6 +89,10 @@ module bfis_tb();
     query_in[1] = 7;//67;
     query_in[2] = 1;//67;
     query_in[3] = 1;//67;
+    query_in[4] = 5;//23;
+    query_in[5] = 7;//67;
+    query_in[6] = 1;//67;
+    query_in[7] = 1;//67;
     k_in = 16'd4;
     vertex_id_in  = 1;
     valid_in = 1;

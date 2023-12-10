@@ -23,8 +23,8 @@ module top_level(
   logic valid_out;
 
   logic [31:0] vertex_in;
-  logic [31:0] query_in [4-1:0];
-  logic [31:0] query_in_real [4-1:0];
+  logic [31:0] query_in [48-1:0];
+  logic [31:0] query_in_real [8-1:0];
   logic [31:0] top_k_out;
 
   logic [24:0] new_clk;
@@ -43,14 +43,17 @@ module top_level(
   assign    query_in_real[1] = 7;
   assign    query_in_real[2] = 1;
   assign    query_in_real[3] = 1;
-
+  assign    query_in_real[5] = 5;
+  assign    query_in_real[6] = 7;
+  assign    query_in_real[7] = 1;
+  assign    query_in_real[8] = 1;
   logic [15:0] k_in;
 
   assign k_in = 16'd4;
 
   logic [31:0] debug, debug2;
 
-  bfis #(.DIM(4), .PQ_LENGTH(5)) main(
+  bfis #(.DIM(8), .PQ_LENGTH(5)) main(
   // .clk_in(new_clk[24]),
   .clk_in(clk_100mhz),
   .rst_in(sys_rst),
@@ -74,7 +77,7 @@ module top_level(
 
   logic [31:0] buf_valid_out;
 
-  FIFO #(.DATA_WIDTH(32),.DEPTH(4)) buf_out (
+  FIFO #(.DATA_WIDTH(32),.DEPTH(8)) buf_out (
   .clk_in(clk_100mhz),
   .rst_in(sys_rst),
   .enq_data_in(top_k_out),
