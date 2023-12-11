@@ -8,13 +8,13 @@
 `endif  /* ! SYNTHESIS */
 
 
-module mainmem #(parameter DIM = 4, parameter PROC_BITS = 0)(
+module cache #(parameter DIM = 4, parameter PROC_BITS = 0)(
   input wire clk_in,
   input wire rst_in,
   input wire [31:0] addr,
   input wire addr_validin,
   output logic [31:0] val_out,
-  output logic addr_validin
+  output logic valid_out
   );
 
 
@@ -44,7 +44,7 @@ module mainmem #(parameter DIM = 4, parameter PROC_BITS = 0)(
     // count 2 cycles to get BRAM values
     if (addr_validin) begin
       cta <= 1;
-      addr_validin <= 0;
+      valid_out <= 0;
     end
     else begin
       cta <= 0;
@@ -52,11 +52,11 @@ module mainmem #(parameter DIM = 4, parameter PROC_BITS = 0)(
     end
 
       if (cta) begin
-        addr_validin <= 1;
-        // val_out <= 1;
+        valid_out <= 1;
+        // data_outa <= 1;
         if (!addr_validin)
           cta <= 0;
-      end else addr_validin <= 0;
+      end else valid_out <= 0;
 
     if (data_validinb) begin
       ctb <= 1;
@@ -70,8 +70,8 @@ module mainmem #(parameter DIM = 4, parameter PROC_BITS = 0)(
         data_valid_outb <= 1;
         if (!data_validinb) ctb <= 0;
       end else data_valid_outb <= 0;
-    // if (cta == 2) addr_validin <= 1;
-    // else addr_validin <= 0;
+    // if (cta == 2) valid_out <= 1;
+    // else valid_out <= 0;
     // if (ctb == 2) data_valid_outb <= 1;
     // else data_valid_outb <= 0;
 
