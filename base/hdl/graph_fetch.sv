@@ -6,7 +6,6 @@ module graph_fetch #(parameter DIM = 2)(
   input wire rst_in,
   input wire [31:0] v_addr_in,
   input wire valid_in,
-  output logic ready_out,
   
   input wire pos_deq_in, // output position vector value
   output logic [31:0] data_out, // output position vector values one by one
@@ -152,7 +151,6 @@ module graph_fetch #(parameter DIM = 2)(
 
     always_ff @( posedge clk_in ) begin
       if (rst_in) begin
-        ready_out <= 1'b1;
         ct <= 0;
         
         mem_valid_out <= 1'b0;
