@@ -447,8 +447,8 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH = 8)(
 
     .visited_req_out(visited_addr_in),
     .visited_req_valid_out(visited_addr_valid_in),
-    .visited_val_returned_in(visited),
-    .visited_val_returned_valid_in(valid_visited)
+    .visited_val_in(visited),
+    .visited_val_valid_in(valid_visited)
   );
 
 

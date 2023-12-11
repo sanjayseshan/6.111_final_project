@@ -32,8 +32,8 @@ module graph_fetch #(parameter DIM = 2)(
 
   output logic [31:0] visited_req_out,
   output logic visited_req_valid_out,
-  input wire visited_val_returned_in,
-  input wire visited_val_returned_valid_in
+  input wire visited_val_in,
+  input wire visited_val_valid_in
   );
 
   // logic [31:0] mem_req_out2; // neighbor address
@@ -89,7 +89,7 @@ module graph_fetch #(parameter DIM = 2)(
         .rst_in(rst_in),
         .deq_in(neigh_deq_in),
         .enq_data_in(mem_data_in2),
-        .enq_in(visited_val_returned_valid_in&&(~visited_val_returned_in)&&(mem_data_in2!=0)), // mem_valid_in
+        .enq_in(visited_val_valid_in&&(~visited_val_in)&&(mem_data_in2!=0)), // mem_valid_in
         .full_out(neigh_full_out),
         .data_out(neigh_fifo_out),
         .valid_out(neigh_valid_out),
@@ -189,9 +189,9 @@ module graph_fetch #(parameter DIM = 2)(
             visited_req_valid_out <= 1'b1;
           
           // received visited result
-          end else if (req_ready_v && visited_val_returned_valid_in) begin
+          end else if (req_ready_v && visited_val_valid_in) begin
             // if not visited, find data
-            if (~visited_val_returned_in) begin
+            if (~visited_val_in) begin
               req_ready_d <= 1'b1;
             
             // if visited, go to next neighbor
