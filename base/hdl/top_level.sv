@@ -10,6 +10,7 @@ module top_level(
   output logic [15:0] led //16 green output LEDs (located right above switches)
   );
 
+  parameter DIM=8;
   // assign led = sw; //for debugging
   //shut up those rgb LEDs (active high):
   // assign rgb1= 0;
@@ -24,7 +25,7 @@ module top_level(
 
   logic [31:0] vertex_in;
   logic [31:0] query_in [48-1:0];
-  logic [31:0] query_in_real [8-1:0];
+  logic [31:0] query_in_real [DIM-1:0];
   logic [31:0] top_k_out;
 
   logic [24:0] new_clk;
@@ -39,17 +40,23 @@ module top_level(
     
   end
 
-  assign    query_in_real[0] = 5;
-  assign    query_in_real[1] = 7;
-  assign    query_in_real[2] = 1;
-  assign    query_in_real[3] = 1;
-  assign    query_in_real[5] = 5;
-  assign    query_in_real[6] = 7;
-  assign    query_in_real[7] = 1;
-  assign    query_in_real[8] = 1;
+  // assign    query_in_real[0] = 5;
+  // assign    query_in_real[1] = 7;
+  // assign    query_in_real[2] = 1;
+  // assign    query_in_real[3] = 1;
+  // assign    query_in_real[4] = 5;
+  // assign    query_in_real[5] = 7;
+  // assign    query_in_real[6] = 1;
+  // assign    query_in_real[7] = 1;
   logic [15:0] k_in;
 
-  assign k_in = 16'd4;
+  // assign k_in = 16'd4;
+
+  logic [4:0] count_in;
+  logic [31:0] data_in [DIM:0];
+  logic ready;
+
+
 
   logic [31:0] debug, debug2;
 
@@ -58,7 +65,7 @@ module top_level(
   .clk_in(clk_100mhz),
   .rst_in(sys_rst),
   .vertex_id_in(1),
-  .valid_in(tmp),
+  .valid_in(ready),
   .query_in(query_in_real),
   .k_in(k_in),
   .top_k_out(top_k_out),
@@ -69,6 +76,65 @@ module top_level(
   );
 
   logic [31:0] val_3, last_val_3, buf_k_out;
+  logic [31:0] tmp;
+  logic [31:0] sig_in;
+  logic [31:0] last_sig_in;
+  
+  logic started_seq;
+
+  always_ff @( posedge clk_100mhz ) begin 
+    if (sys_rst) begin 
+      count_in <= 0;
+      ready <= 0;
+      for (int i=0; i<10; i=i+1)
+        data_in[i] <= 0;
+    end
+    else begin
+      // if (val_3==1 && (val_3 != last_val_3) && count_in != DIM+2) begin
+      //   count_in <= count_in+1;
+
+      if (sig_in == 32'hFFFFFFFF && !started_seq) begin
+        started_seq <= 1;
+        count_in <= 0;
+      end
+
+      last_sig_in <= sig_in;
+
+
+      if (sig_in == 32'hFFFFFFFF && started_seq && last_sig_in != sig_in) begin
+      end
+
+      if (sig_in != 32'hFFFFFFFF && started_seq && last_sig_in != sig_in) begin
+        data_in[count_in] <= sig_in;
+        count_in <= count_in + 1;
+      end
+
+
+      // end
+
+      // if (data_in[count_in] == 0 && tmp != 0)
+      //   data_in[count_in] <= tmp;
+
+      if (count_in == DIM+1) begin
+        query_in_real <= data_in[DIM-1:0];
+        k_in <= data_in[DIM];
+        ready <= 1;//data_in[9];
+        count_in <= DIM+2;
+
+      end else ready <= 0;
+
+    end
+    
+  end
+
+  // assign query_in_real = data_in[7:0];
+  // assign k_in = data_in[8];
+  always_comb begin
+    if (count_in < DIM && count_in != 0) begin
+      led[15:11] = count_in;
+      led[10:0]  = data_in[count_in-1];//data_in[count_in];//data_in[count_in];//data_in[count_in];
+    end
+  end
 
   always_ff @( posedge clk_100mhz ) begin
     last_val_3 <= val_3;
@@ -77,7 +143,7 @@ module top_level(
 
   logic [31:0] buf_valid_out;
 
-  FIFO #(.DATA_WIDTH(32),.DEPTH(8)) buf_out (
+  FIFO #(.DATA_WIDTH(32),.DEPTH(DIM)) buf_out (
   .clk_in(clk_100mhz),
   .rst_in(sys_rst),
   .enq_data_in(top_k_out),
@@ -109,7 +175,7 @@ always_ff @ (posedge clk_100mhz) begin
 end
 
 
-assign led = state;//top_k_out;//state;
+// assign led = state;//top_k_out;//state;
 // assign led[15] = valid_out;//state;
 // assign led[14:12] = state;//state;
 // always_ff @ (posedge clk_100mhz) begin
@@ -127,7 +193,6 @@ assign led = state;//top_k_out;//state;
     
   // end
 
-  logic [31:0] tmp;
 
   manta man (
       .clk(clk_100mhz),
@@ -136,7 +201,7 @@ assign led = state;//top_k_out;//state;
       .val1_in(buf_k_out),
       .val2_in(buf_valid_out),
       .val3_out(val_3),
-      .val4_out(tmp)
+      .val4_out(sig_in)
     );
 
 

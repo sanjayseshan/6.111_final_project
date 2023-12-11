@@ -1,7 +1,7 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
 ---------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2023.1 (lin64) Build 3865809 Sun May  7 15:04:56 MDT 2023
-| Date         : Sun Dec 10 00:04:37 2023
+| Date         : Sun Dec 10 20:11:50 2023
 | Host         : seshanpc running 64-bit Debian GNU/Linux 12 (bookworm)
 | Command      : report_timing -file obj/post_synth_timing.rpt
 | Design       : top_level
@@ -12,16 +12,16 @@ Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2023 Advanc
 
 Timing Report
 
-Slack (MET) :             2.299ns  (required time - arrival time)
-  Source:                 main/gmem/data_mem/output_register.doutb_reg_reg[4]/C
+Slack (MET) :             2.193ns  (required time - arrival time)
+  Source:                 main/pos_vec_reg[7][1]/C
                             (rising edge-triggered cell FDRE clocked by gclk  {rise@0.000ns fall@4.000ns period=10.000ns})
-  Destination:            main/graph/mem_req_out_reg[8]/D
+  Destination:            main/distance_calc/intermediate_subs_out_reg[1][29]/D
                             (rising edge-triggered cell FDRE clocked by gclk  {rise@0.000ns fall@4.000ns period=10.000ns})
   Path Group:             gclk
   Path Type:              Setup (Max at Slow Process Corner)
   Requirement:            10.000ns  (gclk rise@10.000ns - gclk rise@0.000ns)
-  Data Path Delay:        7.550ns  (logic 3.925ns (51.987%)  route 3.625ns (48.013%))
-  Logic Levels:           11  (CARRY4=8 LUT3=1 LUT4=1 LUT5=1)
+  Data Path Delay:        7.381ns  (logic 3.918ns (53.082%)  route 3.463ns (46.918%))
+  Logic Levels:           16  (CARRY4=12 LUT3=1 LUT4=1 LUT6=1 MUXF7=1)
   Clock Path Skew:        -0.145ns (DCD - SCD + CPR)
     Destination Clock Delay (DCD):    2.660ns = ( 12.660 - 10.000 ) 
     Source Clock Delay      (SCD):    2.920ns
@@ -40,42 +40,56 @@ Slack (MET) :             2.299ns  (required time - arrival time)
     N15                  IBUF (Prop_ibuf_I_O)         1.440     1.440 r  clk_100mhz_IBUF_inst/O
                          net (fo=1, unplaced)         0.800     2.240    clk_100mhz_IBUF
                          BUFG (Prop_bufg_I_O)         0.096     2.336 r  clk_100mhz_IBUF_BUFG_inst/O
-                         net (fo=2468, unplaced)      0.584     2.920    main/gmem/data_mem/clk_100mhz_IBUF_BUFG
-                         FDRE                                         r  main/gmem/data_mem/output_register.doutb_reg_reg[4]/C
+                         net (fo=3249, unplaced)      0.584     2.920    main/clk_100mhz_IBUF_BUFG
+                         FDRE                                         r  main/pos_vec_reg[7][1]/C
   -------------------------------------------------------------------    -------------------
-                         FDRE (Prop_fdre_C_Q)         0.456     3.376 r  main/gmem/data_mem/output_register.doutb_reg_reg[4]/Q
-                         net (fo=14, unplaced)        1.034     4.410    main/gmem/data_mem/Q[4]
-                         CARRY4 (Prop_carry4_S[3]_CO[3])
-                                                      0.697     5.107 r  main/gmem/data_mem/mem_req_out_reg[0]_i_30/CO[3]
-                         net (fo=1, unplaced)         0.009     5.116    main/gmem/data_mem/mem_req_out_reg[0]_i_30_n_0
+                         FDRE (Prop_fdre_C_Q)         0.456     3.376 f  main/pos_vec_reg[7][1]/Q
+                         net (fo=1, unplaced)         0.965     4.341    main/distance_calc/Q[1]
+                         LUT6 (Prop_lut6_I0_O)        0.295     4.636 f  main/distance_calc/intermediate_subs_out[7][3]_i_27/O
+                         net (fo=1, unplaced)         0.000     4.636    main/distance_calc/intermediate_subs_out[7][3]_i_27_n_0
+                         MUXF7 (Prop_muxf7_I1_O)      0.245     4.881 f  main/distance_calc/intermediate_subs_out_reg[7][3]_i_14/O
+                         net (fo=4, unplaced)         0.929     5.810    main/distance_calc/intermediate_subs_out_reg[7][3]_i_14_n_0
+                         LUT4 (Prop_lut4_I1_O)        0.324     6.134 r  main/distance_calc/intermediate_subs_out[7][31]_i_52/O
+                         net (fo=1, unplaced)         0.000     6.134    main/distance_calc/intermediate_subs_out[7][31]_i_52_n_0
+                         CARRY4 (Prop_carry4_DI[0]_CO[3])
+                                                      0.553     6.687 r  main/distance_calc/intermediate_subs_out_reg[7][31]_i_40/CO[3]
+                         net (fo=1, unplaced)         0.009     6.696    main/distance_calc/intermediate_subs_out_reg[7][31]_i_40_n_0
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     6.810 r  main/distance_calc/intermediate_subs_out_reg[7][31]_i_31/CO[3]
+                         net (fo=1, unplaced)         0.000     6.810    main/distance_calc/intermediate_subs_out_reg[7][31]_i_31_n_0
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     6.924 r  main/distance_calc/intermediate_subs_out_reg[7][31]_i_16/CO[3]
+                         net (fo=1, unplaced)         0.000     6.924    main/distance_calc/intermediate_subs_out_reg[7][31]_i_16_n_0
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     7.038 r  main/distance_calc/intermediate_subs_out_reg[7][31]_i_10/CO[3]
+                         net (fo=31, unplaced)        0.988     8.026    main/distance_calc/p_0_in
+                         LUT3 (Prop_lut3_I2_O)        0.118     8.144 r  main/distance_calc/intermediate_subs_out[7][3]_i_5/O
+                         net (fo=1, unplaced)         0.000     8.144    main/distance_calc/p_1_in[0]
+                         CARRY4 (Prop_carry4_DI[0]_CO[3])
+                                                      0.553     8.697 r  main/distance_calc/intermediate_subs_out_reg[7][3]_i_1/CO[3]
+                         net (fo=1, unplaced)         0.009     8.706    main/distance_calc/intermediate_subs_out_reg[7][3]_i_1_n_0
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     8.820 r  main/distance_calc/intermediate_subs_out_reg[7][7]_i_1/CO[3]
+                         net (fo=1, unplaced)         0.000     8.820    main/distance_calc/intermediate_subs_out_reg[7][7]_i_1_n_0
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     8.934 r  main/distance_calc/intermediate_subs_out_reg[7][11]_i_1/CO[3]
+                         net (fo=1, unplaced)         0.000     8.934    main/distance_calc/intermediate_subs_out_reg[7][11]_i_1_n_0
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     9.048 r  main/distance_calc/intermediate_subs_out_reg[7][15]_i_1/CO[3]
+                         net (fo=1, unplaced)         0.000     9.048    main/distance_calc/intermediate_subs_out_reg[7][15]_i_1_n_0
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     9.162 r  main/distance_calc/intermediate_subs_out_reg[7][19]_i_1/CO[3]
+                         net (fo=1, unplaced)         0.000     9.162    main/distance_calc/intermediate_subs_out_reg[7][19]_i_1_n_0
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     9.276 r  main/distance_calc/intermediate_subs_out_reg[7][23]_i_1/CO[3]
+                         net (fo=1, unplaced)         0.000     9.276    main/distance_calc/intermediate_subs_out_reg[7][23]_i_1_n_0
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     9.390 r  main/distance_calc/intermediate_subs_out_reg[7][27]_i_1/CO[3]
+                         net (fo=1, unplaced)         0.000     9.390    main/distance_calc/intermediate_subs_out_reg[7][27]_i_1_n_0
                          CARRY4 (Prop_carry4_CI_O[1])
-                                                      0.348     5.464 r  main/gmem/data_mem/mem_req_out_reg[0]_i_29/O[1]
-                         net (fo=2, unplaced)         0.622     6.086    main/gmem/data_mem/mem_valid_out3[5]
-                         LUT4 (Prop_lut4_I0_O)        0.331     6.417 r  main/gmem/data_mem/mem_req_out[0]_i_20/O
-                         net (fo=1, unplaced)         0.000     6.417    main/graph/DI[2]
-                         CARRY4 (Prop_carry4_DI[3]_CO[3])
-                                                      0.411     6.828 r  main/graph/mem_req_out_reg[0]_i_13/CO[3]
-                         net (fo=1, unplaced)         0.009     6.837    main/graph/mem_req_out_reg[0]_i_13_n_0
-                         CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.114     6.951 r  main/graph/mem_req_out_reg[0]_i_8/CO[3]
-                         net (fo=1, unplaced)         0.000     6.951    main/graph/mem_req_out_reg[0]_i_8_n_0
-                         CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.114     7.065 r  main/graph/mem_req_out_reg[0]_i_3/CO[3]
-                         net (fo=1, unplaced)         0.000     7.065    main/graph/mem_req_out_reg[0]_i_3_n_0
-                         CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.114     7.179 r  main/graph/mem_req_out_reg[0]_i_2/CO[3]
-                         net (fo=35, unplaced)        0.991     8.170    main/graph/mem_valid_out232_in
-                         LUT5 (Prop_lut5_I3_O)        0.124     8.294 r  main/graph/mem_req_out[4]_i_3/O
-                         net (fo=1, unplaced)         0.333     8.627    main/graph/mem_req_out[4]_i_3_n_0
-                         CARRY4 (Prop_carry4_CYINIT_CO[3])
-                                                      0.580     9.207 r  main/graph/mem_req_out_reg[4]_i_2/CO[3]
-                         net (fo=1, unplaced)         0.009     9.216    main/graph/mem_req_out_reg[4]_i_2_n_0
-                         CARRY4 (Prop_carry4_CI_O[3])
-                                                      0.329     9.545 r  main/graph/mem_req_out_reg[8]_i_2/O[3]
-                         net (fo=1, unplaced)         0.618    10.163    main/gmem/data_mem/mem_req_out_reg[8]_0[3]
-                         LUT3 (Prop_lut3_I2_O)        0.307    10.470 r  main/gmem/data_mem/mem_req_out[8]_i_1/O
-                         net (fo=1, unplaced)         0.000    10.470    main/graph/mem_req_out_reg[9]_1[7]
-                         FDRE                                         r  main/graph/mem_req_out_reg[8]/D
+                                                      0.348     9.738 r  main/distance_calc/intermediate_subs_out_reg[7][31]_i_2/O[1]
+                         net (fo=8, unplaced)         0.563    10.301    main/distance_calc/intermediate_subs_out0_in[29]
+                         FDRE                                         r  main/distance_calc/intermediate_subs_out_reg[1][29]/D
   -------------------------------------------------------------------    -------------------
 
                          (clock gclk rise edge)      10.000    10.000 r  
@@ -84,16 +98,16 @@ Slack (MET) :             2.299ns  (required time - arrival time)
     N15                  IBUF (Prop_ibuf_I_O)         1.370    11.370 r  clk_100mhz_IBUF_inst/O
                          net (fo=1, unplaced)         0.760    12.130    clk_100mhz_IBUF
                          BUFG (Prop_bufg_I_O)         0.091    12.221 r  clk_100mhz_IBUF_BUFG_inst/O
-                         net (fo=2468, unplaced)      0.439    12.660    main/graph/clk_100mhz_IBUF_BUFG
-                         FDRE                                         r  main/graph/mem_req_out_reg[8]/C
+                         net (fo=3249, unplaced)      0.439    12.660    main/distance_calc/clk_100mhz_IBUF_BUFG
+                         FDRE                                         r  main/distance_calc/intermediate_subs_out_reg[1][29]/C
                          clock pessimism              0.115    12.775    
                          clock uncertainty           -0.035    12.740    
-                         FDRE (Setup_fdre_C_D)        0.029    12.769    main/graph/mem_req_out_reg[8]
+                         FDRE (Setup_fdre_C_D)       -0.246    12.494    main/distance_calc/intermediate_subs_out_reg[1][29]
   -------------------------------------------------------------------
-                         required time                         12.769    
-                         arrival time                         -10.470    
+                         required time                         12.494    
+                         arrival time                         -10.301    
   -------------------------------------------------------------------
-                         slack                                  2.299    
+                         slack                                  2.193    
 
 
 
