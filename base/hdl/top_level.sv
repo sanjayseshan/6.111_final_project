@@ -58,13 +58,15 @@ module top_level(
 
 
 
-  logic [31:0] debug, debug2;
+  logic [31:0] debug, debug2; 
+  logic [31:0] vid;
+
 
   bfis #(.DIM(8), .PQ_LENGTH(5)) main(
   // .clk_in(new_clk[24]),
   .clk_in(clk_100mhz),
   .rst_in(sys_rst),
-  .vertex_id_in(1),
+  .vertex_id_in(vid),
   .valid_in(ready),
   .query_in(query_in_real),
   .k_in(k_in),
@@ -80,6 +82,9 @@ module top_level(
   logic [31:0] sig_in;
   logic [31:0] last_sig_in;
   
+  logic [31:0] cycles;
+  logic counter_running
+
   logic started_seq;
 
   always_ff @( posedge clk_100mhz ) begin 
@@ -88,8 +93,14 @@ module top_level(
       ready <= 0;
       for (int i=0; i<10; i=i+1)
         data_in[i] <= 0;
+      
+      cycles <= 0;
     end
     else begin
+
+      if (counter_running) cycles <= cycles + 1;
+      if (valid_out) counter_running <= 0;
+
       // if (val_3==1 && (val_3 != last_val_3) && count_in != DIM+2) begin
       //   count_in <= count_in+1;
 
@@ -115,11 +126,13 @@ module top_level(
       // if (data_in[count_in] == 0 && tmp != 0)
       //   data_in[count_in] <= tmp;
 
-      if (count_in == DIM+1) begin
+      if (count_in == DIM+2) begin
         query_in_real <= data_in[DIM-1:0];
         k_in <= data_in[DIM];
+        vid <= data_in[DIM+1];
         ready <= 1;//data_in[9];
-        count_in <= DIM+2;
+        count_in <= DIM+3;
+        counter_running <= 1;
 
       end else ready <= 0;
 
@@ -130,10 +143,10 @@ module top_level(
   // assign query_in_real = data_in[7:0];
   // assign k_in = data_in[8];
   always_comb begin
-    if (count_in < DIM && count_in != 0) begin
+    if (count_in < DIM+2 && count_in != 0) begin
       led[15:11] = count_in;
       led[10:0]  = data_in[count_in-1];//data_in[count_in];//data_in[count_in];//data_in[count_in];
-    end
+    end else led = state;
   end
 
   always_ff @( posedge clk_100mhz ) begin
@@ -199,7 +212,7 @@ end
       .rx(uart_rxd),
       .tx(uart_txd),
       .val1_in(buf_k_out),
-      .val2_in(buf_valid_out),
+      .val2_in(cycles),
       .val3_out(val_3),
       .val4_out(sig_in)
     );
