@@ -1,8 +1,8 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
 ---------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2023.1 (lin64) Build 3865809 Sun May  7 15:04:56 MDT 2023
-| Date         : Tue Dec 12 00:27:12 2023
-| Host         : worker running 64-bit Ubuntu 20.04.6 LTS
+| Date         : Tue Dec 12 18:31:23 2023
+| Host         : seshanpc running 64-bit Debian GNU/Linux 12 (bookworm)
 | Command      : report_timing -file obj/post_place_timing.rpt
 | Design       : top_level
 | Device       : 7s50-csga324
@@ -12,19 +12,19 @@ Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2023 Advanc
 
 Timing Report
 
-Slack (MET) :             0.694ns  (required time - arrival time)
-  Source:                 main/checked/i_reg[1]/C
+Slack (MET) :             0.501ns  (required time - arrival time)
+  Source:                 main/gmem/data_mem/output_register.doutb_reg_reg[2]/C
                             (rising edge-triggered cell FDRE clocked by gclk  {rise@0.000ns fall@4.000ns period=10.000ns})
-  Destination:            main/checked/curval_reg[19]/CE
-                            (rising edge-triggered cell FDSE clocked by gclk  {rise@0.000ns fall@4.000ns period=10.000ns})
+  Destination:            main/graph/mem_req_out_reg[10]_rep/D
+                            (rising edge-triggered cell FDRE clocked by gclk  {rise@0.000ns fall@4.000ns period=10.000ns})
   Path Group:             gclk
   Path Type:              Setup (Max at Slow Process Corner)
   Requirement:            10.000ns  (gclk rise@10.000ns - gclk rise@0.000ns)
-  Data Path Delay:        8.730ns  (logic 2.047ns (23.448%)  route 6.683ns (76.552%))
-  Logic Levels:           7  (CARRY4=2 LUT3=1 LUT4=1 LUT5=2 LUT6=1)
-  Clock Path Skew:        -0.133ns (DCD - SCD + CPR)
-    Destination Clock Delay (DCD):    4.769ns = ( 14.769 - 10.000 ) 
-    Source Clock Delay      (SCD):    5.075ns
+  Data Path Delay:        9.127ns  (logic 4.056ns (44.440%)  route 5.071ns (55.560%))
+  Logic Levels:           12  (CARRY4=9 LUT3=1 LUT4=1 LUT5=1)
+  Clock Path Skew:        -0.107ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    4.780ns = ( 14.780 - 10.000 ) 
+    Source Clock Delay      (SCD):    5.060ns
     Clock Pessimism Removal (CPR):    0.174ns
   Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
     Total System Jitter     (TSJ):    0.071ns
@@ -40,28 +40,45 @@ Slack (MET) :             0.694ns  (required time - arrival time)
     N15                  IBUF (Prop_ibuf_I_O)         1.440     1.440 r  clk_100mhz_IBUF_inst/O
                          net (fo=1, estimated)        1.972     3.412    clk_100mhz_IBUF
     BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.096     3.508 r  clk_100mhz_IBUF_BUFG_inst/O
-                         net (fo=3248, estimated)     1.567     5.075    main/checked/clk_100mhz_IBUF_BUFG
-    SLICE_X42Y42         FDRE                                         r  main/checked/i_reg[1]/C
+                         net (fo=3113, estimated)     1.552     5.060    main/gmem/data_mem/clk_100mhz_IBUF_BUFG
+    SLICE_X39Y50         FDRE                                         r  main/gmem/data_mem/output_register.doutb_reg_reg[2]/C
   -------------------------------------------------------------------    -------------------
-    SLICE_X42Y42         FDRE (Prop_fdre_C_Q)         0.518     5.593 r  main/checked/i_reg[1]/Q
-                         net (fo=42, estimated)       1.631     7.224    main/checked/i_reg_n_0_[1]
-    SLICE_X47Y57         LUT6 (Prop_lut6_I2_O)        0.124     7.348 r  main/checked/max_tag_out[19]_i_3/O
-                         net (fo=1, estimated)        0.931     8.279    main/checked/max_tag_out[19]_i_3_n_0
-    SLICE_X45Y58         LUT3 (Prop_lut3_I2_O)        0.152     8.431 r  main/checked/max_tag_out[19]_i_2/O
-                         net (fo=6, estimated)        1.014     9.445    main/checked/max_tag_out[19]_i_2_n_0
-    SLICE_X46Y54         LUT4 (Prop_lut4_I0_O)        0.326     9.771 r  main/checked/read_ptr_min[3]_i_40/O
-                         net (fo=1, routed)           0.000     9.771    main/checked/read_ptr_min[3]_i_40_n_0
-    SLICE_X46Y54         CARRY4 (Prop_carry4_S[1]_CO[3])
-                                                      0.533    10.304 r  main/checked/read_ptr_min_reg[3]_i_15/CO[3]
-                         net (fo=1, estimated)        0.000    10.304    main/checked/read_ptr_min_reg[3]_i_15_n_0
-    SLICE_X46Y55         CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.117    10.421 r  main/checked/read_ptr_min_reg[3]_i_5/CO[3]
-                         net (fo=1, estimated)        0.976    11.397    main/checked/curval242_in
-    SLICE_X41Y42         LUT5 (Prop_lut5_I4_O)        0.124    11.521 r  main/checked/read_ptr_min[3]_i_3/O
-                         net (fo=37, estimated)       1.192    12.713    main/checked/read_ptr_min[3]_i_3_n_0
-    SLICE_X44Y49         LUT5 (Prop_lut5_I2_O)        0.153    12.866 r  main/checked/curval[31]_i_1/O
-                         net (fo=32, estimated)       0.939    13.805    main/checked/curval[31]_i_1_n_0
-    SLICE_X45Y54         FDSE                                         r  main/checked/curval_reg[19]/CE
+    SLICE_X39Y50         FDRE (Prop_fdre_C_Q)         0.456     5.516 r  main/gmem/data_mem/output_register.doutb_reg_reg[2]/Q
+                         net (fo=10, estimated)       0.599     6.115    main/gmem/data_mem/Q[2]
+    SLICE_X37Y49         CARRY4 (Prop_carry4_S[1]_CO[3])
+                                                      0.674     6.789 r  main/gmem/data_mem/mem_req_out_reg[0]_i_33/CO[3]
+                         net (fo=1, estimated)        0.000     6.789    main/gmem/data_mem/mem_req_out_reg[0]_i_33_n_0
+    SLICE_X37Y50         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     6.903 r  main/gmem/data_mem/mem_req_out_reg[0]_i_32/CO[3]
+                         net (fo=1, estimated)        0.000     6.903    main/gmem/data_mem/mem_req_out_reg[0]_i_32_n_0
+    SLICE_X37Y51         CARRY4 (Prop_carry4_CI_O[2])
+                                                      0.239     7.142 r  main/gmem/data_mem/mem_req_out_reg[0]_i_31/O[2]
+                         net (fo=2, estimated)        0.889     8.031    main/graph/mem_valid_out3[10]
+    SLICE_X32Y53         LUT4 (Prop_lut4_I1_O)        0.302     8.333 r  main/graph/mem_req_out[0]_i_20/O
+                         net (fo=1, routed)           0.000     8.333    main/gmem/data_mem/mem_req_out_reg[0]_i_3[1]
+    SLICE_X32Y53         CARRY4 (Prop_carry4_S[1]_CO[3])
+                                                      0.550     8.883 r  main/gmem/data_mem/mem_req_out_reg[0]_i_8/CO[3]
+                         net (fo=1, estimated)        0.000     8.883    main/graph/CO[0]
+    SLICE_X32Y54         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     8.997 r  main/graph/mem_req_out_reg[0]_i_3/CO[3]
+                         net (fo=1, estimated)        0.000     8.997    main/graph/mem_req_out_reg[0]_i_3_n_0
+    SLICE_X32Y55         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     9.111 r  main/graph/mem_req_out_reg[0]_i_2/CO[3]
+                         net (fo=34, estimated)       1.004    10.115    main/graph/mem_valid_out232_in
+    SLICE_X39Y54         LUT5 (Prop_lut5_I2_O)        0.124    10.239 r  main/graph/mem_req_out[4]_i_3/O
+                         net (fo=1, estimated)        0.676    10.915    main/graph/mem_req_out[4]_i_3_n_0
+    SLICE_X38Y49         CARRY4 (Prop_carry4_CYINIT_CO[3])
+                                                      0.595    11.510 r  main/graph/mem_req_out_reg[4]_i_2/CO[3]
+                         net (fo=1, estimated)        0.000    11.510    main/graph/mem_req_out_reg[4]_i_2_n_0
+    SLICE_X38Y50         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    11.627 r  main/graph/mem_req_out_reg[8]_i_2/CO[3]
+                         net (fo=1, estimated)        0.000    11.627    main/graph/mem_req_out_reg[8]_i_2_n_0
+    SLICE_X38Y51         CARRY4 (Prop_carry4_CI_O[1])
+                                                      0.323    11.950 r  main/graph/mem_req_out_reg[12]_i_2/O[1]
+                         net (fo=15, estimated)       1.006    12.956    main/gmem/data_mem/mem_req_out_reg[12]_rep__11[1]
+    SLICE_X37Y53         LUT3 (Prop_lut3_I2_O)        0.334    13.290 r  main/gmem/data_mem/mem_req_out[10]_rep_i_1/O
+                         net (fo=1, estimated)        0.897    14.187    main/graph/mem_req_out_reg[10]_rep_1
+    SLICE_X34Y39         FDRE                                         r  main/graph/mem_req_out_reg[10]_rep/D
   -------------------------------------------------------------------    -------------------
 
                          (clock gclk rise edge)      10.000    10.000 r  
@@ -70,16 +87,16 @@ Slack (MET) :             0.694ns  (required time - arrival time)
     N15                  IBUF (Prop_ibuf_I_O)         1.370    11.370 r  clk_100mhz_IBUF_inst/O
                          net (fo=1, estimated)        1.873    13.244    clk_100mhz_IBUF
     BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.091    13.335 r  clk_100mhz_IBUF_BUFG_inst/O
-                         net (fo=3248, estimated)     1.434    14.769    main/checked/clk_100mhz_IBUF_BUFG
-    SLICE_X45Y54         FDSE                                         r  main/checked/curval_reg[19]/C
-                         clock pessimism              0.174    14.942    
-                         clock uncertainty           -0.035    14.907    
-    SLICE_X45Y54         FDSE (Setup_fdse_C_CE)      -0.408    14.499    main/checked/curval_reg[19]
+                         net (fo=3113, estimated)     1.445    14.780    main/graph/clk_100mhz_IBUF_BUFG
+    SLICE_X34Y39         FDRE                                         r  main/graph/mem_req_out_reg[10]_rep/C
+                         clock pessimism              0.174    14.953    
+                         clock uncertainty           -0.035    14.918    
+    SLICE_X34Y39         FDRE (Setup_fdre_C_D)       -0.230    14.688    main/graph/mem_req_out_reg[10]_rep
   -------------------------------------------------------------------
-                         required time                         14.499    
-                         arrival time                         -13.805    
+                         required time                         14.688    
+                         arrival time                         -14.187    
   -------------------------------------------------------------------
-                         slack                                  0.694    
+                         slack                                  0.501    
 
 
 
