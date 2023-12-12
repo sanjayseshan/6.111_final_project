@@ -388,8 +388,8 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH = 8)(
   graph_memory# (.DIM(DIM), .PROC_BITS(0)) gmem (
     .clk_in(clk_in),
     .rst_in(rst_in),
-    .data_addra(mem_req_out),
-    .data_addrb((state==3'b1||state==3'b110)?first_pos_lookup_addr:mem_req_out2),
+    .data_addra_in(mem_req_out),
+    .data_addrb_in((state==3'b1||state==3'b110)?first_pos_lookup_addr:mem_req_out2),
     .data_validina(mem_valid_out),
     .data_validinb((state==3'b1||state==3'b110)?first_pos_lookup_addr_valid:mem_valid_out2),
     .data_outa(mem_data_in),

@@ -13,8 +13,8 @@ module graph_memory #(parameter DIM = 2, parameter PROC_BITS = 4)(
   input wire rst_in,
   input wire [31+PROC_BITS:0] idx_addr,
   input wire idx_validin,
-  input wire [31+PROC_BITS:0] data_addra,
-  input wire [31+PROC_BITS:0] data_addrb,
+  input wire [31+PROC_BITS:0] data_addra_in,
+  input wire [31+PROC_BITS:0] data_addrb_in,
   input wire data_validina,
   input wire data_validinb,
   output logic [31:0] rowidx_out,
@@ -102,8 +102,8 @@ module graph_memory #(parameter DIM = 2, parameter PROC_BITS = 4)(
     .RAM_PERFORMANCE("HIGH_PERFORMANCE"), // Select "HIGH_PERFORMANCE" or "LOW_LATENCY"
     .INIT_FILE(`FPATH(samples/tester_8/out_addrs.mem))                        // Specify name/location of RAM initialization file if using one (leave blank if not)
   ) data_mem (
-    .addra(data_addra[13:0]),   // Port A address bus, width determined from RAM_DEPTH
-    .addrb(data_addrb[13:0]),   // Port B address bus, width determined from RAM_DEPTH
+    .addra(data_addra_in[13:0]),   // Port A address bus, width determined from RAM_DEPTH
+    .addrb(data_addrb_in[13:0]),   // Port B address bus, width determined from RAM_DEPTH
     .dina(0),     // Port A RAM input data, width determined from RAM_WIDTH
     .dinb(0),     // Port B RAM input data, width determined from RAM_WIDTH
     .clka(clk_in),     // Port A clock
