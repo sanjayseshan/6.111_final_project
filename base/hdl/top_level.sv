@@ -10,7 +10,7 @@ module top_level(
   output logic [15:0] led //16 green output LEDs (located right above switches)
   );
 
-  parameter DIM=4;
+  parameter DIM=8;
   // assign led = sw; //for debugging
   //shut up those rgb LEDs (active high):
   // assign rgb1= 0;
@@ -60,7 +60,7 @@ module top_level(
 
   logic [31:0] debug, debug2;
 
-  bfis #(.DIM(4), .PQ_LENGTH(5)) main(
+  bfis #(.DIM(8), .PQ_LENGTH(5)) main(
   // .clk_in(new_clk[24]),
   .clk_in(clk_100mhz),
   .rst_in(sys_rst),
@@ -82,16 +82,27 @@ module top_level(
   
   logic started_seq;
 
+  logic [31:0] cycles;
+  logic counter_running;
+
+
   always_ff @( posedge clk_100mhz ) begin 
     if (sys_rst) begin 
       count_in <= 0;
       ready <= 0;
       for (int i=0; i<10; i=i+1)
         data_in[i] <= 0;
+
+      cycles <= 0;
+      counter_running <= 0;
     end
     else begin
       // if (val_3==1 && (val_3 != last_val_3) && count_in != DIM+2) begin
       //   count_in <= count_in+1;
+
+      if (counter_running) cycles <= cycles + 1;
+      if (valid_out) counter_running <= 0;
+
 
       if (sig_in == 32'hFFFFFFFF && !started_seq) begin
         started_seq <= 1;
@@ -120,6 +131,7 @@ module top_level(
         k_in <= data_in[DIM];
         ready <= 1;//data_in[9];
         count_in <= DIM+2;
+        counter_running <= 1;
 
       end else ready <= 0;
 
@@ -199,7 +211,7 @@ end
       .rx(uart_rxd),
       .tx(uart_txd),
       .val1_in(buf_k_out),
-      .val2_in(buf_valid_out),
+      .val2_in(cycles),
       .val3_out(val_3),
       .val4_out(sig_in)
     );
