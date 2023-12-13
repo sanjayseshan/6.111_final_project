@@ -42,8 +42,8 @@ module graph_fetch_tb();
   graph_memory# (.DIM(0), .PROC_BITS(0)) g (
     .clk_in(clk_in),
     .rst_in(rst_in),
-    .data_addra(mem_req_out),
-    .data_addrb(mem_req_out2),
+    .data_addra_in(mem_req_out),
+    .data_addrb_in(mem_req_out2),
     .data_validina(mem_valid_out),
     .data_validinb(mem_valid_out2),
     .data_outa(mem_data_in),
@@ -69,7 +69,7 @@ graph_fetch #(.DIM(4)) graph(
   .rst_in(rst_in),
   .v_addr_in(v_addr_in),
   .valid_in(valid_in),
-  .ready_out(ready_out),
+  // .ready_out(ready_out),
 
   .pos_deq_in(pos_deq_in),
   .data_out(data_out),
@@ -95,8 +95,8 @@ graph_fetch #(.DIM(4)) graph(
 
   .visited_req_out(visited_addr_in),
   .visited_req_valid_out(visited_addr_valid_in),
-  .visited_val_returned_in(visited),
-  .visited_val_returned_valid_in(valid_visited)
+  .visited_val_in(visited),
+  .visited_val_valid_in(valid_visited)
 );
 
 
