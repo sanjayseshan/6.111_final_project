@@ -25,20 +25,10 @@ count = 0
 def send_data(v):
     time.sleep(1)
     m.lab8_io_core.val4_out.set(0xFFFFFFFF) # set the value val4_out to be val4
-    # m.lab8_io_core.val3_out.set(0) # set the value val3_out to be val3
-    # a = m.lab8_io_core.val1_in.get() # read in the output from our divider
-    # b = m.lab8_io_core.val2_in.get()
     time.sleep(0.5)
     m.lab8_io_core.val4_out.set(v) # set the value val4_out to be val4
-    # m.lab8_io_core.val3_out.set(1) # set the value val3_out to be val3
-    # a = m.lab8_io_core.val1_in.get() # read in the output from our divider
-    # b = m.lab8_io_core.val2_in.get()
-    # m.lab8_io_core.val4_out.set(0xFFFFFFFF) # set the value val4_out to be val4
-    # m.lab8_io_core.val3_out.set(0) # set the value val3_out to be val3
-    # a = m.lab8_io_core.val1_in.get() # read in the output from our divider
-    # b = m.lab8_io_core.val2_in.get()
-    # time.sleep(0.5)
 
+# query in vector
 send_data(5)
 send_data(7)
 send_data(1)
@@ -48,8 +38,10 @@ send_data(1)
 # send_data(1)
 # send_data(1)
 
+# k_in
 send_data(4)
 
+# v_id --> MUST MATCH empty.mem position
 send_data(1)
 
 

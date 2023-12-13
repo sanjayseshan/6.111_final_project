@@ -1,2 +1,0 @@
-addsub.v,verilog,xil_defaultlib,../../../../project_2.gen/sources_1/ip/addsub/sim/addsub.v,
-glbl.v,Verilog,xil_defaultlib,glbl.v
