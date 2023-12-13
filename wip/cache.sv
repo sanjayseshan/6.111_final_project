@@ -76,7 +76,7 @@ module cache #(parameter DIM = 8, parameter PROC_BITS = 0)(
     end else valid_out_temp <= 0;
 
     if (valid_out_temp) begin
-        if (cache_out[32*4]==1) begin
+        if (cache_out[32*4+1+19]==1 && cache_out[32*4+19:32*4+1]) begin
             valid_out <= 1;
             val_out <= cache_out[32*offset+32:32*offset];
         end else begin
@@ -98,7 +98,7 @@ module cache #(parameter DIM = 8, parameter PROC_BITS = 0)(
 
 
   xilinx_true_dual_port_read_first_2_clock_ram #(
-    .RAM_WIDTH(32*4+1),                       // Specify RAM data width
+    .RAM_WIDTH(32*4+1+19),                       // Specify RAM data width
     .RAM_DEPTH(16384),                     // Specify RAM depth (number of entries)
     .RAM_PERFORMANCE("HIGH_PERFORMANCE"), // Select "HIGH_PERFORMANCE" or "LOW_LATENCY"
     .INIT_FILE(`FPATH(samples/tester_8/out_addrs.mem))                        // Specify name/location of RAM initialization file if using one (leave blank if not)
