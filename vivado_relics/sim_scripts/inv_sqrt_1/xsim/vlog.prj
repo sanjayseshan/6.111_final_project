@@ -1,7 +1,0 @@
-verilog xil_defaultlib  \
-"../../../../project_2.gen/sources_1/ip/inv_sqrt_1/sim/inv_sqrt.v" \
-
-verilog xil_defaultlib "glbl.v"
-
-# Do not sort compile order
-nosort
