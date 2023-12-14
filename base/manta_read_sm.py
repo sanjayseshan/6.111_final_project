@@ -50,7 +50,7 @@ send_data(1)
 
 send_data(4)
 
-send_data(1)
+#send_data(1)
 
 
 time.sleep(0.01) # wait a little amount...though honestly this is isn't needed since Python is slow.
