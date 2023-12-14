@@ -62,7 +62,7 @@ module top_level(
   logic [31:0] vid;
 
 
-  bfis #(.DIM(DIM), .PQ_LENGTH(8)) main(
+  bfis #(.DIM(DIM), .PQ_LENGTH(5)) main(
   // .clk_in(new_clk[24]),
   .clk_in(clk_100mhz),
   .rst_in(sys_rst),

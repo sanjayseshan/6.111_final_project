@@ -1,7 +1,7 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
 ---------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2023.1 (lin64) Build 3865809 Sun May  7 15:04:56 MDT 2023
-| Date         : Tue Dec 12 18:30:40 2023
+| Date         : Wed Dec 13 19:47:58 2023
 | Host         : seshanpc running 64-bit Debian GNU/Linux 12 (bookworm)
 | Command      : report_timing -file obj/post_synth_timing.rpt
 | Design       : top_level
@@ -40,15 +40,15 @@ Slack (MET) :             1.515ns  (required time - arrival time)
     N15                  IBUF (Prop_ibuf_I_O)         1.440     1.440 r  clk_100mhz_IBUF_inst/O
                          net (fo=1, unplaced)         0.800     2.240    clk_100mhz_IBUF
                          BUFG (Prop_bufg_I_O)         0.096     2.336 r  clk_100mhz_IBUF_BUFG_inst/O
-                         net (fo=3052, unplaced)      0.584     2.920    main/graph/clk_100mhz_IBUF_BUFG
+                         net (fo=3466, unplaced)      0.584     2.920    main/graph/clk_100mhz_IBUF_BUFG
                          FDRE                                         r  main/graph/mem_req_out2_reg[12]/C
   -------------------------------------------------------------------    -------------------
                          FDRE (Prop_fdre_C_Q)         0.456     3.376 r  main/graph/mem_req_out2_reg[12]/Q
                          net (fo=82, unplaced)        1.060     4.436    main/graph/mem_req_out2[12]
                          LUT6 (Prop_lut6_I0_O)        0.295     4.731 r  main/graph/ram_data_b[13]_i_629/O
                          net (fo=84, unplaced)        0.997     5.728    main/graph/ram_data_b[13]_i_629_n_0
-                         LUT3 (Prop_lut3_I0_O)        0.124     5.852 r  main/graph/ram_data_b[13]_i_660/O
-                         net (fo=80, unplaced)        0.996     6.848    main/graph/ram_data_b[13]_i_660_n_0
+                         LUT3 (Prop_lut3_I0_O)        0.124     5.852 r  main/graph/ram_data_b[13]_i_659/O
+                         net (fo=80, unplaced)        0.996     6.848    main/graph/ram_data_b[13]_i_659_n_0
                          LUT6 (Prop_lut6_I1_O)        0.124     6.972 r  main/graph/ram_data_b[10]_i_343/O
                          net (fo=1, unplaced)         0.902     7.874    main/graph/ram_data_b[10]_i_343_n_0
                          LUT6 (Prop_lut6_I1_O)        0.124     7.998 r  main/graph/ram_data_b[10]_i_118/O
@@ -70,7 +70,7 @@ Slack (MET) :             1.515ns  (required time - arrival time)
     N15                  IBUF (Prop_ibuf_I_O)         1.370    11.370 r  clk_100mhz_IBUF_inst/O
                          net (fo=1, unplaced)         0.760    12.130    clk_100mhz_IBUF
                          BUFG (Prop_bufg_I_O)         0.091    12.221 r  clk_100mhz_IBUF_BUFG_inst/O
-                         net (fo=3052, unplaced)      0.439    12.660    main/gmem/data_mem/clk_100mhz_IBUF_BUFG
+                         net (fo=3466, unplaced)      0.439    12.660    main/gmem/data_mem/clk_100mhz_IBUF_BUFG
                          FDRE                                         r  main/gmem/data_mem/ram_data_b_reg[10]/C
                          clock pessimism              0.115    12.775    
                          clock uncertainty           -0.035    12.740    

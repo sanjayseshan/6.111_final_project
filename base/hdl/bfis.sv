@@ -366,7 +366,7 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH = 8)(
 
 
     // priority queue
-    CheckedQueue #(.DATA_WIDTH(32), .TAG_WIDTH(32), .DEPTH(16'd8)) pq (
+    CheckedQueue #(.DATA_WIDTH(32), .TAG_WIDTH(32), .DEPTH(16'd18)) pq (
     .clk_in(clk_in),
     .rst_in(rst_in),
     .deq_smallest_in(pq_deq_in),
