@@ -2,12 +2,13 @@
 `default_nettype none // prevents system from inferring an undeclared logic (good practice)
 
 module top_level(
-  input wire clk_100mhz,
-  input wire [15:0] sw, //all 16 input slide switches
-  input wire [3:0] btn, //all four momentary button switches
-  input wire uart_rxd,
-  output wire uart_txd,
-  output logic [15:0] led //16 green output LEDs (located right above switches)
+    input wire CLK_sys_clk1_300_n
+//        input wire clk_100mhz,
+//  input wire [15:0] sw, //all 16 input slide switches
+//  input wire [3:0] btn, //all four momentary button switches
+//  input wire uart_rxd,
+//  output wire uart_txd,
+//  output logic [15:0] led //16 green output LEDs (located right above switches)
   );
 
   parameter DIM=4;
@@ -16,10 +17,15 @@ module top_level(
   // assign rgb1= 0;
   // assign rgb0 = 0;
 
+  logic uart_rxd,uart_txd;
+  logic [15:0] led;
+
   logic [2:0] state;
 
+   logic clk_100mhz;
+   assign clk_100mhz = CLK_sys_clk1_300_n;
   logic sys_rst;
-  assign sys_rst = btn[0];
+  assign sys_rst = 0;//btn[0];
 
   logic valid_out;
 

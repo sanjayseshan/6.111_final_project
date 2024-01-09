@@ -3,7 +3,11 @@
 # xc7s50 refers to the fact that it is a Spartan-7-50 FPGA
 # csga324 refers to its package it is in
 # refers to the "speed grade" of the chip
-set partNum xc7s50csga324-1
+#set partNum xc7s50csga324-1
+set partNum xcvu095-ffva2104-2-e
+set partname {xcvu095-ffva2104-2-e}
+set boardname {vcu108}
+
 set outputDir obj
 file mkdir $outputDir
 set files [glob -nocomplain "$outputDir/*"]
