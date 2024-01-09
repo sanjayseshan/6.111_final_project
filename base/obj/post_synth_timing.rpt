@@ -1,7 +1,7 @@
 Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.
 -----------------------------------------------------------------------------------------
 | Tool Version      : Vivado v.2017.4 (lin64) Build 2086221 Fri Dec 15 20:54:30 MST 2017
-| Date              : Mon Jan  8 18:56:16 2024
+| Date              : Mon Jan  8 21:53:25 2024
 | Host              : audacity running 64-bit Ubuntu 18.04.6 LTS
 | Command           : report_timing -file obj/post_synth_timing.rpt
 | Design            : top_level
@@ -12,44 +12,88 @@ Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.
 
 Timing Report
 
-Slack:                    inf
+Slack (MET) :             6.673ns  (required time - arrival time)
   Source:                 main/FSM_sequential_state_reg[0]/C
-                            (rising edge-triggered cell FDRE)
+                            (rising edge-triggered cell FDSE clocked by gclk  {rise@0.000ns fall@4.000ns period=10.000ns})
   Destination:            main/gmem/data_mem/ram_data_b_reg[8]/D
-  Path Group:             (none)
-  Path Type:              Max at Slow Process Corner
+                            (rising edge-triggered cell FDRE clocked by gclk  {rise@0.000ns fall@4.000ns period=10.000ns})
+  Path Group:             gclk
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            10.000ns  (gclk rise@10.000ns - gclk rise@0.000ns)
   Data Path Delay:        3.205ns  (logic 0.871ns (27.176%)  route 2.334ns (72.824%))
-  Logic Levels:           12  (FDRE=1 LUT2=1 LUT3=2 LUT5=1 LUT6=4 MUXF7=3)
+  Logic Levels:           11  (LUT2=1 LUT3=2 LUT5=1 LUT6=4 MUXF7=3)
+  Clock Path Skew:        -0.145ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    3.425ns = ( 13.425 - 10.000 ) 
+    Source Clock Delay      (SCD):    3.973ns
+    Clock Pessimism Removal (CPR):    0.403ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
 
     Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
   -------------------------------------------------------------------    -------------------
-                         FDRE                         0.000     0.000 r  main/FSM_sequential_state_reg[0]/C
-                         FDRE (Prop_FDRE_C_Q)         0.115     0.115 r  main/FSM_sequential_state_reg[0]/Q
-                         net (fo=244, unplaced)       0.343     0.458    main/graph/out[0]
-                         LUT5 (Prop_LUT5_I2_O)        0.115     0.573 r  main/graph/ram_data_b[12]_i_622/O
-                         net (fo=123, unplaced)       0.324     0.897    main/graph/ram_data_b[12]_i_622_n_0
-                         LUT6 (Prop_LUT6_I0_O)        0.040     0.937 r  main/graph/ram_data_b[12]_i_630/O
-                         net (fo=59, unplaced)        0.307     1.244    main/graph/ram_data_b[12]_i_630_n_0
-                         LUT2 (Prop_LUT2_I0_O)        0.093     1.337 r  main/graph/ram_data_b[10]_i_385/O
-                         net (fo=29, unplaced)        0.291     1.628    main/graph/ram_data_b[10]_i_385_n_0
-                         LUT6 (Prop_LUT6_I3_O)        0.040     1.668 r  main/graph/ram_data_b[8]_i_914/O
-                         net (fo=1, unplaced)         0.000     1.668    main/graph/ram_data_b[8]_i_914_n_0
-                         MUXF7 (Prop_MUXF7_I1_O)      0.067     1.735 r  main/graph/ram_data_b_reg[8]_i_576/O
-                         net (fo=1, unplaced)         0.271     2.006    main/graph/ram_data_b_reg[8]_i_576_n_0
-                         LUT3 (Prop_LUT3_I2_O)        0.093     2.099 r  main/graph/ram_data_b[8]_i_243/O
-                         net (fo=1, unplaced)         0.253     2.352    main/graph/ram_data_b[8]_i_243_n_0
-                         LUT6 (Prop_LUT6_I0_O)        0.041     2.393 r  main/graph/ram_data_b[8]_i_80/O
-                         net (fo=1, unplaced)         0.000     2.393    main/graph/ram_data_b[8]_i_80_n_0
-                         MUXF7 (Prop_MUXF7_I0_O)      0.067     2.460 r  main/graph/ram_data_b_reg[8]_i_31/O
-                         net (fo=1, unplaced)         0.271     2.731    main/graph/ram_data_b_reg[8]_i_31_n_0
-                         LUT3 (Prop_LUT3_I2_O)        0.093     2.824 r  main/graph/ram_data_b[8]_i_11/O
-                         net (fo=1, unplaced)         0.234     3.058    main/graph/ram_data_b[8]_i_11_n_0
-                         LUT6 (Prop_LUT6_I5_O)        0.040     3.098 r  main/graph/ram_data_b[8]_i_3/O
-                         net (fo=1, unplaced)         0.000     3.098    main/graph/ram_data_b[8]_i_3_n_0
-                         MUXF7 (Prop_MUXF7_I1_O)      0.067     3.165 r  main/graph/ram_data_b_reg[8]_i_1/O
-                         net (fo=1, unplaced)         0.040     3.205    main/gmem/data_mem/first_pos_lookup_addr_reg[0][8]
+                         (clock gclk rise edge)       0.000     0.000 r  
+    F31                                               0.000     0.000 r  CLK_sys_clk1_300_n (IN)
+                         net (fo=0)                   0.000     0.000    CLK_sys_clk1_300_n_IBUF_inst/I
+    F31                  INBUF (Prop_INBUF_HPIOB_PAD_O)
+                                                      0.546     0.546 r  CLK_sys_clk1_300_n_IBUF_inst/INBUF_INST/O
+                         net (fo=1, routed)           0.089     0.635    CLK_sys_clk1_300_n_IBUF_inst/OUT
+    F31                  IBUFCTRL (Prop_IBUFCTRL_HPIOB_I_O)
+                                                      0.000     0.635 r  CLK_sys_clk1_300_n_IBUF_inst/IBUFCTRL_INST/O
+                         net (fo=1, unplaced)         0.671     1.306    CLK_sys_clk1_300_n_IBUF
+                         BUFGCE (Prop_BUFGCE_I_O)     0.083     1.389 r  CLK_sys_clk1_300_n_IBUF_BUFG_inst/O
+                         net (fo=2723, unplaced)      2.584     3.973    main/CLK_sys_clk1_300_n_IBUF_BUFG
+                         FDSE                                         r  main/FSM_sequential_state_reg[0]/C
+  -------------------------------------------------------------------    -------------------
+                         FDSE (Prop_FDSE_C_Q)         0.115     4.088 r  main/FSM_sequential_state_reg[0]/Q
+                         net (fo=248, unplaced)       0.343     4.431    main/graph/out[0]
+                         LUT5 (Prop_LUT5_I2_O)        0.115     4.546 r  main/graph/ram_data_b[12]_i_622/O
+                         net (fo=123, unplaced)       0.324     4.870    main/graph/ram_data_b[12]_i_622_n_0
+                         LUT6 (Prop_LUT6_I0_O)        0.040     4.910 r  main/graph/ram_data_b[12]_i_630/O
+                         net (fo=59, unplaced)        0.307     5.217    main/graph/ram_data_b[12]_i_630_n_0
+                         LUT2 (Prop_LUT2_I0_O)        0.093     5.310 r  main/graph/ram_data_b[10]_i_385/O
+                         net (fo=29, unplaced)        0.291     5.601    main/graph/ram_data_b[10]_i_385_n_0
+                         LUT6 (Prop_LUT6_I3_O)        0.040     5.641 r  main/graph/ram_data_b[8]_i_914/O
+                         net (fo=1, unplaced)         0.000     5.641    main/graph/ram_data_b[8]_i_914_n_0
+                         MUXF7 (Prop_MUXF7_I1_O)      0.067     5.708 r  main/graph/ram_data_b_reg[8]_i_576/O
+                         net (fo=1, unplaced)         0.271     5.979    main/graph/ram_data_b_reg[8]_i_576_n_0
+                         LUT3 (Prop_LUT3_I2_O)        0.093     6.072 r  main/graph/ram_data_b[8]_i_243/O
+                         net (fo=1, unplaced)         0.253     6.325    main/graph/ram_data_b[8]_i_243_n_0
+                         LUT6 (Prop_LUT6_I0_O)        0.041     6.366 r  main/graph/ram_data_b[8]_i_80/O
+                         net (fo=1, unplaced)         0.000     6.366    main/graph/ram_data_b[8]_i_80_n_0
+                         MUXF7 (Prop_MUXF7_I0_O)      0.067     6.433 r  main/graph/ram_data_b_reg[8]_i_31/O
+                         net (fo=1, unplaced)         0.271     6.704    main/graph/ram_data_b_reg[8]_i_31_n_0
+                         LUT3 (Prop_LUT3_I2_O)        0.093     6.797 r  main/graph/ram_data_b[8]_i_11/O
+                         net (fo=1, unplaced)         0.234     7.031    main/graph/ram_data_b[8]_i_11_n_0
+                         LUT6 (Prop_LUT6_I5_O)        0.040     7.071 r  main/graph/ram_data_b[8]_i_3/O
+                         net (fo=1, unplaced)         0.000     7.071    main/graph/ram_data_b[8]_i_3_n_0
+                         MUXF7 (Prop_MUXF7_I1_O)      0.067     7.138 r  main/graph/ram_data_b_reg[8]_i_1/O
+                         net (fo=1, unplaced)         0.040     7.178    main/gmem/data_mem/first_pos_lookup_addr_reg[0][8]
                          FDRE                                         r  main/gmem/data_mem/ram_data_b_reg[8]/D
   -------------------------------------------------------------------    -------------------
+
+                         (clock gclk rise edge)      10.000    10.000 r  
+    F31                                               0.000    10.000 r  CLK_sys_clk1_300_n (IN)
+                         net (fo=0)                   0.000    10.000    CLK_sys_clk1_300_n_IBUF_inst/I
+    F31                  INBUF (Prop_INBUF_HPIOB_PAD_O)
+                                                      0.276    10.276 r  CLK_sys_clk1_300_n_IBUF_inst/INBUF_INST/O
+                         net (fo=1, routed)           0.050    10.326    CLK_sys_clk1_300_n_IBUF_inst/OUT
+    F31                  IBUFCTRL (Prop_IBUFCTRL_HPIOB_I_O)
+                                                      0.000    10.326 r  CLK_sys_clk1_300_n_IBUF_inst/IBUFCTRL_INST/O
+                         net (fo=1, unplaced)         0.585    10.911    CLK_sys_clk1_300_n_IBUF
+                         BUFGCE (Prop_BUFGCE_I_O)     0.075    10.986 r  CLK_sys_clk1_300_n_IBUF_BUFG_inst/O
+                         net (fo=2723, unplaced)      2.439    13.425    main/gmem/data_mem/CLK_sys_clk1_300_n_IBUF_BUFG
+                         FDRE                                         r  main/gmem/data_mem/ram_data_b_reg[8]/C
+                         clock pessimism              0.403    13.828    
+                         clock uncertainty           -0.035    13.793    
+                         FDRE (Setup_FDRE_C_D)        0.058    13.851    main/gmem/data_mem/ram_data_b_reg[8]
+  -------------------------------------------------------------------
+                         required time                         13.851    
+                         arrival time                          -7.178    
+  -------------------------------------------------------------------
+                         slack                                  6.673    
 
 
 

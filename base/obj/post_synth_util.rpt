@@ -1,7 +1,7 @@
 Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.
 ------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2017.4 (lin64) Build 2086221 Fri Dec 15 20:54:30 MST 2017
-| Date         : Mon Jan  8 18:56:16 2024
+| Date         : Mon Jan  8 21:53:25 2024
 | Host         : audacity running 64-bit Ubuntu 18.04.6 LTS
 | Command      : report_utilization -file obj/post_synth_util.rpt
 | Design       : top_level
@@ -31,14 +31,14 @@ Table of Contents
 +-------------------------+-------+-------+-----------+-------+
 |        Site Type        |  Used | Fixed | Available | Util% |
 +-------------------------+-------+-------+-----------+-------+
-| CLB LUTs*               | 20193 |     0 |    537600 |  3.76 |
-|   LUT as Logic          | 20193 |     0 |    537600 |  3.76 |
+| CLB LUTs*               | 20017 |     0 |    537600 |  3.72 |
+|   LUT as Logic          | 20017 |     0 |    537600 |  3.72 |
 |   LUT as Memory         |     0 |     0 |     76800 |  0.00 |
-| CLB Registers           |  3254 |     0 |   1075200 |  0.30 |
-|   Register as Flip Flop |  3254 |     0 |   1075200 |  0.30 |
+| CLB Registers           |  2720 |     0 |   1075200 |  0.25 |
+|   Register as Flip Flop |  2720 |     0 |   1075200 |  0.25 |
 |   Register as Latch     |     0 |     0 |   1075200 |  0.00 |
-| CARRY8                  |    68 |     0 |     67200 |  0.10 |
-| F7 Muxes                |  6102 |     0 |    268800 |  2.27 |
+| CARRY8                  |    66 |     0 |     67200 |  0.10 |
+| F7 Muxes                |  6103 |     0 |    268800 |  2.27 |
 | F8 Muxes                |  1791 |     0 |    134400 |  1.33 |
 | F9 Muxes                |     0 |     0 |     67200 |  0.00 |
 +-------------------------+-------+-------+-----------+-------+
@@ -59,8 +59,8 @@ Table of Contents
 | 0     |          Yes |           - |            - |
 | 0     |          Yes |           - |          Set |
 | 0     |          Yes |           - |        Reset |
-| 17    |          Yes |         Set |            - |
-| 3237  |          Yes |       Reset |            - |
+| 106   |          Yes |         Set |            - |
+| 2614  |          Yes |       Reset |            - |
 +-------+--------------+-------------+--------------+
 
 
@@ -95,9 +95,9 @@ Table of Contents
 +------------+------+-------+-----------+-------+
 |  Site Type | Used | Fixed | Available | Util% |
 +------------+------+-------+-----------+-------+
-| Bonded IOB |    1 |     1 |       832 |  0.12 |
-| HPIOB      |    1 |     1 |       780 |  0.13 |
-|   INPUT    |    1 |       |           |       |
+| Bonded IOB |    2 |     2 |       832 |  0.24 |
+| HPIOB      |    2 |     2 |       780 |  0.26 |
+|   INPUT    |    2 |       |           |       |
 |   OUTPUT   |    0 |       |           |       |
 |   BIDIR    |    0 |       |           |       |
 +------------+------+-------+-----------+-------+
@@ -162,21 +162,21 @@ Table of Contents
 +----------+-------+---------------------+
 | Ref Name |  Used | Functional Category |
 +----------+-------+---------------------+
-| LUT6     | 15757 |                 CLB |
-| MUXF7    |  6102 |                 CLB |
-| FDRE     |  3237 |            Register |
-| LUT5     |  2579 |                 CLB |
+| LUT6     | 15666 |                 CLB |
+| MUXF7    |  6103 |                 CLB |
+| FDRE     |  2614 |            Register |
+| LUT5     |  2537 |                 CLB |
 | MUXF8    |  1791 |                 CLB |
-| LUT3     |  1721 |                 CLB |
-| LUT4     |   796 |                 CLB |
-| LUT2     |   650 |                 CLB |
-| CARRY8   |    68 |                 CLB |
-| LUT1     |    25 |                 CLB |
-| FDSE     |    17 |            Register |
+| LUT3     |  1676 |                 CLB |
+| LUT4     |   709 |                 CLB |
+| LUT2     |   671 |                 CLB |
+| FDSE     |   106 |            Register |
+| CARRY8   |    66 |                 CLB |
+| LUT1     |    53 |                 CLB |
 | RAMB36E2 |     2 |           Block Ram |
+| INBUF    |     2 |                 I/O |
+| IBUFCTRL |     2 |              Others |
 | RAMB18E2 |     1 |           Block Ram |
-| INBUF    |     1 |                 I/O |
-| IBUFCTRL |     1 |              Others |
 | BUFGCE   |     1 |               Clock |
 +----------+-------+---------------------+
 

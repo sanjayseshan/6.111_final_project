@@ -7,16 +7,17 @@ set_property LOC F31  [get_ports { CLK_sys_clk1_300_n }]
 set_property LOC G22  [get_ports { CLK_sys_clk2_300_p }]
 set_property LOC G21  [get_ports { CLK_sys_clk2_300_n }]
 
-set_property IOSTANDARD DIFF_SSTL12 [get_ports { CLK_sys_clk1_300_p }]
-set_property IOSTANDARD DIFF_SSTL12 [get_ports { CLK_sys_clk1_300_n }]
-set_property IOSTANDARD DIFF_SSTL12 [get_ports { CLK_sys_clk2_300_p }]
-set_property IOSTANDARD DIFF_SSTL12 [get_ports { CLK_sys_clk2_300_n }]
+# set_property IOSTANDARD DIFF_SSTL12 [get_ports { CLK_sys_clk1_300_p }]
+# set_property IOSTANDARD DIFF_SSTL12 [get_ports { CLK_sys_clk1_300_n }]
+# set_property IOSTANDARD DIFF_SSTL12 [get_ports { CLK_sys_clk2_300_p }]
+# set_property IOSTANDARD DIFF_SSTL12 [get_ports { CLK_sys_clk2_300_n }]
 
 set_property IOSTANDARD LVCMOS18    [get_ports { RST_N_pci_sys_reset_n }]
 set_property PULLUP     true        [get_ports { RST_N_pci_sys_reset_n }]
 
 #set_property -dict {PACKAGE_PIN N15 IOSTANDARD LVCMOS33} [get_ports {clk_100mhz}]
-#create_clock -add -name gclk -period 10.000 -waveform {0 4} [get_ports {clk_100mhz}]
+# create_clock -add -name gclk -period 10.000 -waveform {0 4} [get_ports {clk_100mhz}]
+create_clock -add -name gclk -period 10.000 -waveform {0 4} [get_ports {CLK_sys_clk1_300_n}]
 
 # Set Bank 0 voltage
 #set_property CFGBVS VCCO [current_design]
@@ -154,6 +155,6 @@ set_property PULLUP     true        [get_ports { RST_N_pci_sys_reset_n }]
 #set_property IOSTANDARD LVCMOS33 [ get_ports "uart*"]
 
 
-set_property BITSTREAM.CONFIG.UNUSEDPIN PULLUP [current_design]
-set_property BITSTREAM.GENERAL.COMPRESS TRUE [current_design]
+# set_property BITSTREAM.CONFIG.UNUSEDPIN PULLUP [current_design]
+# set_property BITSTREAM.GENERAL.COMPRESS TRUE [current_design]
 
