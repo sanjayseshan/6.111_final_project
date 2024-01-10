@@ -2,14 +2,49 @@
 `default_nettype none // prevents system from inferring an undeclared logic (good practice)
 
 module top_level(
+
+    input  wire       clk_125mhz_p,
+    input  wire       clk_125mhz_n,
+    input  wire       reset,
+
+    /*
+     * GPIO
+     */
+    input  wire       btnu,
+    input  wire       btnl,
+    input  wire       btnd,
+    input  wire       btnr,
+    input  wire       btnc,
+    input  wire [3:0] sw,
+    output wire [7:0] led,
+
+    /*
+     * Ethernet: 1000BASE-T SGMII
+     */
+    input  wire       phy_sgmii_rx_p,
+    input  wire       phy_sgmii_rx_n,
+    output wire       phy_sgmii_tx_p,
+    output wire       phy_sgmii_tx_n,
+    input  wire       phy_sgmii_clk_p,
+    input  wire       phy_sgmii_clk_n,
+    output wire       phy_reset_n,
+    input  wire       phy_int_n,
+
+    /*
+     * UART: 500000 bps, 8N1
+     */
+    input  wire       uart_rxd,
+    output wire       uart_txd,
+    output wire       uart_rts,
+    input  wire       uart_cts
     // input wire CLK_sys_clk1_300_n
-    input wire  CLK_pci_sys_clk_p,
-  input wire  CLK_pci_sys_clk_n,
-  input wire  RST_N_pci_sys_reset_n,
-  input wire  CLK_sys_clk1_300_p,
-  input wire  CLK_sys_clk1_300_n,
-  input wire  CLK_sys_clk2_300_p,
-  input wire  CLK_sys_clk2_300_n
+    // input wire  clk_125mhz,
+  // input wire  CLK_pci_sys_clk_n,
+  // input wire  RST_N_pci_sys_reset_n,
+  // input wire  CLK_sys_clk1_300_p,
+  // input wire  CLK_sys_clk1_300_n,
+  // input wire  CLK_sys_clk2_300_p,
+  // input wire  CLK_sys_clk2_300_n
 //        input wire clk_100mhz,
 //  input wire [15:0] sw, //all 16 input slide switches
 //  input wire [3:0] btn, //all four momentary button switches
@@ -25,14 +60,14 @@ module top_level(
   // assign rgb0 = 0;
 
   logic uart_rxd,uart_txd;
-  logic [15:0] led;
+  // logic [15:0] led;
 
   logic [2:0] state;
 
    logic clk_100mhz;
-   assign clk_100mhz = CLK_sys_clk1_300_n;
+   assign clk_100mhz = clk_125mhz_p;
   logic sys_rst;
-  assign sys_rst = RST_N_pci_sys_reset_n;//0;//btn[0];
+  assign sys_rst = reset;//0;//btn[0];
 
   logic valid_out;
 
@@ -157,13 +192,13 @@ module top_level(
   end
 
   // assign query_in_real = data_in[7:0];
-  // assign k_in = data_in[8];
-  always_comb begin
-    if (count_in < DIM+2 && count_in != 0) begin
-      led[15:11] = count_in;
-      led[10:0]  = data_in[count_in-1];//data_in[count_in];//data_in[count_in];//data_in[count_in];
-    end else led = state;
-  end
+  // // assign k_in = data_in[8];
+  // always_comb begin
+  //   if (count_in < DIM+2 && count_in != 0) begin
+  //     // led[15:11] = count_in;
+  //     // led[10:0]  = data_in[count_in-1];//data_in[count_in];//data_in[count_in];//data_in[count_in];
+  //   end else led = state;
+  // end
 
   always_ff @( posedge clk_100mhz ) begin
     last_val_3 <= val_3;
