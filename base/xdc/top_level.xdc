@@ -21,18 +21,18 @@ set_property BITSTREAM.CONFIG.OVERTEMPSHUTDOWN Enable  [current_design]
 #create_clock -period 3.333 -name clk_300mhz_2 [get_ports clk_300mhz_2_p]
 
 # 125 MHz
-set_property -dict {LOC BC9  IOSTANDARD LVDS} [get_ports clk_125mhz_p]
-set_property -dict {LOC BC8  IOSTANDARD LVDS} [get_ports clk_125mhz_n]
-create_clock -period 8.000 -name clk_125mhz [get_ports clk_125mhz_p]
+# set_property -dict {LOC BC9  IOSTANDARD LVDS} [get_ports clk_125mhz_p]
+# set_property -dict {LOC BC8  IOSTANDARD LVDS} [get_ports clk_125mhz_n]
+# create_clock -period 8.000 -name clk_125mhz [get_ports clk_125mhz_p]
 
 # 90 MHz
-#set_property -dict {LOC AL20 IOSTANDARD LVCMOS18} [get_ports clk_90mhz]
-#create_clock -period 11.111 -name clk_90mhz [get_ports clk_90mhz]
+set_property -dict {LOC AL20 IOSTANDARD LVCMOS18} [get_ports clk_90mhz]
+create_clock -period 11.111 -name clk_90mhz [get_ports clk_90mhz]
 
 # User SMA clock J34/J35
-#set_property -dict {LOC AR14 IOSTANDARD LVDS} [get_ports user_sma_clk_p]
-#set_property -dict {LOC AT14 IOSTANDARD LVDS} [get_ports user_sma_clk_n]
-#create_clock -period 8.000 -name user_sma_clk [get_ports user_sma_clk_p]
+set_property -dict {LOC AR14 IOSTANDARD LVDS} [get_ports user_sma_clk_p]
+set_property -dict {LOC AT14 IOSTANDARD LVDS} [get_ports user_sma_clk_n]
+create_clock -period 8.000 -name user_sma_clk [get_ports user_sma_clk_p]
 
 # LEDs
 set_property -dict {LOC AT32 IOSTANDARD LVCMOS12 SLEW SLOW DRIVE 8} [get_ports {led[0]}]
@@ -110,24 +110,24 @@ set_false_path -from [get_ports {uart_rxd uart_cts}]
 set_input_delay 0 [get_ports {uart_rxd uart_cts}]
 
 # Gigabit Ethernet SGMII PHY
-set_property -dict {LOC AR24 IOSTANDARD DIFF_HSTL_I_18} [get_ports phy_sgmii_rx_p]
-set_property -dict {LOC AT24 IOSTANDARD DIFF_HSTL_I_18} [get_ports phy_sgmii_rx_n]
-set_property -dict {LOC AR23 IOSTANDARD DIFF_HSTL_I_18} [get_ports phy_sgmii_tx_p]
-set_property -dict {LOC AR22 IOSTANDARD DIFF_HSTL_I_18} [get_ports phy_sgmii_tx_n]
-set_property -dict {LOC AT22 IOSTANDARD LVDS_25} [get_ports phy_sgmii_clk_p]
-set_property -dict {LOC AU22 IOSTANDARD LVDS_25} [get_ports phy_sgmii_clk_n]
-set_property -dict {LOC AU21 IOSTANDARD LVCMOS18 SLEW SLOW DRIVE 8} [get_ports phy_reset_n]
-set_property -dict {LOC AT21 IOSTANDARD LVCMOS18} [get_ports phy_int_n]
+# set_property -dict {LOC AR24 IOSTANDARD DIFF_HSTL_I_18} [get_ports phy_sgmii_rx_p]
+# set_property -dict {LOC AT24 IOSTANDARD DIFF_HSTL_I_18} [get_ports phy_sgmii_rx_n]
+# set_property -dict {LOC AR23 IOSTANDARD DIFF_HSTL_I_18} [get_ports phy_sgmii_tx_p]
+# set_property -dict {LOC AR22 IOSTANDARD DIFF_HSTL_I_18} [get_ports phy_sgmii_tx_n]
+# set_property -dict {LOC AT22 IOSTANDARD LVDS_25} [get_ports phy_sgmii_clk_p]
+# set_property -dict {LOC AU22 IOSTANDARD LVDS_25} [get_ports phy_sgmii_clk_n]
+# set_property -dict {LOC AU21 IOSTANDARD LVCMOS18 SLEW SLOW DRIVE 8} [get_ports phy_reset_n]
+# set_property -dict {LOC AT21 IOSTANDARD LVCMOS18} [get_ports phy_int_n]
 #set_property -dict {LOC AV24 IOSTANDARD LVCMOS18 SLEW SLOW DRIVE 8} [get_ports phy_mdio]
 #set_property -dict {LOC AV21 IOSTANDARD LVCMOS18 SLEW SLOW DRIVE 8} [get_ports phy_mdc]
 
 # 625 MHz ref clock from SGMII PHY
 #create_clock -period 1.600 -name phy_sgmii_clk [get_ports phy_sgmii_clk_p]
 
-set_false_path -to [get_ports {phy_reset_n}]
-set_output_delay 0 [get_ports {phy_reset_n}]
-set_false_path -from [get_ports {phy_int_n}]
-set_input_delay 0 [get_ports {phy_int_n}]
+# set_false_path -to [get_ports {phy_reset_n}]
+# set_output_delay 0 [get_ports {phy_reset_n}]
+# set_false_path -from [get_ports {phy_int_n}]
+# set_input_delay 0 [get_ports {phy_int_n}]
 
 #set_false_path -to [get_ports {phy_mdio phy_mdc}]
 #set_output_delay 0 [get_ports {phy_mdio phy_mdc}]

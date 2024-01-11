@@ -3,8 +3,10 @@
 
 module top_level(
 
-    input  wire       clk_125mhz_p,
-    input  wire       clk_125mhz_n,
+    input wire clk_90mhz,
+
+    // input  wire       clk_125mhz_p,
+    // input  wire       clk_125mhz_n,
     input  wire       reset,
 
     /*
@@ -21,14 +23,14 @@ module top_level(
     /*
      * Ethernet: 1000BASE-T SGMII
      */
-    input  wire       phy_sgmii_rx_p,
-    input  wire       phy_sgmii_rx_n,
-    output wire       phy_sgmii_tx_p,
-    output wire       phy_sgmii_tx_n,
-    input  wire       phy_sgmii_clk_p,
-    input  wire       phy_sgmii_clk_n,
-    output wire       phy_reset_n,
-    input  wire       phy_int_n,
+    // input  wire       phy_sgmii_rx_p,
+    // input  wire       phy_sgmii_rx_n,
+    // output wire       phy_sgmii_tx_p,
+    // output wire       phy_sgmii_tx_n,
+    // input  wire       phy_sgmii_clk_p,
+    // input  wire       phy_sgmii_clk_n,
+    // output wire       phy_reset_n,
+    // input  wire       phy_int_n,
 
     /*
      * UART: 500000 bps, 8N1
@@ -65,7 +67,7 @@ module top_level(
   logic [2:0] state;
 
    logic clk_100mhz;
-   assign clk_100mhz = clk_125mhz_p;
+   assign clk_100mhz = clk_90mhz;
   logic sys_rst;
   assign sys_rst = reset;//0;//btn[0];
 
