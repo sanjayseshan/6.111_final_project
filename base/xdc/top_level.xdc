@@ -21,13 +21,13 @@ set_property BITSTREAM.CONFIG.OVERTEMPSHUTDOWN Enable  [current_design]
 #create_clock -period 3.333 -name clk_300mhz_2 [get_ports clk_300mhz_2_p]
 
 # 125 MHz
-# set_property -dict {LOC BC9  IOSTANDARD LVDS} [get_ports clk_125mhz_p]
-# set_property -dict {LOC BC8  IOSTANDARD LVDS} [get_ports clk_125mhz_n]
-# create_clock -period 8.000 -name clk_125mhz [get_ports clk_125mhz_p]
+set_property -dict {LOC BC9  IOSTANDARD LVDS} [get_ports clk_125mhz_p]
+set_property -dict {LOC BC8  IOSTANDARD LVDS} [get_ports clk_125mhz_n]
+create_clock -period 8.000 -name clk_125mhz [get_ports clk_125mhz_p]
 
 # 90 MHz
-set_property -dict {LOC AL20 IOSTANDARD LVCMOS18} [get_ports clk_90mhz]
-create_clock -period 11.111 -name clk_90mhz [get_ports clk_90mhz]
+# set_property -dict {LOC AL20 IOSTANDARD LVCMOS18} [get_ports clk_90mhz]
+# create_clock -period 11.111 -name clk_90mhz [get_ports clk_90mhz]
 
 # User SMA clock J34/J35
 set_property -dict {LOC AR14 IOSTANDARD LVDS} [get_ports user_sma_clk_p]

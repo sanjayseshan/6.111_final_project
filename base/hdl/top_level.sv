@@ -3,10 +3,10 @@
 
 module top_level(
 
-    input wire clk_90mhz,
+    // input wire clk_90mhz,
 
-    // input  wire       clk_125mhz_p,
-    // input  wire       clk_125mhz_n,
+    input  wire       clk_125mhz_p,
+    input  wire       clk_125mhz_n,
     input  wire       reset,
 
     /*
@@ -67,7 +67,7 @@ module top_level(
   logic [2:0] state;
 
    logic clk_100mhz;
-   assign clk_100mhz = clk_90mhz;
+   assign clk_100mhz = clk_125mhz_p;
   logic sys_rst;
   assign sys_rst = reset;//0;//btn[0];
 

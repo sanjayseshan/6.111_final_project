@@ -1,0 +1,1112 @@
+#-----------------------------------------------------------
+# Vivado v2017.4 (64-bit)
+# SW Build 2086221 on Fri Dec 15 20:54:30 MST 2017
+# IP Build 2085800 on Fri Dec 15 22:25:07 MST 2017
+# Start of session at: Thu Jan 11 00:38:55 2024
+# Process ID: 975
+# Current directory: /home/seshan/6.111_final_project/base/fpga/top_level.runs/synth_1
+# Command line: vivado -log top_level.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source top_level.tcl
+# Log file: /home/seshan/6.111_final_project/base/fpga/top_level.runs/synth_1/top_level.vds
+# Journal file: /home/seshan/6.111_final_project/base/fpga/top_level.runs/synth_1/vivado.jou
+#-----------------------------------------------------------
+source top_level.tcl -notrace
+Command: synth_design -top top_level -part xcvu095-ffva2104-2-e
+Starting synth_design
+Attempting to get a license for feature 'Synthesis' and/or device 'xcvu095'
+INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xcvu095'
+INFO: [Common 17-1540] The version limit for your license is '2021.06' and has expired for new software. A version limit expiration means that, although you may be able to continue to use the current version of tools or IP with this license, you will not be eligible for any updates or new releases.
+INFO: Launching helper process for spawning children vivado processes
+INFO: Helper process launched with PID 981 
+WARNING: [Synth 8-2611] redeclaration of ansi port uart_rxd is not allowed [/home/seshan/6.111_final_project/base/hdl/top_level.sv:64]
+WARNING: [Synth 8-2611] redeclaration of ansi port uart_txd is not allowed [/home/seshan/6.111_final_project/base/hdl/top_level.sv:64]
+WARNING: [Synth 8-976] uart_rxd has already been declared [/home/seshan/6.111_final_project/base/hdl/top_level.sv:64]
+WARNING: [Synth 8-2654] second declaration of uart_rxd ignored [/home/seshan/6.111_final_project/base/hdl/top_level.sv:64]
+INFO: [Synth 8-994] uart_rxd is declared here [/home/seshan/6.111_final_project/base/hdl/top_level.sv:38]
+INFO: [Synth 8-994] uart_txd is declared here [/home/seshan/6.111_final_project/base/hdl/top_level.sv:39]
+---------------------------------------------------------------------------------
+Starting RTL Elaboration : Time (s): cpu = 00:00:05 ; elapsed = 00:00:06 . Memory (MB): peak = 1304.113 ; gain = 96.273 ; free physical = 5949 ; free virtual = 123500
+---------------------------------------------------------------------------------
+INFO: [Synth 8-638] synthesizing module 'top_level' [/home/seshan/6.111_final_project/base/hdl/top_level.sv:4]
+	Parameter DIM bound to: 4 - type: integer 
+WARNING: [Synth 8-324] index 4 out of range [/home/seshan/6.111_final_project/base/hdl/top_level.sv:97]
+WARNING: [Synth 8-324] index 5 out of range [/home/seshan/6.111_final_project/base/hdl/top_level.sv:98]
+WARNING: [Synth 8-324] index 6 out of range [/home/seshan/6.111_final_project/base/hdl/top_level.sv:99]
+WARNING: [Synth 8-324] index 7 out of range [/home/seshan/6.111_final_project/base/hdl/top_level.sv:100]
+INFO: [Synth 8-638] synthesizing module 'bfis' [/home/seshan/6.111_final_project/base/hdl/bfis.sv:4]
+	Parameter DIM bound to: 4 - type: integer 
+	Parameter PQ_LENGTH bound to: 5 - type: integer 
+INFO: [Synth 8-638] synthesizing module 'distance' [/home/seshan/6.111_final_project/base/hdl/distance_calc.sv:4]
+	Parameter DIM bound to: 4 - type: integer 
+INFO: [Synth 8-256] done synthesizing module 'distance' (1#1) [/home/seshan/6.111_final_project/base/hdl/distance_calc.sv:4]
+INFO: [Synth 8-638] synthesizing module 'CheckedQueue' [/home/seshan/6.111_final_project/base/hdl/checked.sv:4]
+	Parameter DATA_WIDTH bound to: 32 - type: integer 
+	Parameter TAG_WIDTH bound to: 32 - type: integer 
+	Parameter DEPTH bound to: 5 - type: integer 
+INFO: [Synth 8-638] synthesizing module 'FIFO' [/home/seshan/6.111_final_project/base/hdl/fifo.sv:4]
+	Parameter DATA_WIDTH bound to: 2 - type: integer 
+	Parameter DEPTH bound to: 8 - type: integer 
+INFO: [Synth 8-256] done synthesizing module 'FIFO' (2#1) [/home/seshan/6.111_final_project/base/hdl/fifo.sv:4]
+INFO: [Synth 8-638] synthesizing module 'PQ_FIFO_CH' [/home/seshan/6.111_final_project/base/hdl/checked.sv:226]
+	Parameter DATA_WIDTH bound to: 4 - type: integer 
+	Parameter DEPTH bound to: 5 - type: integer 
+WARNING: [Synth 8-3848] Net full_out in module/entity PQ_FIFO_CH does not have driver. [/home/seshan/6.111_final_project/base/hdl/checked.sv:232]
+WARNING: [Synth 8-3848] Net empty_out in module/entity PQ_FIFO_CH does not have driver. [/home/seshan/6.111_final_project/base/hdl/checked.sv:234]
+INFO: [Synth 8-256] done synthesizing module 'PQ_FIFO_CH' (3#1) [/home/seshan/6.111_final_project/base/hdl/checked.sv:226]
+INFO: [Synth 8-256] done synthesizing module 'CheckedQueue' (4#1) [/home/seshan/6.111_final_project/base/hdl/checked.sv:4]
+INFO: [Synth 8-638] synthesizing module 'CheckedQueue__parameterized0' [/home/seshan/6.111_final_project/base/hdl/checked.sv:4]
+	Parameter DATA_WIDTH bound to: 32 - type: integer 
+	Parameter TAG_WIDTH bound to: 32 - type: integer 
+	Parameter DEPTH bound to: 16'b0000000000010010 
+INFO: [Synth 8-638] synthesizing module 'PQ_FIFO_CH__parameterized0' [/home/seshan/6.111_final_project/base/hdl/checked.sv:226]
+	Parameter DATA_WIDTH bound to: 6 - type: integer 
+	Parameter DEPTH bound to: 16'b0000000000010010 
+WARNING: [Synth 8-3848] Net full_out in module/entity PQ_FIFO_CH__parameterized0 does not have driver. [/home/seshan/6.111_final_project/base/hdl/checked.sv:232]
+WARNING: [Synth 8-3848] Net empty_out in module/entity PQ_FIFO_CH__parameterized0 does not have driver. [/home/seshan/6.111_final_project/base/hdl/checked.sv:234]
+INFO: [Synth 8-256] done synthesizing module 'PQ_FIFO_CH__parameterized0' (4#1) [/home/seshan/6.111_final_project/base/hdl/checked.sv:226]
+INFO: [Synth 8-256] done synthesizing module 'CheckedQueue__parameterized0' (4#1) [/home/seshan/6.111_final_project/base/hdl/checked.sv:4]
+WARNING: [Synth 8-689] width (4) of port connection 'size_out' does not match port width (6) of module 'CheckedQueue__parameterized0' [/home/seshan/6.111_final_project/base/hdl/bfis.sv:380]
+WARNING: [Synth 8-350] instance 'pq' of module 'CheckedQueue' requires 15 connections, but only 14 given [/home/seshan/6.111_final_project/base/hdl/bfis.sv:369]
+INFO: [Synth 8-638] synthesizing module 'graph_memory' [/home/seshan/6.111_final_project/base/hdl/storage.sv:11]
+	Parameter DIM bound to: 4 - type: integer 
+	Parameter PROC_BITS bound to: 0 - type: integer 
+INFO: [Synth 8-638] synthesizing module 'xilinx_true_dual_port_read_first_2_clock_ram' [/home/seshan/6.111_final_project/base/hdl/xilinx_true_dual_port_read_first_2_clock_ram.v:10]
+	Parameter RAM_WIDTH bound to: 32 - type: integer 
+	Parameter RAM_DEPTH bound to: 16384 - type: integer 
+	Parameter RAM_PERFORMANCE bound to: HIGH_PERFORMANCE - type: string 
+	Parameter INIT_FILE bound to: samples/citeseer_4/out_addrs.mem - type: string 
+CRITICAL WARNING: [Synth 8-4445] could not open $readmem data file 'samples/citeseer_4/out_addrs.mem'; please make sure the file is added to project and has read permission, ignoring [/home/seshan/6.111_final_project/base/hdl/xilinx_true_dual_port_read_first_2_clock_ram.v:51]
+INFO: [Synth 8-256] done synthesizing module 'xilinx_true_dual_port_read_first_2_clock_ram' (5#1) [/home/seshan/6.111_final_project/base/hdl/xilinx_true_dual_port_read_first_2_clock_ram.v:10]
+INFO: [Synth 8-638] synthesizing module 'xilinx_single_port_ram_read_first' [/home/seshan/6.111_final_project/base/hdl/xilinx_single_port_ram_read_first.v:10]
+	Parameter RAM_WIDTH bound to: 32 - type: integer 
+	Parameter RAM_DEPTH bound to: 4096 - type: integer 
+	Parameter RAM_PERFORMANCE bound to: HIGH_PERFORMANCE - type: string 
+	Parameter INIT_FILE bound to: samples/citeseer_4/out_vidx.mem - type: string 
+CRITICAL WARNING: [Synth 8-4445] could not open $readmem data file 'samples/citeseer_4/out_vidx.mem'; please make sure the file is added to project and has read permission, ignoring [/home/seshan/6.111_final_project/base/hdl/xilinx_single_port_ram_read_first.v:33]
+INFO: [Synth 8-256] done synthesizing module 'xilinx_single_port_ram_read_first' (6#1) [/home/seshan/6.111_final_project/base/hdl/xilinx_single_port_ram_read_first.v:10]
+INFO: [Synth 8-256] done synthesizing module 'graph_memory' (7#1) [/home/seshan/6.111_final_project/base/hdl/storage.sv:11]
+INFO: [Synth 8-638] synthesizing module 'visited' [/home/seshan/6.111_final_project/base/hdl/visited.sv:10]
+	Parameter PROC_BITS bound to: 0 - type: integer 
+INFO: [Synth 8-638] synthesizing module 'xilinx_single_port_ram_read_first__parameterized0' [/home/seshan/6.111_final_project/base/hdl/xilinx_single_port_ram_read_first.v:10]
+	Parameter RAM_WIDTH bound to: 1 - type: integer 
+	Parameter RAM_DEPTH bound to: 4096 - type: integer 
+	Parameter RAM_PERFORMANCE bound to: HIGH_PERFORMANCE - type: string 
+	Parameter INIT_FILE bound to: empty.mem - type: string 
+CRITICAL WARNING: [Synth 8-4445] could not open $readmem data file 'empty.mem'; please make sure the file is added to project and has read permission, ignoring [/home/seshan/6.111_final_project/base/hdl/xilinx_single_port_ram_read_first.v:33]
+INFO: [Synth 8-256] done synthesizing module 'xilinx_single_port_ram_read_first__parameterized0' (7#1) [/home/seshan/6.111_final_project/base/hdl/xilinx_single_port_ram_read_first.v:10]
+INFO: [Synth 8-256] done synthesizing module 'visited' (8#1) [/home/seshan/6.111_final_project/base/hdl/visited.sv:10]
+INFO: [Synth 8-638] synthesizing module 'graph_fetch' [/home/seshan/6.111_final_project/base/hdl/graph_fetch.sv:4]
+	Parameter DIM bound to: 4 - type: integer 
+INFO: [Synth 8-638] synthesizing module 'FIFO__parameterized0' [/home/seshan/6.111_final_project/base/hdl/fifo.sv:4]
+	Parameter DATA_WIDTH bound to: 32 - type: integer 
+	Parameter DEPTH bound to: 4 - type: integer 
+INFO: [Synth 8-256] done synthesizing module 'FIFO__parameterized0' (8#1) [/home/seshan/6.111_final_project/base/hdl/fifo.sv:4]
+INFO: [Synth 8-638] synthesizing module 'FIFO__parameterized1' [/home/seshan/6.111_final_project/base/hdl/fifo.sv:4]
+	Parameter DATA_WIDTH bound to: 32 - type: integer 
+	Parameter DEPTH bound to: 16 - type: integer 
+INFO: [Synth 8-256] done synthesizing module 'FIFO__parameterized1' (8#1) [/home/seshan/6.111_final_project/base/hdl/fifo.sv:4]
+INFO: [Synth 8-256] done synthesizing module 'graph_fetch' (9#1) [/home/seshan/6.111_final_project/base/hdl/graph_fetch.sv:4]
+WARNING: [Synth 8-3848] Net debug in module/entity bfis does not have driver. [/home/seshan/6.111_final_project/base/hdl/bfis.sv:15]
+WARNING: [Synth 8-3848] Net debug2 in module/entity bfis does not have driver. [/home/seshan/6.111_final_project/base/hdl/bfis.sv:16]
+INFO: [Synth 8-256] done synthesizing module 'bfis' (10#1) [/home/seshan/6.111_final_project/base/hdl/bfis.sv:4]
+WARNING: [Synth 8-689] width (32) of port connection 'valid_out' does not match port width (1) of module 'FIFO__parameterized0' [/home/seshan/6.111_final_project/base/hdl/top_level.sv:221]
+WARNING: [Synth 8-6014] Unused sequential element new_clk_reg was removed.  [/home/seshan/6.111_final_project/base/hdl/top_level.sv:85]
+WARNING: [Synth 8-6014] Unused sequential element last_val_3_reg was removed.  [/home/seshan/6.111_final_project/base/hdl/top_level.sv:206]
+WARNING: [Synth 8-3848] Net led in module/entity top_level does not have driver. [/home/seshan/6.111_final_project/base/hdl/top_level.sv:21]
+WARNING: [Synth 8-3848] Net uart_txd in module/entity top_level does not have driver. [/home/seshan/6.111_final_project/base/hdl/top_level.sv:39]
+WARNING: [Synth 8-3848] Net uart_rts in module/entity top_level does not have driver. [/home/seshan/6.111_final_project/base/hdl/top_level.sv:40]
+INFO: [Synth 8-256] done synthesizing module 'top_level' (11#1) [/home/seshan/6.111_final_project/base/hdl/top_level.sv:4]
+WARNING: [Synth 8-3331] design visited has unconnected port v_addr_in[31]
+WARNING: [Synth 8-3331] design visited has unconnected port v_addr_in[30]
+WARNING: [Synth 8-3331] design visited has unconnected port v_addr_in[29]
+WARNING: [Synth 8-3331] design visited has unconnected port v_addr_in[28]
+WARNING: [Synth 8-3331] design visited has unconnected port v_addr_in[27]
+WARNING: [Synth 8-3331] design visited has unconnected port v_addr_in[26]
+WARNING: [Synth 8-3331] design visited has unconnected port v_addr_in[25]
+WARNING: [Synth 8-3331] design visited has unconnected port v_addr_in[24]
+WARNING: [Synth 8-3331] design visited has unconnected port v_addr_in[23]
+WARNING: [Synth 8-3331] design visited has unconnected port v_addr_in[22]
+WARNING: [Synth 8-3331] design visited has unconnected port v_addr_in[21]
+WARNING: [Synth 8-3331] design visited has unconnected port v_addr_in[20]
+WARNING: [Synth 8-3331] design visited has unconnected port v_addr_in[19]
+WARNING: [Synth 8-3331] design visited has unconnected port v_addr_in[18]
+WARNING: [Synth 8-3331] design visited has unconnected port v_addr_in[17]
+WARNING: [Synth 8-3331] design visited has unconnected port v_addr_in[16]
+WARNING: [Synth 8-3331] design visited has unconnected port v_addr_in[15]
+WARNING: [Synth 8-3331] design visited has unconnected port v_addr_in[14]
+WARNING: [Synth 8-3331] design visited has unconnected port v_addr_in[13]
+WARNING: [Synth 8-3331] design visited has unconnected port v_addr_in[12]
+WARNING: [Synth 8-3331] design graph_memory has unconnected port idx_addr[31]
+WARNING: [Synth 8-3331] design graph_memory has unconnected port idx_addr[30]
+WARNING: [Synth 8-3331] design graph_memory has unconnected port idx_addr[29]
+WARNING: [Synth 8-3331] design graph_memory has unconnected port idx_addr[28]
+WARNING: [Synth 8-3331] design graph_memory has unconnected port idx_addr[27]
+WARNING: [Synth 8-3331] design graph_memory has unconnected port idx_addr[26]
+WARNING: [Synth 8-3331] design graph_memory has unconnected port idx_addr[25]
+WARNING: [Synth 8-3331] design graph_memory has unconnected port idx_addr[24]
+WARNING: [Synth 8-3331] design graph_memory has unconnected port idx_addr[23]
+WARNING: [Synth 8-3331] design graph_memory has unconnected port idx_addr[22]
+WARNING: [Synth 8-3331] design graph_memory has unconnected port idx_addr[21]
+WARNING: [Synth 8-3331] design graph_memory has unconnected port idx_addr[20]
+WARNING: [Synth 8-3331] design graph_memory has unconnected port idx_addr[19]
+WARNING: [Synth 8-3331] design graph_memory has unconnected port idx_addr[18]
+WARNING: [Synth 8-3331] design graph_memory has unconnected port idx_addr[17]
+WARNING: [Synth 8-3331] design graph_memory has unconnected port idx_addr[16]
+WARNING: [Synth 8-3331] design graph_memory has unconnected port idx_addr[15]
+WARNING: [Synth 8-3331] design graph_memory has unconnected port idx_addr[14]
+WARNING: [Synth 8-3331] design graph_memory has unconnected port idx_addr[13]
+WARNING: [Synth 8-3331] design graph_memory has unconnected port idx_addr[12]
+WARNING: [Synth 8-3331] design graph_memory has unconnected port data_addra_in[31]
+WARNING: [Synth 8-3331] design graph_memory has unconnected port data_addra_in[30]
+WARNING: [Synth 8-3331] design graph_memory has unconnected port data_addra_in[29]
+WARNING: [Synth 8-3331] design graph_memory has unconnected port data_addra_in[28]
+WARNING: [Synth 8-3331] design graph_memory has unconnected port data_addra_in[27]
+WARNING: [Synth 8-3331] design graph_memory has unconnected port data_addra_in[26]
+WARNING: [Synth 8-3331] design graph_memory has unconnected port data_addra_in[25]
+WARNING: [Synth 8-3331] design graph_memory has unconnected port data_addra_in[24]
+WARNING: [Synth 8-3331] design graph_memory has unconnected port data_addra_in[23]
+WARNING: [Synth 8-3331] design graph_memory has unconnected port data_addra_in[22]
+WARNING: [Synth 8-3331] design graph_memory has unconnected port data_addra_in[21]
+WARNING: [Synth 8-3331] design graph_memory has unconnected port data_addra_in[20]
+WARNING: [Synth 8-3331] design graph_memory has unconnected port data_addra_in[19]
+WARNING: [Synth 8-3331] design graph_memory has unconnected port data_addra_in[18]
+WARNING: [Synth 8-3331] design graph_memory has unconnected port data_addra_in[17]
+WARNING: [Synth 8-3331] design graph_memory has unconnected port data_addra_in[16]
+WARNING: [Synth 8-3331] design graph_memory has unconnected port data_addra_in[15]
+WARNING: [Synth 8-3331] design graph_memory has unconnected port data_addra_in[14]
+WARNING: [Synth 8-3331] design graph_memory has unconnected port data_addrb_in[31]
+WARNING: [Synth 8-3331] design graph_memory has unconnected port data_addrb_in[30]
+WARNING: [Synth 8-3331] design graph_memory has unconnected port data_addrb_in[29]
+WARNING: [Synth 8-3331] design graph_memory has unconnected port data_addrb_in[28]
+WARNING: [Synth 8-3331] design graph_memory has unconnected port data_addrb_in[27]
+WARNING: [Synth 8-3331] design graph_memory has unconnected port data_addrb_in[26]
+WARNING: [Synth 8-3331] design graph_memory has unconnected port data_addrb_in[25]
+WARNING: [Synth 8-3331] design graph_memory has unconnected port data_addrb_in[24]
+WARNING: [Synth 8-3331] design graph_memory has unconnected port data_addrb_in[23]
+WARNING: [Synth 8-3331] design graph_memory has unconnected port data_addrb_in[22]
+WARNING: [Synth 8-3331] design graph_memory has unconnected port data_addrb_in[21]
+WARNING: [Synth 8-3331] design graph_memory has unconnected port data_addrb_in[20]
+WARNING: [Synth 8-3331] design graph_memory has unconnected port data_addrb_in[19]
+WARNING: [Synth 8-3331] design graph_memory has unconnected port data_addrb_in[18]
+WARNING: [Synth 8-3331] design graph_memory has unconnected port data_addrb_in[17]
+WARNING: [Synth 8-3331] design graph_memory has unconnected port data_addrb_in[16]
+WARNING: [Synth 8-3331] design graph_memory has unconnected port data_addrb_in[15]
+WARNING: [Synth 8-3331] design graph_memory has unconnected port data_addrb_in[14]
+WARNING: [Synth 8-3331] design PQ_FIFO_CH__parameterized0 has unconnected port full_out
+WARNING: [Synth 8-3331] design PQ_FIFO_CH__parameterized0 has unconnected port empty_out
+WARNING: [Synth 8-3331] design PQ_FIFO_CH has unconnected port full_out
+WARNING: [Synth 8-3331] design PQ_FIFO_CH has unconnected port empty_out
+WARNING: [Synth 8-3331] design bfis has unconnected port debug[31]
+WARNING: [Synth 8-3331] design bfis has unconnected port debug[30]
+WARNING: [Synth 8-3331] design bfis has unconnected port debug[29]
+WARNING: [Synth 8-3331] design bfis has unconnected port debug[28]
+WARNING: [Synth 8-3331] design bfis has unconnected port debug[27]
+WARNING: [Synth 8-3331] design bfis has unconnected port debug[26]
+WARNING: [Synth 8-3331] design bfis has unconnected port debug[25]
+WARNING: [Synth 8-3331] design bfis has unconnected port debug[24]
+WARNING: [Synth 8-3331] design bfis has unconnected port debug[23]
+WARNING: [Synth 8-3331] design bfis has unconnected port debug[22]
+WARNING: [Synth 8-3331] design bfis has unconnected port debug[21]
+WARNING: [Synth 8-3331] design bfis has unconnected port debug[20]
+WARNING: [Synth 8-3331] design bfis has unconnected port debug[19]
+WARNING: [Synth 8-3331] design bfis has unconnected port debug[18]
+WARNING: [Synth 8-3331] design bfis has unconnected port debug[17]
+WARNING: [Synth 8-3331] design bfis has unconnected port debug[16]
+WARNING: [Synth 8-3331] design bfis has unconnected port debug[15]
+WARNING: [Synth 8-3331] design bfis has unconnected port debug[14]
+WARNING: [Synth 8-3331] design bfis has unconnected port debug[13]
+WARNING: [Synth 8-3331] design bfis has unconnected port debug[12]
+INFO: [Common 17-14] Message 'Synth 8-3331' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings.
+---------------------------------------------------------------------------------
+Finished RTL Elaboration : Time (s): cpu = 00:00:07 ; elapsed = 00:00:08 . Memory (MB): peak = 1385.363 ; gain = 177.523 ; free physical = 5934 ; free virtual = 123486
+---------------------------------------------------------------------------------
+
+Report Check Netlist: 
++------+------------------+-------+---------+-------+------------------+
+|      |Item              |Errors |Warnings |Status |Description       |
++------+------------------+-------+---------+-------+------------------+
+|1     |multi_driven_nets |      0|        0|Passed |Multi driven nets |
++------+------------------+-------+---------+-------+------------------+
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:08 ; elapsed = 00:00:08 . Memory (MB): peak = 1385.363 ; gain = 177.523 ; free physical = 5941 ; free virtual = 123493
+---------------------------------------------------------------------------------
+INFO: [Device 21-403] Loading part xcvu095-ffva2104-2-e
+INFO: [Project 1-570] Preparing netlist for logic optimization
+
+Processing XDC Constraints
+Initializing timing engine
+Parsing XDC File [/home/seshan/6.111_final_project/base/xdc/top_level.xdc]
+WARNING: [Vivado 12-584] No ports matched 'user_sma_clk_p'. [/home/seshan/6.111_final_project/base/xdc/top_level.xdc:33]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/seshan/6.111_final_project/base/xdc/top_level.xdc:33]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'user_sma_clk_n'. [/home/seshan/6.111_final_project/base/xdc/top_level.xdc:34]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/seshan/6.111_final_project/base/xdc/top_level.xdc:34]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'user_sma_clk_p'. [/home/seshan/6.111_final_project/base/xdc/top_level.xdc:35]
+CRITICAL WARNING: [Vivado 12-4739] create_clock:No valid object(s) found for '-objects [get_ports user_sma_clk_p]'. [/home/seshan/6.111_final_project/base/xdc/top_level.xdc:35]
+Resolution: Check if the specified object(s) exists in the current design. If it does, ensure that the correct design hierarchy was specified for the object. If you are working with clocks, make sure create_clock was used to create the clock object before it is referenced.
+INFO: [Constraints 18-632] set_output_delay: No clock object specified, the clocks will be automatically identified [/home/seshan/6.111_final_project/base/xdc/top_level.xdc:48]
+INFO: [Constraints 18-632] set_input_delay: No clock object specified, the clocks will be automatically identified [/home/seshan/6.111_final_project/base/xdc/top_level.xdc:54]
+INFO: [Constraints 18-632] set_input_delay: No clock object specified, the clocks will be automatically identified [/home/seshan/6.111_final_project/base/xdc/top_level.xdc:64]
+INFO: [Constraints 18-632] set_input_delay: No clock object specified, the clocks will be automatically identified [/home/seshan/6.111_final_project/base/xdc/top_level.xdc:73]
+INFO: [Constraints 18-632] set_output_delay: No clock object specified, the clocks will be automatically identified [/home/seshan/6.111_final_project/base/xdc/top_level.xdc:108]
+INFO: [Constraints 18-632] set_input_delay: No clock object specified, the clocks will be automatically identified [/home/seshan/6.111_final_project/base/xdc/top_level.xdc:110]
+Finished Parsing XDC File [/home/seshan/6.111_final_project/base/xdc/top_level.xdc]
+INFO: [Project 1-236] Implementation specific constraints were found while reading constraint file [/home/seshan/6.111_final_project/base/xdc/top_level.xdc]. These constraints will be ignored for synthesis but will be used in implementation. Impacted constraints are listed in the file [.Xil/top_level_propImpl.xdc].
+Resolution: To avoid this warning, move constraints listed in [.Xil/top_level_propImpl.xdc] to another XDC file and exclude this new file from synthesis with the used_in_synthesis property (File Properties dialog in GUI) and re-run elaboration/synthesis.
+Completed Processing XDC Constraints
+
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2031.105 ; gain = 0.000 ; free physical = 5380 ; free virtual = 122931
+---------------------------------------------------------------------------------
+Finished Constraint Validation : Time (s): cpu = 00:00:20 ; elapsed = 00:00:25 . Memory (MB): peak = 2031.105 ; gain = 823.266 ; free physical = 5452 ; free virtual = 123004
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Loading Part and Timing Information
+---------------------------------------------------------------------------------
+Loading part: xcvu095-ffva2104-2-e
+---------------------------------------------------------------------------------
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:20 ; elapsed = 00:00:25 . Memory (MB): peak = 2031.105 ; gain = 823.266 ; free physical = 5452 ; free virtual = 123004
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Applying 'set_property' XDC Constraints
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:20 ; elapsed = 00:00:25 . Memory (MB): peak = 2031.105 ; gain = 823.266 ; free physical = 5452 ; free virtual = 123004
+---------------------------------------------------------------------------------
+INFO: [Synth 8-5818] HDL ADVISOR - The operator resource <adder> is shared. To prevent sharing consider applying a KEEP on the output of the operator [/home/seshan/6.111_final_project/base/hdl/distance_calc.sv:43]
+INFO: [Synth 8-5544] ROM "intermediate_subs_out_reg[3]" won't be mapped to Block RAM because address size (2) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "intermediate_subs_out_reg[2]" won't be mapped to Block RAM because address size (2) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "intermediate_subs_out_reg[1]" won't be mapped to Block RAM because address size (2) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "intermediate_subs_out_reg[0]" won't be mapped to Block RAM because address size (2) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "valid_mults_out_reg[3]" won't be mapped to Block RAM because address size (2) smaller than threshold (5)
+WARNING: [Synth 8-6014] Unused sequential element distance_reg was removed.  [/home/seshan/6.111_final_project/base/hdl/distance_calc.sv:32]
+INFO: [Synth 8-5544] ROM "queue_reg[7]" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "queue_reg[6]" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "queue_reg[5]" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "queue_reg[4]" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "queue_reg[3]" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "queue_reg[2]" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "queue_reg[1]" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "queue_reg[0]" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "valid_reg[7]" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "valid_reg[6]" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "valid_reg[5]" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "valid_reg[4]" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "valid_reg[3]" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "valid_reg[2]" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "valid_reg[1]" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "valid_reg[0]" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+WARNING: [Synth 8-6014] Unused sequential element read_ptr_reg was removed.  [/home/seshan/6.111_final_project/base/hdl/fifo.sv:36]
+WARNING: [Synth 8-6014] Unused sequential element write_ptr_reg was removed.  [/home/seshan/6.111_final_project/base/hdl/fifo.sv:37]
+INFO: [Synth 8-5544] ROM "valid_reg[4]" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "valid_reg[3]" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "valid_reg[2]" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "valid_reg[1]" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "valid_reg[0]" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "valid_reg[4]" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "valid_reg[3]" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "valid_reg[2]" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "valid_reg[1]" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "valid_reg[0]" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+WARNING: [Synth 8-6014] Unused sequential element read_ptr_reg was removed.  [/home/seshan/6.111_final_project/base/hdl/checked.sv:260]
+WARNING: [Synth 8-6014] Unused sequential element write_ptr_reg was removed.  [/home/seshan/6.111_final_project/base/hdl/checked.sv:261]
+INFO: [Synth 8-5818] HDL ADVISOR - The operator resource <adder> is shared. To prevent sharing consider applying a KEEP on the output of the operator [/home/seshan/6.111_final_project/base/hdl/checked.sv:205]
+INFO: [Synth 8-5544] ROM "queue_reg[4]" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "queue_reg[3]" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "queue_reg[2]" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "queue_reg[1]" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "queue_reg[0]" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "valid_reg[4]" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "valid_reg[4]" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "valid_reg[3]" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "valid_reg[3]" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "valid_reg[2]" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "valid_reg[2]" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "valid_reg[1]" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "valid_reg[1]" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "valid_reg[0]" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "valid_reg[0]" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5546] ROM "ready" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "empty_out" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5544] ROM "full_out" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+WARNING: [Synth 8-6014] Unused sequential element i_reg was removed.  [/home/seshan/6.111_final_project/base/hdl/checked.sv:39]
+WARNING: [Synth 8-6014] Unused sequential element size_out_reg was removed.  [/home/seshan/6.111_final_project/base/hdl/checked.sv:163]
+INFO: [Synth 8-5544] ROM "queue_reg[4]" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "queue_reg[3]" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "queue_reg[2]" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "queue_reg[1]" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "queue_reg[0]" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "valid_reg[4]" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "valid_reg[4]" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "valid_reg[3]" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "valid_reg[3]" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "valid_reg[2]" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "valid_reg[2]" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "valid_reg[1]" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "valid_reg[1]" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "valid_reg[0]" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "valid_reg[0]" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5546] ROM "ready" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "empty_out" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5544] ROM "full_out" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5546] ROM "valid_reg[17]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "valid_reg[16]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "valid_reg[15]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "valid_reg[14]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "valid_reg[13]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "valid_reg[12]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "valid_reg[11]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "valid_reg[10]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "valid_reg[9]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "valid_reg[8]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "valid_reg[7]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "valid_reg[6]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "valid_reg[5]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "valid_reg[4]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "valid_reg[3]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "valid_reg[2]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "valid_reg[1]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "valid_reg[0]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "valid_reg[17]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "valid_reg[16]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "valid_reg[15]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "valid_reg[14]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "valid_reg[13]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "valid_reg[12]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "valid_reg[11]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "valid_reg[10]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "valid_reg[9]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "valid_reg[8]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "valid_reg[7]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "valid_reg[6]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "valid_reg[5]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "valid_reg[4]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "valid_reg[3]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "valid_reg[2]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "valid_reg[1]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "valid_reg[0]" won't be mapped to RAM because it is too sparse
+WARNING: [Synth 8-6014] Unused sequential element read_ptr_reg was removed.  [/home/seshan/6.111_final_project/base/hdl/checked.sv:260]
+WARNING: [Synth 8-6014] Unused sequential element write_ptr_reg was removed.  [/home/seshan/6.111_final_project/base/hdl/checked.sv:261]
+INFO: [Synth 8-5818] HDL ADVISOR - The operator resource <adder> is shared. To prevent sharing consider applying a KEEP on the output of the operator [/home/seshan/6.111_final_project/base/hdl/checked.sv:205]
+INFO: [Synth 8-5546] ROM "queue_reg[17]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "queue_reg[16]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "queue_reg[15]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "queue_reg[14]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "queue_reg[13]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "queue_reg[12]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "queue_reg[11]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "queue_reg[10]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "queue_reg[9]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "queue_reg[8]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "queue_reg[7]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "queue_reg[6]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "queue_reg[5]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "queue_reg[4]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "queue_reg[3]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "queue_reg[2]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "queue_reg[1]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "queue_reg[0]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "valid_reg[17]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "valid_reg[17]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "valid_reg[16]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "valid_reg[16]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "valid_reg[15]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "valid_reg[15]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "valid_reg[14]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "valid_reg[14]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "valid_reg[13]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "valid_reg[13]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "valid_reg[12]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "valid_reg[12]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "valid_reg[11]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "valid_reg[11]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "valid_reg[10]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "valid_reg[10]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "valid_reg[9]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "valid_reg[9]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "valid_reg[8]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "valid_reg[8]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "valid_reg[7]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "valid_reg[7]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "valid_reg[6]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "valid_reg[6]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "valid_reg[5]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "valid_reg[5]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "valid_reg[4]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "valid_reg[4]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "valid_reg[3]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "valid_reg[3]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "valid_reg[2]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "valid_reg[2]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "valid_reg[1]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "valid_reg[1]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "valid_reg[0]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "valid_reg[0]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "ready" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "empty_out" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "full_out" won't be mapped to RAM because it is too sparse
+WARNING: [Synth 8-6014] Unused sequential element i_reg was removed.  [/home/seshan/6.111_final_project/base/hdl/checked.sv:39]
+WARNING: [Synth 8-6014] Unused sequential element size_out_reg was removed.  [/home/seshan/6.111_final_project/base/hdl/checked.sv:163]
+INFO: [Synth 8-5546] ROM "queue_reg[17]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "queue_reg[16]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "queue_reg[15]" won't be mapped to RAM because it is too sparse
+INFO: [Common 17-14] Message 'Synth 8-5546' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings.
+INFO: [Synth 8-5544] ROM "queue_reg[3]" won't be mapped to Block RAM because address size (3) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "queue_reg[2]" won't be mapped to Block RAM because address size (3) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "queue_reg[1]" won't be mapped to Block RAM because address size (3) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "queue_reg[0]" won't be mapped to Block RAM because address size (3) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "valid_reg[3]" won't be mapped to Block RAM because address size (3) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "valid_reg[2]" won't be mapped to Block RAM because address size (3) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "valid_reg[1]" won't be mapped to Block RAM because address size (3) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "valid_reg[0]" won't be mapped to Block RAM because address size (3) smaller than threshold (5)
+WARNING: [Synth 8-6014] Unused sequential element read_ptr_reg was removed.  [/home/seshan/6.111_final_project/base/hdl/fifo.sv:36]
+WARNING: [Synth 8-6014] Unused sequential element write_ptr_reg was removed.  [/home/seshan/6.111_final_project/base/hdl/fifo.sv:37]
+INFO: [Synth 8-5818] HDL ADVISOR - The operator resource <adder> is shared. To prevent sharing consider applying a KEEP on the output of the operator [/home/seshan/6.111_final_project/base/hdl/graph_fetch.sv:208]
+INFO: [Synth 8-5818] HDL ADVISOR - The operator resource <adder> is shared. To prevent sharing consider applying a KEEP on the output of the operator [/home/seshan/6.111_final_project/base/hdl/graph_fetch.sv:165]
+WARNING: [Synth 8-6014] Unused sequential element ct_reg was removed.  [/home/seshan/6.111_final_project/base/hdl/graph_fetch.sv:107]
+WARNING: [Synth 8-6014] Unused sequential element mem_req_out2_reg was removed.  [/home/seshan/6.111_final_project/base/hdl/graph_fetch.sv:166]
+INFO: [Synth 8-802] inferred FSM for state register 'state_reg' in module 'bfis'
+INFO: [Synth 8-5544] ROM "pos_vec_reg[3]" won't be mapped to Block RAM because address size (3) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "pos_vec_reg[2]" won't be mapped to Block RAM because address size (3) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "pos_vec_reg[1]" won't be mapped to Block RAM because address size (3) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "pos_vec_reg[0]" won't be mapped to Block RAM because address size (3) smaller than threshold (5)
+INFO: [Synth 8-5545] ROM "pos_valid_reg[3]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "pos_valid_reg[3]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "pos_valid_reg[2]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "pos_valid_reg[2]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "pos_valid_reg[1]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "pos_valid_reg[1]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "pos_valid_reg[0]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "pos_valid_reg[0]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5544] ROM "state" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "state" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "state" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
+WARNING: [Synth 8-6014] Unused sequential element k_count_reg was removed.  [/home/seshan/6.111_final_project/base/hdl/bfis.sv:111]
+INFO: [Synth 8-5555] Implemented Block Ram Cascade chain of height 8 and width 18 for RAM BRAM_reg
+INFO: [Synth 8-5555] Implemented Block Ram Cascade chain of height 4 and width 9 for RAM BRAM_reg
+INFO: [Synth 8-5555] Implemented Block Ram Cascade chain of height 2 and width 4 for RAM BRAM_reg
+INFO: [Synth 8-3971] The signal BRAM_reg was recognized as a true dual port RAM template.
+INFO: [Synth 8-5555] Implemented Block Ram Cascade chain of height 2 and width 18 for RAM BRAM_reg
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+                  iSTATE |                              001 |                              000
+                 iSTATE0 |                              010 |                              001
+                 iSTATE1 |                              011 |                              010
+                 iSTATE2 |                              100 |                              011
+                 iSTATE3 |                              110 |                              100
+                 iSTATE4 |                              111 |                              101
+                 iSTATE6 |                              101 |                              110
+*
+                 iSTATE5 |                              000 |                              111
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'state_reg' using encoding 'sequential' in module 'bfis'
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:21 ; elapsed = 00:00:27 . Memory (MB): peak = 2031.105 ; gain = 823.266 ; free physical = 5440 ; free virtual = 122992
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+---------------------------------------------------------------------------------
+Start RTL Component Statistics 
+---------------------------------------------------------------------------------
+Detailed RTL Component Info : 
++---Adders : 
+	   3 Input     32 Bit       Adders := 2     
+	   2 Input     32 Bit       Adders := 9     
+	   2 Input     16 Bit       Adders := 1     
+	   2 Input      7 Bit       Adders := 2     
+	   2 Input      6 Bit       Adders := 7     
+	   2 Input      5 Bit       Adders := 4     
+	   2 Input      4 Bit       Adders := 8     
+	   2 Input      3 Bit       Adders := 5     
+	   2 Input      2 Bit       Adders := 1     
++---Registers : 
+	               32 Bit    Registers := 107   
+	               16 Bit    Registers := 1     
+	                7 Bit    Registers := 1     
+	                6 Bit    Registers := 28    
+	                5 Bit    Registers := 3     
+	                4 Bit    Registers := 16    
+	                3 Bit    Registers := 6     
+	                2 Bit    Registers := 23    
+	                1 Bit    Registers := 160   
++---RAMs : 
+	             512K Bit         RAMs := 1     
+	             128K Bit         RAMs := 1     
+	               4K Bit         RAMs := 1     
++---Muxes : 
+	   4 Input     32 Bit        Muxes := 5     
+	   2 Input     32 Bit        Muxes := 45    
+	   2 Input     16 Bit        Muxes := 1     
+	   2 Input      6 Bit        Muxes := 37    
+	   2 Input      4 Bit        Muxes := 15    
+	   2 Input      3 Bit        Muxes := 3     
+	   8 Input      3 Bit        Muxes := 1     
+	  12 Input      3 Bit        Muxes := 1     
+	   2 Input      2 Bit        Muxes := 8     
+	   4 Input      2 Bit        Muxes := 1     
+	   4 Input      1 Bit        Muxes := 8     
+	   2 Input      1 Bit        Muxes := 536   
+	   3 Input      1 Bit        Muxes := 58    
+	   5 Input      1 Bit        Muxes := 3     
+	   9 Input      1 Bit        Muxes := 1     
+	   7 Input      1 Bit        Muxes := 2     
+	   8 Input      1 Bit        Muxes := 6     
+	   6 Input      1 Bit        Muxes := 15    
+---------------------------------------------------------------------------------
+Finished RTL Component Statistics 
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start RTL Hierarchical Component Statistics 
+---------------------------------------------------------------------------------
+Hierarchical RTL Component report 
+Module top_level 
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input     32 Bit       Adders := 1     
++---Registers : 
+	               32 Bit    Registers := 1     
++---Muxes : 
+	   2 Input     32 Bit        Muxes := 1     
+Module distance 
+Detailed RTL Component Info : 
++---Adders : 
+	   3 Input     32 Bit       Adders := 1     
+	   2 Input     32 Bit       Adders := 5     
+	   2 Input      6 Bit       Adders := 4     
+	   2 Input      2 Bit       Adders := 1     
++---Registers : 
+	               32 Bit    Registers := 9     
+	                6 Bit    Registers := 4     
+	                3 Bit    Registers := 1     
+	                2 Bit    Registers := 2     
+	                1 Bit    Registers := 9     
++---Muxes : 
+	   4 Input     32 Bit        Muxes := 3     
+	   2 Input     32 Bit        Muxes := 14    
+	   2 Input      6 Bit        Muxes := 8     
+	   2 Input      2 Bit        Muxes := 6     
+	   4 Input      1 Bit        Muxes := 2     
+	   2 Input      1 Bit        Muxes := 94    
+Module FIFO 
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input      4 Bit       Adders := 2     
++---Registers : 
+	                4 Bit    Registers := 2     
+	                2 Bit    Registers := 9     
+	                1 Bit    Registers := 11    
++---Muxes : 
+	   2 Input      1 Bit        Muxes := 18    
+Module PQ_FIFO_CH 
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input      4 Bit       Adders := 2     
++---Registers : 
+	                4 Bit    Registers := 7     
+	                1 Bit    Registers := 6     
++---Muxes : 
+	   2 Input      4 Bit        Muxes := 10    
+	   2 Input      1 Bit        Muxes := 34    
+	   3 Input      1 Bit        Muxes := 5     
+Module CheckedQueue 
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input      5 Bit       Adders := 2     
+	   2 Input      4 Bit       Adders := 1     
++---Registers : 
+	               32 Bit    Registers := 14    
+	                5 Bit    Registers := 1     
+	                4 Bit    Registers := 4     
+	                1 Bit    Registers := 14    
++---Muxes : 
+	   2 Input     32 Bit        Muxes := 11    
+	   2 Input      4 Bit        Muxes := 5     
+	   2 Input      2 Bit        Muxes := 1     
+	   2 Input      1 Bit        Muxes := 51    
+	   5 Input      1 Bit        Muxes := 1     
+	   3 Input      1 Bit        Muxes := 6     
+Module PQ_FIFO_CH__parameterized0 
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input      6 Bit       Adders := 2     
++---Registers : 
+	                6 Bit    Registers := 20    
+	                1 Bit    Registers := 19    
++---Muxes : 
+	   2 Input      6 Bit        Muxes := 24    
+	   2 Input      1 Bit        Muxes := 112   
+	   3 Input      1 Bit        Muxes := 18    
+Module CheckedQueue__parameterized0 
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input      7 Bit       Adders := 2     
+	   2 Input      6 Bit       Adders := 1     
++---Registers : 
+	               32 Bit    Registers := 40    
+	                7 Bit    Registers := 1     
+	                6 Bit    Registers := 4     
+	                1 Bit    Registers := 27    
++---Muxes : 
+	   2 Input     32 Bit        Muxes := 11    
+	   2 Input      6 Bit        Muxes := 5     
+	   2 Input      2 Bit        Muxes := 1     
+	   2 Input      1 Bit        Muxes := 79    
+	   5 Input      1 Bit        Muxes := 1     
+	   3 Input      1 Bit        Muxes := 18    
+Module xilinx_true_dual_port_read_first_2_clock_ram 
+Detailed RTL Component Info : 
++---Registers : 
+	               32 Bit    Registers := 4     
++---RAMs : 
+	             512K Bit         RAMs := 1     
+Module xilinx_single_port_ram_read_first 
+Detailed RTL Component Info : 
++---Registers : 
+	               32 Bit    Registers := 2     
++---RAMs : 
+	             128K Bit         RAMs := 1     
+Module graph_memory 
+Detailed RTL Component Info : 
++---Registers : 
+	                2 Bit    Registers := 2     
+	                1 Bit    Registers := 4     
++---Muxes : 
+	   2 Input      1 Bit        Muxes := 1     
+Module xilinx_single_port_ram_read_first__parameterized0 
+Detailed RTL Component Info : 
++---Registers : 
+	                1 Bit    Registers := 2     
++---RAMs : 
+	               4K Bit         RAMs := 1     
+Module visited 
+Detailed RTL Component Info : 
++---Registers : 
+	                2 Bit    Registers := 1     
+	                1 Bit    Registers := 1     
++---Muxes : 
+	   4 Input      2 Bit        Muxes := 1     
+	   2 Input      1 Bit        Muxes := 2     
+Module FIFO__parameterized0 
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input      3 Bit       Adders := 2     
++---Registers : 
+	               32 Bit    Registers := 5     
+	                3 Bit    Registers := 2     
+	                1 Bit    Registers := 7     
++---Muxes : 
+	   4 Input     32 Bit        Muxes := 1     
+	   2 Input      1 Bit        Muxes := 10    
+	   4 Input      1 Bit        Muxes := 2     
+Module FIFO__parameterized1 
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input      5 Bit       Adders := 2     
++---Registers : 
+	               32 Bit    Registers := 17    
+	                5 Bit    Registers := 2     
+	                1 Bit    Registers := 19    
++---Muxes : 
+	   2 Input      1 Bit        Muxes := 34    
+Module graph_fetch 
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input     32 Bit       Adders := 2     
+	   2 Input      4 Bit       Adders := 1     
++---Registers : 
+	               32 Bit    Registers := 2     
+	                4 Bit    Registers := 1     
+	                1 Bit    Registers := 7     
++---Muxes : 
+	   2 Input     32 Bit        Muxes := 2     
+	   2 Input      1 Bit        Muxes := 24    
+Module bfis 
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input     32 Bit       Adders := 1     
+	   3 Input     32 Bit       Adders := 1     
+	   2 Input     16 Bit       Adders := 1     
+	   2 Input      3 Bit       Adders := 1     
++---Registers : 
+	               32 Bit    Registers := 8     
+	               16 Bit    Registers := 1     
+	                3 Bit    Registers := 1     
+	                1 Bit    Registers := 16    
++---Muxes : 
+	   2 Input     32 Bit        Muxes := 6     
+	   2 Input     16 Bit        Muxes := 1     
+	   2 Input      3 Bit        Muxes := 3     
+	   8 Input      3 Bit        Muxes := 1     
+	  12 Input      3 Bit        Muxes := 1     
+	   2 Input      1 Bit        Muxes := 49    
+	   9 Input      1 Bit        Muxes := 1     
+	   5 Input      1 Bit        Muxes := 1     
+	   3 Input      1 Bit        Muxes := 11    
+	   7 Input      1 Bit        Muxes := 2     
+	   4 Input      1 Bit        Muxes := 2     
+	   8 Input      1 Bit        Muxes := 6     
+	   6 Input      1 Bit        Muxes := 15    
+---------------------------------------------------------------------------------
+Finished RTL Hierarchical Component Statistics
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Part Resource Summary
+---------------------------------------------------------------------------------
+Part Resources:
+DSPs: 768 (col length:192)
+BRAMs: 3456 (col length: RAMB18 192 RAMB36 96)
+---------------------------------------------------------------------------------
+Finished Part Resource Summary
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Cross Boundary and Area Optimization
+---------------------------------------------------------------------------------
+WARNING: [Synth 8-6014] Unused sequential element distance_reg was removed.  [/home/seshan/6.111_final_project/base/hdl/distance_calc.sv:32]
+WARNING: [Synth 8-6014] Unused sequential element read_ptr_reg was removed.  [/home/seshan/6.111_final_project/base/hdl/fifo.sv:36]
+WARNING: [Synth 8-6014] Unused sequential element write_ptr_reg was removed.  [/home/seshan/6.111_final_project/base/hdl/fifo.sv:37]
+WARNING: [Synth 8-6014] Unused sequential element read_ptr_reg was removed.  [/home/seshan/6.111_final_project/base/hdl/checked.sv:260]
+WARNING: [Synth 8-6014] Unused sequential element write_ptr_reg was removed.  [/home/seshan/6.111_final_project/base/hdl/checked.sv:261]
+WARNING: [Synth 8-6014] Unused sequential element i_reg was removed.  [/home/seshan/6.111_final_project/base/hdl/checked.sv:39]
+WARNING: [Synth 8-6014] Unused sequential element size_out_reg was removed.  [/home/seshan/6.111_final_project/base/hdl/checked.sv:163]
+WARNING: [Synth 8-6014] Unused sequential element write_ptr_reg was removed.  [/home/seshan/6.111_final_project/base/hdl/fifo.sv:37]
+WARNING: [Synth 8-6014] Unused sequential element read_ptr_reg was removed.  [/home/seshan/6.111_final_project/base/hdl/fifo.sv:36]
+WARNING: [Synth 8-6014] Unused sequential element write_ptr_reg was removed.  [/home/seshan/6.111_final_project/base/hdl/checked.sv:261]
+WARNING: [Synth 8-6014] Unused sequential element read_ptr_reg was removed.  [/home/seshan/6.111_final_project/base/hdl/checked.sv:260]
+WARNING: [Synth 8-6014] Unused sequential element i_reg was removed.  [/home/seshan/6.111_final_project/base/hdl/checked.sv:39]
+WARNING: [Synth 8-6014] Unused sequential element size_out_reg was removed.  [/home/seshan/6.111_final_project/base/hdl/checked.sv:163]
+WARNING: [Synth 8-6014] Unused sequential element position/read_ptr_reg was removed.  [/home/seshan/6.111_final_project/base/hdl/fifo.sv:36]
+WARNING: [Synth 8-6014] Unused sequential element position/write_ptr_reg was removed.  [/home/seshan/6.111_final_project/base/hdl/fifo.sv:37]
+WARNING: [Synth 8-6014] Unused sequential element ct_reg was removed.  [/home/seshan/6.111_final_project/base/hdl/graph_fetch.sv:107]
+WARNING: [Synth 8-6014] Unused sequential element mem_req_out2_reg was removed.  [/home/seshan/6.111_final_project/base/hdl/graph_fetch.sv:166]
+INFO: [Synth 8-5545] ROM "pos_valid_reg[0]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "pos_valid_reg[1]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "pos_valid_reg[2]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "pos_valid_reg[3]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+WARNING: [Synth 8-6014] Unused sequential element k_count_reg was removed.  [/home/seshan/6.111_final_project/base/hdl/bfis.sv:111]
+WARNING: [Synth 8-6014] Unused sequential element buf_out/queue_reg[0] was removed.  [/home/seshan/6.111_final_project/base/hdl/fifo.sv:28]
+WARNING: [Synth 8-6014] Unused sequential element buf_out/queue_reg[1] was removed.  [/home/seshan/6.111_final_project/base/hdl/fifo.sv:28]
+WARNING: [Synth 8-6014] Unused sequential element buf_out/queue_reg[2] was removed.  [/home/seshan/6.111_final_project/base/hdl/fifo.sv:28]
+WARNING: [Synth 8-6014] Unused sequential element buf_out/queue_reg[3] was removed.  [/home/seshan/6.111_final_project/base/hdl/fifo.sv:28]
+WARNING: [Synth 8-6014] Unused sequential element buf_out/data_out_reg was removed.  [/home/seshan/6.111_final_project/base/hdl/fifo.sv:32]
+WARNING: [Synth 8-6014] Unused sequential element buf_out/valid_out_reg was removed.  [/home/seshan/6.111_final_project/base/hdl/fifo.sv:38]
+warning: Removed RAM data_mem/BRAM_reg due to inactive write enable
+WARNING: [Synth 8-6014] Unused sequential element data_mem/BRAM_reg was removed. 
+WARNING: [Synth 8-6014] Unused sequential element data_mem/BRAM_reg was removed. 
+WARNING: [Synth 8-5730] RAM data_mem/BRAM_reg got removed due to cross hierarchy optimization. 
+warning: Removed RAM ptr_mem/BRAM_reg due to inactive write enable
+WARNING: [Synth 8-6014] Unused sequential element ptr_mem/BRAM_reg was removed. 
+WARNING: [Synth 8-5730] RAM ptr_mem/BRAM_reg got removed due to cross hierarchy optimization. 
+WARNING: [Synth 8-3332] Sequential element (Q_data_reg[4][31]) is unused and will be removed from module CheckedQueue.
+WARNING: [Synth 8-3332] Sequential element (Q_data_reg[4][30]) is unused and will be removed from module CheckedQueue.
+WARNING: [Synth 8-3332] Sequential element (Q_data_reg[4][29]) is unused and will be removed from module CheckedQueue.
+WARNING: [Synth 8-3332] Sequential element (Q_data_reg[4][28]) is unused and will be removed from module CheckedQueue.
+WARNING: [Synth 8-3332] Sequential element (Q_data_reg[4][27]) is unused and will be removed from module CheckedQueue.
+WARNING: [Synth 8-3332] Sequential element (Q_data_reg[4][26]) is unused and will be removed from module CheckedQueue.
+WARNING: [Synth 8-3332] Sequential element (Q_data_reg[4][25]) is unused and will be removed from module CheckedQueue.
+WARNING: [Synth 8-3332] Sequential element (Q_data_reg[4][24]) is unused and will be removed from module CheckedQueue.
+WARNING: [Synth 8-3332] Sequential element (Q_data_reg[4][23]) is unused and will be removed from module CheckedQueue.
+WARNING: [Synth 8-3332] Sequential element (Q_data_reg[4][22]) is unused and will be removed from module CheckedQueue.
+WARNING: [Synth 8-3332] Sequential element (Q_data_reg[4][21]) is unused and will be removed from module CheckedQueue.
+WARNING: [Synth 8-3332] Sequential element (Q_data_reg[4][20]) is unused and will be removed from module CheckedQueue.
+WARNING: [Synth 8-3332] Sequential element (Q_data_reg[4][19]) is unused and will be removed from module CheckedQueue.
+WARNING: [Synth 8-3332] Sequential element (Q_data_reg[4][18]) is unused and will be removed from module CheckedQueue.
+WARNING: [Synth 8-3332] Sequential element (Q_data_reg[4][17]) is unused and will be removed from module CheckedQueue.
+WARNING: [Synth 8-3332] Sequential element (Q_data_reg[4][16]) is unused and will be removed from module CheckedQueue.
+WARNING: [Synth 8-3332] Sequential element (Q_data_reg[4][15]) is unused and will be removed from module CheckedQueue.
+WARNING: [Synth 8-3332] Sequential element (Q_data_reg[4][14]) is unused and will be removed from module CheckedQueue.
+WARNING: [Synth 8-3332] Sequential element (Q_data_reg[4][13]) is unused and will be removed from module CheckedQueue.
+WARNING: [Synth 8-3332] Sequential element (Q_data_reg[4][12]) is unused and will be removed from module CheckedQueue.
+WARNING: [Synth 8-3332] Sequential element (Q_data_reg[4][11]) is unused and will be removed from module CheckedQueue.
+WARNING: [Synth 8-3332] Sequential element (Q_data_reg[4][10]) is unused and will be removed from module CheckedQueue.
+WARNING: [Synth 8-3332] Sequential element (Q_data_reg[4][9]) is unused and will be removed from module CheckedQueue.
+WARNING: [Synth 8-3332] Sequential element (Q_data_reg[4][8]) is unused and will be removed from module CheckedQueue.
+WARNING: [Synth 8-3332] Sequential element (Q_data_reg[4][7]) is unused and will be removed from module CheckedQueue.
+WARNING: [Synth 8-3332] Sequential element (Q_data_reg[4][6]) is unused and will be removed from module CheckedQueue.
+WARNING: [Synth 8-3332] Sequential element (Q_data_reg[4][5]) is unused and will be removed from module CheckedQueue.
+WARNING: [Synth 8-3332] Sequential element (Q_data_reg[4][4]) is unused and will be removed from module CheckedQueue.
+WARNING: [Synth 8-3332] Sequential element (Q_data_reg[4][3]) is unused and will be removed from module CheckedQueue.
+WARNING: [Synth 8-3332] Sequential element (Q_data_reg[4][2]) is unused and will be removed from module CheckedQueue.
+WARNING: [Synth 8-3332] Sequential element (Q_data_reg[4][1]) is unused and will be removed from module CheckedQueue.
+WARNING: [Synth 8-3332] Sequential element (Q_data_reg[4][0]) is unused and will be removed from module CheckedQueue.
+WARNING: [Synth 8-3332] Sequential element (Q_data_reg[3][31]) is unused and will be removed from module CheckedQueue.
+WARNING: [Synth 8-3332] Sequential element (Q_data_reg[3][30]) is unused and will be removed from module CheckedQueue.
+WARNING: [Synth 8-3332] Sequential element (Q_data_reg[3][29]) is unused and will be removed from module CheckedQueue.
+WARNING: [Synth 8-3332] Sequential element (Q_data_reg[3][28]) is unused and will be removed from module CheckedQueue.
+WARNING: [Synth 8-3332] Sequential element (Q_data_reg[3][27]) is unused and will be removed from module CheckedQueue.
+WARNING: [Synth 8-3332] Sequential element (Q_data_reg[3][26]) is unused and will be removed from module CheckedQueue.
+WARNING: [Synth 8-3332] Sequential element (Q_data_reg[3][25]) is unused and will be removed from module CheckedQueue.
+WARNING: [Synth 8-3332] Sequential element (Q_data_reg[3][24]) is unused and will be removed from module CheckedQueue.
+WARNING: [Synth 8-3332] Sequential element (Q_data_reg[3][23]) is unused and will be removed from module CheckedQueue.
+WARNING: [Synth 8-3332] Sequential element (Q_data_reg[3][22]) is unused and will be removed from module CheckedQueue.
+WARNING: [Synth 8-3332] Sequential element (Q_data_reg[3][21]) is unused and will be removed from module CheckedQueue.
+WARNING: [Synth 8-3332] Sequential element (Q_data_reg[3][20]) is unused and will be removed from module CheckedQueue.
+WARNING: [Synth 8-3332] Sequential element (Q_data_reg[3][19]) is unused and will be removed from module CheckedQueue.
+WARNING: [Synth 8-3332] Sequential element (Q_data_reg[3][18]) is unused and will be removed from module CheckedQueue.
+WARNING: [Synth 8-3332] Sequential element (Q_data_reg[3][17]) is unused and will be removed from module CheckedQueue.
+WARNING: [Synth 8-3332] Sequential element (Q_data_reg[3][16]) is unused and will be removed from module CheckedQueue.
+WARNING: [Synth 8-3332] Sequential element (Q_data_reg[3][15]) is unused and will be removed from module CheckedQueue.
+WARNING: [Synth 8-3332] Sequential element (Q_data_reg[3][14]) is unused and will be removed from module CheckedQueue.
+WARNING: [Synth 8-3332] Sequential element (Q_data_reg[3][13]) is unused and will be removed from module CheckedQueue.
+WARNING: [Synth 8-3332] Sequential element (Q_data_reg[3][12]) is unused and will be removed from module CheckedQueue.
+WARNING: [Synth 8-3332] Sequential element (Q_data_reg[3][11]) is unused and will be removed from module CheckedQueue.
+WARNING: [Synth 8-3332] Sequential element (Q_data_reg[3][10]) is unused and will be removed from module CheckedQueue.
+WARNING: [Synth 8-3332] Sequential element (Q_data_reg[3][9]) is unused and will be removed from module CheckedQueue.
+WARNING: [Synth 8-3332] Sequential element (Q_data_reg[3][8]) is unused and will be removed from module CheckedQueue.
+WARNING: [Synth 8-3332] Sequential element (Q_data_reg[3][7]) is unused and will be removed from module CheckedQueue.
+WARNING: [Synth 8-3332] Sequential element (Q_data_reg[3][6]) is unused and will be removed from module CheckedQueue.
+WARNING: [Synth 8-3332] Sequential element (Q_data_reg[3][5]) is unused and will be removed from module CheckedQueue.
+WARNING: [Synth 8-3332] Sequential element (Q_data_reg[3][4]) is unused and will be removed from module CheckedQueue.
+WARNING: [Synth 8-3332] Sequential element (Q_data_reg[3][3]) is unused and will be removed from module CheckedQueue.
+WARNING: [Synth 8-3332] Sequential element (Q_data_reg[3][2]) is unused and will be removed from module CheckedQueue.
+WARNING: [Synth 8-3332] Sequential element (Q_data_reg[3][1]) is unused and will be removed from module CheckedQueue.
+WARNING: [Synth 8-3332] Sequential element (Q_data_reg[3][0]) is unused and will be removed from module CheckedQueue.
+WARNING: [Synth 8-3332] Sequential element (Q_data_reg[2][31]) is unused and will be removed from module CheckedQueue.
+WARNING: [Synth 8-3332] Sequential element (Q_data_reg[2][30]) is unused and will be removed from module CheckedQueue.
+WARNING: [Synth 8-3332] Sequential element (Q_data_reg[2][29]) is unused and will be removed from module CheckedQueue.
+WARNING: [Synth 8-3332] Sequential element (Q_data_reg[2][28]) is unused and will be removed from module CheckedQueue.
+WARNING: [Synth 8-3332] Sequential element (Q_data_reg[2][27]) is unused and will be removed from module CheckedQueue.
+WARNING: [Synth 8-3332] Sequential element (Q_data_reg[2][26]) is unused and will be removed from module CheckedQueue.
+WARNING: [Synth 8-3332] Sequential element (Q_data_reg[2][25]) is unused and will be removed from module CheckedQueue.
+WARNING: [Synth 8-3332] Sequential element (Q_data_reg[2][24]) is unused and will be removed from module CheckedQueue.
+WARNING: [Synth 8-3332] Sequential element (Q_data_reg[2][23]) is unused and will be removed from module CheckedQueue.
+WARNING: [Synth 8-3332] Sequential element (Q_data_reg[2][22]) is unused and will be removed from module CheckedQueue.
+WARNING: [Synth 8-3332] Sequential element (Q_data_reg[2][21]) is unused and will be removed from module CheckedQueue.
+WARNING: [Synth 8-3332] Sequential element (Q_data_reg[2][20]) is unused and will be removed from module CheckedQueue.
+WARNING: [Synth 8-3332] Sequential element (Q_data_reg[2][19]) is unused and will be removed from module CheckedQueue.
+WARNING: [Synth 8-3332] Sequential element (Q_data_reg[2][18]) is unused and will be removed from module CheckedQueue.
+WARNING: [Synth 8-3332] Sequential element (Q_data_reg[2][17]) is unused and will be removed from module CheckedQueue.
+WARNING: [Synth 8-3332] Sequential element (Q_data_reg[2][16]) is unused and will be removed from module CheckedQueue.
+WARNING: [Synth 8-3332] Sequential element (Q_data_reg[2][15]) is unused and will be removed from module CheckedQueue.
+WARNING: [Synth 8-3332] Sequential element (Q_data_reg[2][14]) is unused and will be removed from module CheckedQueue.
+WARNING: [Synth 8-3332] Sequential element (Q_data_reg[2][13]) is unused and will be removed from module CheckedQueue.
+WARNING: [Synth 8-3332] Sequential element (Q_data_reg[2][12]) is unused and will be removed from module CheckedQueue.
+WARNING: [Synth 8-3332] Sequential element (Q_data_reg[2][11]) is unused and will be removed from module CheckedQueue.
+WARNING: [Synth 8-3332] Sequential element (Q_data_reg[2][10]) is unused and will be removed from module CheckedQueue.
+WARNING: [Synth 8-3332] Sequential element (Q_data_reg[2][9]) is unused and will be removed from module CheckedQueue.
+WARNING: [Synth 8-3332] Sequential element (Q_data_reg[2][8]) is unused and will be removed from module CheckedQueue.
+WARNING: [Synth 8-3332] Sequential element (Q_data_reg[2][7]) is unused and will be removed from module CheckedQueue.
+WARNING: [Synth 8-3332] Sequential element (Q_data_reg[2][6]) is unused and will be removed from module CheckedQueue.
+WARNING: [Synth 8-3332] Sequential element (Q_data_reg[2][5]) is unused and will be removed from module CheckedQueue.
+WARNING: [Synth 8-3332] Sequential element (Q_data_reg[2][4]) is unused and will be removed from module CheckedQueue.
+WARNING: [Synth 8-3332] Sequential element (Q_data_reg[2][3]) is unused and will be removed from module CheckedQueue.
+WARNING: [Synth 8-3332] Sequential element (Q_data_reg[2][2]) is unused and will be removed from module CheckedQueue.
+WARNING: [Synth 8-3332] Sequential element (Q_data_reg[2][1]) is unused and will be removed from module CheckedQueue.
+WARNING: [Synth 8-3332] Sequential element (Q_data_reg[2][0]) is unused and will be removed from module CheckedQueue.
+WARNING: [Synth 8-3332] Sequential element (Q_data_reg[1][31]) is unused and will be removed from module CheckedQueue.
+WARNING: [Synth 8-3332] Sequential element (Q_data_reg[1][30]) is unused and will be removed from module CheckedQueue.
+WARNING: [Synth 8-3332] Sequential element (Q_data_reg[1][29]) is unused and will be removed from module CheckedQueue.
+WARNING: [Synth 8-3332] Sequential element (Q_data_reg[1][28]) is unused and will be removed from module CheckedQueue.
+INFO: [Common 17-14] Message 'Synth 8-3332' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings.
+---------------------------------------------------------------------------------
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:30 ; elapsed = 00:00:36 . Memory (MB): peak = 2031.105 ; gain = 823.266 ; free physical = 5313 ; free virtual = 122865
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start ROM, RAM, DSP and Shift Register Reporting
+---------------------------------------------------------------------------------
+
+Block RAM: Preliminary Mapping  Report (see note below)
++---------------------------------------------------+------------+------------------------+---+---+------------------------+---+---+------------------+--------+--------+-----------------+
+|Module Name                                        | RTL Object | PORT A (Depth x Width) | W | R | PORT B (Depth x Width) | W | R | Ports driving FF | RAMB18 | RAMB36 | Cascade Heights | 
++---------------------------------------------------+------------+------------------------+---+---+------------------------+---+---+------------------+--------+--------+-----------------+
+|xilinx_true_dual_port_read_first_2_clock_ram:      | BRAM_reg   | 16 K x 32(READ_FIRST)  | W | R | 16 K x 32(READ_FIRST)  | W | R | Port A and B     | 1      | 14     | 8,4,2           | 
+|xilinx_single_port_ram_read_first__parameterized0: | BRAM_reg   | 4 K x 1(READ_FIRST)    | W | R |                        |   |   | Port A           | 1      | 0      |                 | 
++---------------------------------------------------+------------+------------------------+---+---+------------------------+---+---+------------------+--------+--------+-----------------+
+
+Note: The tale above is a preliminary report that shows the Block RAMs at the current stage of the synthesis flow. Some Block RAMs may be reimplemented as non Block RAM primitives later in the synthesis flow. Multiple instantiated Block RAMs are reported only once. 
+---------------------------------------------------------------------------------
+Finished ROM, RAM, DSP and Shift Register Reporting
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+---------------------------------------------------------------------------------
+Start Applying XDC Timing Constraints
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:40 ; elapsed = 00:00:57 . Memory (MB): peak = 2300.387 ; gain = 1092.547 ; free physical = 4989 ; free virtual = 122541
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Timing Optimization
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Timing Optimization : Time (s): cpu = 00:00:44 ; elapsed = 00:01:00 . Memory (MB): peak = 2397.934 ; gain = 1190.094 ; free physical = 4953 ; free virtual = 122505
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start ROM, RAM, DSP and Shift Register Reporting
+---------------------------------------------------------------------------------
+
+Block RAM: Final Mapping  Report
++---------------------------------------------------+------------+------------------------+---+---+------------------------+---+---+------------------+--------+--------+-----------------+
+|Module Name                                        | RTL Object | PORT A (Depth x Width) | W | R | PORT B (Depth x Width) | W | R | Ports driving FF | RAMB18 | RAMB36 | Cascade Heights | 
++---------------------------------------------------+------------+------------------------+---+---+------------------------+---+---+------------------+--------+--------+-----------------+
+|xilinx_true_dual_port_read_first_2_clock_ram:      | BRAM_reg   | 16 K x 32(READ_FIRST)  | W | R | 16 K x 32(READ_FIRST)  | W | R | Port A and B     | 1      | 14     | 8,4,2           | 
+|xilinx_single_port_ram_read_first__parameterized0: | BRAM_reg   | 4 K x 1(READ_FIRST)    | W | R |                        |   |   | Port A           | 1      | 0      |                 | 
++---------------------------------------------------+------------+------------------------+---+---+------------------------+---+---+------------------+--------+--------+-----------------+
+
+---------------------------------------------------------------------------------
+Finished ROM, RAM, DSP and Shift Register Reporting
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+---------------------------------------------------------------------------------
+Start Technology Mapping
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Technology Mapping : Time (s): cpu = 00:00:45 ; elapsed = 00:01:01 . Memory (MB): peak = 2397.934 ; gain = 1190.094 ; free physical = 4947 ; free virtual = 122499
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+---------------------------------------------------------------------------------
+Start IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished IO Insertion : Time (s): cpu = 00:00:46 ; elapsed = 00:01:02 . Memory (MB): peak = 2397.934 ; gain = 1190.094 ; free physical = 4947 ; free virtual = 122499
+---------------------------------------------------------------------------------
+
+Report Check Netlist: 
++------+------------------+-------+---------+-------+------------------+
+|      |Item              |Errors |Warnings |Status |Description       |
++------+------------------+-------+---------+-------+------------------+
+|1     |multi_driven_nets |      0|        0|Passed |Multi driven nets |
++------+------------------+-------+---------+-------+------------------+
+---------------------------------------------------------------------------------
+Start Renaming Generated Instances
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:46 ; elapsed = 00:01:02 . Memory (MB): peak = 2397.934 ; gain = 1190.094 ; free physical = 4947 ; free virtual = 122499
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+---------------------------------------------------------------------------------
+Start Rebuilding User Hierarchy
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:46 ; elapsed = 00:01:02 . Memory (MB): peak = 2397.934 ; gain = 1190.094 ; free physical = 4947 ; free virtual = 122499
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Ports
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Ports : Time (s): cpu = 00:00:46 ; elapsed = 00:01:02 . Memory (MB): peak = 2397.934 ; gain = 1190.094 ; free physical = 4947 ; free virtual = 122499
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:46 ; elapsed = 00:01:02 . Memory (MB): peak = 2397.934 ; gain = 1190.094 ; free physical = 4947 ; free virtual = 122499
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Nets
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Nets : Time (s): cpu = 00:00:46 ; elapsed = 00:01:02 . Memory (MB): peak = 2397.934 ; gain = 1190.094 ; free physical = 4947 ; free virtual = 122499
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Writing Synthesis Report
+---------------------------------------------------------------------------------
+
+Report BlackBoxes: 
++-+--------------+----------+
+| |BlackBox name |Instances |
++-+--------------+----------+
++-+--------------+----------+
+
+Report Cell Usage: 
++------+-----------+------+
+|      |Cell       |Count |
++------+-----------+------+
+|1     |BUFG       |     1|
+|2     |CARRY8     |    59|
+|3     |LUT1       |    53|
+|4     |LUT2       |   337|
+|5     |LUT3       |   391|
+|6     |LUT4       |   531|
+|7     |LUT5       |   439|
+|8     |LUT6       |  1326|
+|9     |MUXF7      |   241|
+|10    |MUXF8      |   115|
+|11    |RAMB18E2_1 |     1|
+|12    |FDRE       |  1769|
+|13    |FDSE       |   106|
+|14    |IBUF       |     2|
+|15    |OBUFT      |    10|
++------+-----------+------+
+
+Report Instance Areas: 
++------+------------------+--------------------------------------------------+------+
+|      |Instance          |Module                                            |Cells |
++------+------------------+--------------------------------------------------+------+
+|1     |top               |                                                  |  5381|
+|2     |  main            |bfis                                              |  5368|
+|3     |    checked       |CheckedQueue                                      |   867|
+|4     |      buf_out_max |FIFO_0                                            |   117|
+|5     |      lru_cache   |PQ_FIFO_CH                                        |   134|
+|6     |    distance_calc |distance                                          |  1198|
+|7     |    gmem          |graph_memory                                      |    48|
+|8     |    graph         |graph_fetch                                       |   455|
+|9     |      neighbors   |FIFO__parameterized0                              |    53|
+|10    |      position    |FIFO__parameterized1                              |   284|
+|11    |    pq            |CheckedQueue__parameterized0                      |  2580|
+|12    |      buf_out_max |FIFO                                              |   148|
+|13    |      lru_cache   |PQ_FIFO_CH__parameterized0                        |   545|
+|14    |    vmem          |visited                                           |     7|
+|15    |      bram_3_2    |xilinx_single_port_ram_read_first__parameterized0 |     1|
++------+------------------+--------------------------------------------------+------+
+---------------------------------------------------------------------------------
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:46 ; elapsed = 00:01:02 . Memory (MB): peak = 2397.934 ; gain = 1190.094 ; free physical = 4947 ; free virtual = 122499
+---------------------------------------------------------------------------------
+Synthesis finished with 0 errors, 0 critical warnings and 2138 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:39 ; elapsed = 00:00:52 . Memory (MB): peak = 2397.934 ; gain = 544.352 ; free physical = 4972 ; free virtual = 122524
+Synthesis Optimization Complete : Time (s): cpu = 00:00:46 ; elapsed = 00:01:02 . Memory (MB): peak = 2397.941 ; gain = 1190.094 ; free physical = 4972 ; free virtual = 122524
+INFO: [Project 1-571] Translating synthesized netlist
+INFO: [Netlist 29-17] Analyzing 418 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+INFO: [Project 1-570] Preparing netlist for logic optimization
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+INFO: [Project 1-111] Unisim Transformation Summary:
+  A total of 3 instances were transformed.
+  BUFG => BUFGCE: 1 instances
+  IBUF => IBUF (IBUFCTRL, INBUF): 2 instances
+
+INFO: [Common 17-83] Releasing license: Synthesis
+258 Infos, 270 Warnings, 6 Critical Warnings and 0 Errors encountered.
+synth_design completed successfully
+synth_design: Time (s): cpu = 00:00:49 ; elapsed = 00:01:05 . Memory (MB): peak = 2429.949 ; gain = 1261.086 ; free physical = 5092 ; free virtual = 122644
+INFO: [Common 17-1381] The checkpoint '/home/seshan/6.111_final_project/base/fpga/top_level.runs/synth_1/top_level.dcp' has been generated.
+INFO: [runtcl-4] Executing : report_utilization -file top_level_utilization_synth.rpt -pb top_level_utilization_synth.pb
+report_utilization: Time (s): cpu = 00:00:00.37 ; elapsed = 00:00:00.44 . Memory (MB): peak = 2453.961 ; gain = 0.000 ; free physical = 5093 ; free virtual = 122645
+INFO: [Common 17-206] Exiting Vivado at Thu Jan 11 00:40:08 2024...

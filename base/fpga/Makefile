@@ -1,7 +1,7 @@
 
 # FPGA settings
 FPGA_PART = xcvu095-ffva2104-2-e
-FPGA_TOP = fpga
+FPGA_TOP = top_level
 FPGA_ARCH = VirtexUltrascale
 
 # Files for synthesis

@@ -1,1 +1,1 @@
-open_project -quiet fpga.xpr
+open_project -quiet top_level.xpr

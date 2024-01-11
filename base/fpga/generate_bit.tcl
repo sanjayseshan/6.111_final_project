@@ -1,4 +1,4 @@
-open_project fpga.xpr
+open_project top_level.xpr
 open_run impl_1
-write_bitstream -force fpga.runs/impl_1/fpga.bit
-write_debug_probes -force fpga.runs/impl_1/fpga.ltx
+write_bitstream -force top_level.runs/impl_1/top_level.bit
+write_debug_probes -force top_level.runs/impl_1/top_level.ltx
