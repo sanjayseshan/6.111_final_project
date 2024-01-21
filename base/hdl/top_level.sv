@@ -5,20 +5,12 @@ module top_level(
 
     // input wire clk_90mhz,
 
-    input  wire       clk_125mhz_p,
-    input  wire       clk_125mhz_n,
+    input  wire       clk,
     input  wire       reset,
 
     /*
      * GPIO
      */
-    input  wire       btnu,
-    input  wire       btnl,
-    input  wire       btnd,
-    input  wire       btnr,
-    input  wire       btnc,
-    input  wire [3:0] sw,
-    output wire [7:0] led,
 
     /*
      * Ethernet: 1000BASE-T SGMII
@@ -35,10 +27,6 @@ module top_level(
     /*
      * UART: 500000 bps, 8N1
      */
-    input  wire       uart_rxd,
-    output wire       uart_txd,
-    output wire       uart_rts,
-    input  wire       uart_cts
     // input wire CLK_sys_clk1_300_n
     // input wire  clk_125mhz,
   // input wire  CLK_pci_sys_clk_n,
@@ -67,7 +55,7 @@ module top_level(
   logic [2:0] state;
 
    logic clk_100mhz;
-   assign clk_100mhz = clk_125mhz_p;
+   assign clk_100mhz = clk;
   logic sys_rst;
   assign sys_rst = reset;//0;//btn[0];
 

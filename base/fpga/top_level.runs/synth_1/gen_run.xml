@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<GenRun Id="synth_1" LaunchPart="xcvu095-ffva2104-2-e" LaunchTime="1704951534">
-  <File Type="PA-TCL" Name="top_level.tcl"/>
-  <File Type="REPORTS-TCL" Name="top_level_reports.tcl"/>
-  <File Type="RDS-RDS" Name="top_level.vds"/>
-  <File Type="RDS-DCP" Name="top_level.dcp"/>
+<GenRun Id="synth_1" LaunchPart="xcvu095-ffva2104-2-e" LaunchTime="1704996572">
   <File Type="RDS-UTIL-PB" Name="top_level_utilization_synth.pb"/>
   <File Type="RDS-UTIL" Name="top_level_utilization_synth.rpt"/>
+  <File Type="RDS-RDS" Name="top_level.vds"/>
+  <File Type="RDS-DCP" Name="top_level.dcp"/>
+  <File Type="PA-TCL" Name="top_level.tcl"/>
+  <File Type="REPORTS-TCL" Name="top_level_reports.tcl"/>
   <FileSet Name="sources" Type="DesignSrcs" RelSrcDir="$PSRCDIR/sources_1">
     <Filter Type="Srcs"/>
     <File Path="$PPRDIR/../hdl/xilinx_single_port_ram_read_first.v">

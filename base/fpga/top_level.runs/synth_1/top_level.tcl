@@ -25,7 +25,6 @@ set_property webtalk.parent_dir /home/seshan/6.111_final_project/base/fpga/top_l
 set_property parent.project_path /home/seshan/6.111_final_project/base/fpga/top_level.xpr [current_project]
 set_property default_lib xil_defaultlib [current_project]
 set_property target_language Verilog [current_project]
-set_property ip_output_repo /home/seshan/6.111_final_project/base/fpga/top_level.cache/ip [current_project]
 set_property ip_cache_permissions {read write} [current_project]
 read_verilog -library xil_defaultlib -sv {
   /home/seshan/6.111_final_project/base/hdl/bfis.sv
