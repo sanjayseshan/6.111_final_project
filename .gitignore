@@ -14,3 +14,5 @@
 *.synctex.gz
 base/manta.yaml
 base/xsim.dir
+base/vcu108
+base/vcu108/*

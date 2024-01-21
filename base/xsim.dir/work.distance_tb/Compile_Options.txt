@@ -1,1 +1,0 @@
--svlog "sim/distance_tb.sv" --debug "wave" 

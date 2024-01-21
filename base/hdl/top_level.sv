@@ -2,12 +2,45 @@
 `default_nettype none // prevents system from inferring an undeclared logic (good practice)
 
 module top_level(
-  input wire clk_100mhz,
-  input wire [15:0] sw, //all 16 input slide switches
-  input wire [3:0] btn, //all four momentary button switches
-  input wire uart_rxd,
-  output wire uart_txd,
-  output logic [15:0] led //16 green output LEDs (located right above switches)
+
+    // input wire clk_90mhz,
+
+    input  wire       clk,
+    input  wire       reset
+
+    /*
+     * GPIO
+     */
+
+    /*
+     * Ethernet: 1000BASE-T SGMII
+     */
+    // input  wire       phy_sgmii_rx_p,
+    // input  wire       phy_sgmii_rx_n,
+    // output wire       phy_sgmii_tx_p,
+    // output wire       phy_sgmii_tx_n,
+    // input  wire       phy_sgmii_clk_p,
+    // input  wire       phy_sgmii_clk_n,
+    // output wire       phy_reset_n,
+    // input  wire       phy_int_n,
+
+    /*
+     * UART: 500000 bps, 8N1
+     */
+    // input wire CLK_sys_clk1_300_n
+    // input wire  clk_125mhz,
+  // input wire  CLK_pci_sys_clk_n,
+  // input wire  RST_N_pci_sys_reset_n,
+  // input wire  CLK_sys_clk1_300_p,
+  // input wire  CLK_sys_clk1_300_n,
+  // input wire  CLK_sys_clk2_300_p,
+  // input wire  CLK_sys_clk2_300_n
+//        input wire clk_100mhz,
+//  input wire [15:0] sw, //all 16 input slide switches
+//  input wire [3:0] btn, //all four momentary button switches
+//  input wire uart_rxd,
+//  output wire uart_txd,
+//  output logic [15:0] led //16 green output LEDs (located right above switches)
   );
 
   parameter DIM=4;
@@ -16,10 +49,15 @@ module top_level(
   // assign rgb1= 0;
   // assign rgb0 = 0;
 
+  logic uart_rxd,uart_txd;
+  // logic [15:0] led;
+
   logic [2:0] state;
 
+   logic clk_100mhz;
+   assign clk_100mhz = clk;
   logic sys_rst;
-  assign sys_rst = btn[0];
+  assign sys_rst = reset;//0;//btn[0];
 
   logic valid_out;
 
@@ -40,26 +78,29 @@ module top_level(
     
   end
 
-  // assign    query_in_real[0] = 5;
-  // assign    query_in_real[1] = 7;
-  // assign    query_in_real[2] = 1;
-  // assign    query_in_real[3] = 1;
-  // assign    query_in_real[4] = 5;
-  // assign    query_in_real[5] = 7;
-  // assign    query_in_real[6] = 1;
-  // assign    query_in_real[7] = 1;
+  assign    query_in_real[0] = 5;
+  assign    query_in_real[1] = 7;
+  assign    query_in_real[2] = 1;
+  assign    query_in_real[3] = 1;
+  assign    query_in_real[4] = 5;
+  assign    query_in_real[5] = 7;
+  assign    query_in_real[6] = 1;
+  assign    query_in_real[7] = 1;
   logic [15:0] k_in;
 
-  // assign k_in = 16'd4;
+  assign k_in = 16'd4;
 
   logic [4:0] count_in;
   logic [31:0] data_in [DIM:0];
   logic ready;
 
+  assign ready=1;
 
 
   logic [31:0] debug, debug2; 
   logic [31:0] vid;
+
+  assign vid = 1;
 
 
   bfis #(.DIM(DIM), .PQ_LENGTH(5)) main(
@@ -89,65 +130,65 @@ module top_level(
 
   always_ff @( posedge clk_100mhz ) begin 
     if (sys_rst) begin 
-      count_in <= 0;
-      ready <= 0;
-      for (int i=0; i<10; i=i+1)
-        data_in[i] <= 0;
+      // count_in <= 0;
+      // ready <= 0;
+      // for (int i=0; i<10; i=i+1)
+      //   data_in[i] <= 0;
       
-      cycles <= 0;
+      // cycles <= 0;
     end
     else begin
 
-      if (counter_running) cycles <= cycles + 1;
-      if (valid_out) counter_running <= 0;
+    //   if (counter_running) cycles <= cycles + 1;
+    //   if (valid_out) counter_running <= 0;
 
-      // if (val_3==1 && (val_3 != last_val_3) && count_in != DIM+2) begin
-      //   count_in <= count_in+1;
+    //   // if (val_3==1 && (val_3 != last_val_3) && count_in != DIM+2) begin
+    //   //   count_in <= count_in+1;
 
-      if (sig_in == 32'hFFFFFFFF && !started_seq) begin
-        started_seq <= 1;
-        count_in <= 0;
-      end
+    //   if (sig_in == 32'hFFFFFFFF && !started_seq) begin
+    //     started_seq <= 1;
+    //     count_in <= 0;
+    //   end
 
-      last_sig_in <= sig_in;
-
-
-      if (sig_in == 32'hFFFFFFFF && started_seq && last_sig_in != sig_in) begin
-      end
-
-      if (sig_in != 32'hFFFFFFFF && started_seq && last_sig_in != sig_in) begin
-        data_in[count_in] <= sig_in;
-        count_in <= count_in + 1;
-      end
+    //   last_sig_in <= sig_in;
 
 
-      // end
+    //   if (sig_in == 32'hFFFFFFFF && started_seq && last_sig_in != sig_in) begin
+    //   end
 
-      // if (data_in[count_in] == 0 && tmp != 0)
-      //   data_in[count_in] <= tmp;
+    //   if (sig_in != 32'hFFFFFFFF && started_seq && last_sig_in != sig_in) begin
+    //     data_in[count_in] <= sig_in;
+    //     count_in <= count_in + 1;
+    //   end
 
-      if (count_in == DIM+2) begin
-        query_in_real <= data_in[DIM-1:0];
-        k_in <= data_in[DIM];
-        vid <= data_in[DIM+1];
-        ready <= 1;//data_in[9];
-        count_in <= DIM+3;
-        counter_running <= 1;
 
-      end else ready <= 0;
+    //   // end
+
+    //   // if (data_in[count_in] == 0 && tmp != 0)
+    //   //   data_in[count_in] <= tmp;
+
+    //   if (count_in == DIM+2) begin
+    //     query_in_real <= data_in[DIM-1:0];
+    //     k_in <= data_in[DIM];
+    //     vid <= data_in[DIM+1];
+    //     ready <= 1;//data_in[9];
+    //     count_in <= DIM+3;
+    //     counter_running <= 1;
+
+    //   end else ready <= 0;
 
     end
     
   end
 
   // assign query_in_real = data_in[7:0];
-  // assign k_in = data_in[8];
-  always_comb begin
-    if (count_in < DIM+2 && count_in != 0) begin
-      led[15:11] = count_in;
-      led[10:0]  = data_in[count_in-1];//data_in[count_in];//data_in[count_in];//data_in[count_in];
-    end else led = state;
-  end
+  // // assign k_in = data_in[8];
+  // always_comb begin
+  //   if (count_in < DIM+2 && count_in != 0) begin
+  //     // led[15:11] = count_in;
+  //     // led[10:0]  = data_in[count_in-1];//data_in[count_in];//data_in[count_in];//data_in[count_in];
+  //   end else led = state;
+  // end
 
   always_ff @( posedge clk_100mhz ) begin
     last_val_3 <= val_3;
@@ -207,15 +248,15 @@ end
   // end
 
 
-  manta man (
-      .clk(clk_100mhz),
-      .rx(uart_rxd),
-      .tx(uart_txd),
-      .val1_in(buf_k_out),
-      .val2_in(cycles),
-      .val3_out(val_3),
-      .val4_out(sig_in)
-    );
+  // manta man (
+  //     .clk(clk_100mhz),
+  //     .rx(uart_rxd),
+  //     .tx(uart_txd),
+  //     .val1_in(buf_k_out),
+  //     .val2_in(cycles),
+  //     .val3_out(val_3),
+  //     .val4_out(sig_in)
+  //   );
 
 
   //   //lots of stuff
