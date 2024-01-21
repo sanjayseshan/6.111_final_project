@@ -8,3 +8,6 @@
 [submodule "Big-ANN"]
 	path = Big-ANN
 	url = git@github.com:chenxuhao/Big-ANN.git
+[submodule "connectal"]
+	path = connectal
+	url = https://github.com/cambridgehackers/connectal.git
