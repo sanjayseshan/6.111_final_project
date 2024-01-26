@@ -11,3 +11,9 @@
 [submodule "connectal"]
 	path = connectal
 	url = https://github.com/cambridgehackers/connectal.git
+[submodule "buildcache"]
+	path = buildcache
+	url = https://github.com/cambridgehackers/buildcache
+[submodule "fpgamake"]
+	path = fpgamake
+	url = https://github.com/cambridgehackers/fpgamake

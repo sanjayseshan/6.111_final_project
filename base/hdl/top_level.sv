@@ -3,44 +3,13 @@
 
 module top_level(
 
-    // input wire clk_90mhz,
-
     input  wire       clk,
-    input  wire       reset
+    input  wire       reset,
 
-    /*
-     * GPIO
-     */
-
-    /*
-     * Ethernet: 1000BASE-T SGMII
-     */
-    // input  wire       phy_sgmii_rx_p,
-    // input  wire       phy_sgmii_rx_n,
-    // output wire       phy_sgmii_tx_p,
-    // output wire       phy_sgmii_tx_n,
-    // input  wire       phy_sgmii_clk_p,
-    // input  wire       phy_sgmii_clk_n,
-    // output wire       phy_reset_n,
-    // input  wire       phy_int_n,
-
-    /*
-     * UART: 500000 bps, 8N1
-     */
-    // input wire CLK_sys_clk1_300_n
-    // input wire  clk_125mhz,
-  // input wire  CLK_pci_sys_clk_n,
-  // input wire  RST_N_pci_sys_reset_n,
-  // input wire  CLK_sys_clk1_300_p,
-  // input wire  CLK_sys_clk1_300_n,
-  // input wire  CLK_sys_clk2_300_p,
-  // input wire  CLK_sys_clk2_300_n
-//        input wire clk_100mhz,
-//  input wire [15:0] sw, //all 16 input slide switches
-//  input wire [3:0] btn, //all four momentary button switches
-//  input wire uart_rxd,
-//  output wire uart_txd,
-//  output logic [15:0] led //16 green output LEDs (located right above switches)
+    input wire [31:0] data_rt_in,
+    input wire data_in_rt_valid,
+    output logic [31:0] data_rt_out,
+    output logic data_out_rt_valid
   );
 
   parameter DIM=4;
@@ -54,8 +23,10 @@ module top_level(
 
   logic [2:0] state;
 
-   logic clk_100mhz;
-   assign clk_100mhz = clk;
+  logic clk_100mhz;
+  assign clk_100mhz = clk;
+
+
   logic sys_rst;
   assign sys_rst = reset;//0;//btn[0];
 
@@ -237,6 +208,7 @@ end
 // end
 
   logic [2:0] i;
+  assign data_rt_out = top_k_out;
 
   // always_ff @( posedge clk_100mhz ) begin 
   //   if (sys_rst) i <= 0;
