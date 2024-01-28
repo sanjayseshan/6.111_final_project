@@ -4,7 +4,7 @@
 `ifdef SYNTHESIS
 `define FPATH(X) `"X`"
 `else /* ! SYNTHESIS */
-`define FPATH(X) `"data/X`"
+`define FPATH(X) `"/home/seshan/6.111_final_project/base/data/X`"
 `endif  /* ! SYNTHESIS */
 
 

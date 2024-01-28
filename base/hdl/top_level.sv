@@ -208,7 +208,7 @@ end
 // end
 
   logic [2:0] i;
-  assign data_rt_out = top_k_out;
+  assign data_rt_out = state;
 
   // always_ff @( posedge clk_100mhz ) begin 
   //   if (sys_rst) i <= 0;
