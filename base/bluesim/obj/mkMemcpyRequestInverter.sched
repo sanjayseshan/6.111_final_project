@@ -1,0 +1,17 @@
+=== Generated schedule for mkMemcpyRequestInverter ===
+
+Method schedule
+---------------
+Method: ifc_startCopy
+Ready signal: fifo_startCopy.i_notFull
+Conflict-free: inverseIfc_startCopy
+Conflicts: ifc_startCopy
+ 
+Method: inverseIfc_startCopy
+Ready signal: fifo_startCopy.i_notEmpty
+Conflict-free: ifc_startCopy
+Conflicts: inverseIfc_startCopy
+ 
+Logical execution order: ifc_startCopy, inverseIfc_startCopy
+
+=======================================================

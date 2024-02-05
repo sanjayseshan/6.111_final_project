@@ -85,6 +85,11 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH = 8)(
   // assign debug2 = checked_size;
 
 
+  assign debug = mem_data_in;
+  assign debug2 = mem_req_out;
+
+
+
   // #####################################################
   // ################## STATE MACHINE ####################
 
@@ -450,7 +455,6 @@ module bfis #(parameter DIM = 2, parameter PQ_LENGTH = 8)(
     .visited_val_in(visited),
     .visited_val_valid_in(valid_visited)
   );
-
 
 endmodule
 

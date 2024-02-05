@@ -1,0 +1,613 @@
+=== Generated schedule for mkCnocTop ===
+
+Method schedule
+---------------
+Method: requests_0_id
+Ready signal: True
+Conflict-free: requests_0_id,
+	       requests_0_message_enq,
+	       requests_0_message_notFull,
+	       indications_0_id,
+	       indications_0_message_first,
+	       indications_0_message_deq,
+	       indications_0_message_notEmpty,
+	       readers_0_readReq_get,
+	       readers_0_readData_put,
+	       readers_1_readReq_get,
+	       readers_1_readData_put,
+	       writers_0_writeReq_get,
+	       writers_0_writeData_get,
+	       writers_0_writeDone_put,
+	       writers_1_writeReq_get,
+	       writers_1_writeData_get,
+	       writers_1_writeDone_put
+ 
+Method: requests_0_message_enq
+Ready signal: lMemcpyRequestInputNoc_fifoMsgSink.i_notFull
+Conflict-free: requests_0_id,
+	       indications_0_id,
+	       indications_0_message_first,
+	       indications_0_message_deq,
+	       indications_0_message_notEmpty,
+	       readers_0_readReq_get,
+	       readers_0_readData_put,
+	       readers_1_readReq_get,
+	       readers_1_readData_put,
+	       writers_0_writeReq_get,
+	       writers_0_writeData_get,
+	       writers_0_writeDone_put,
+	       writers_1_writeReq_get,
+	       writers_1_writeData_get,
+	       writers_1_writeDone_put
+Sequenced after: requests_0_message_notFull
+Conflicts: requests_0_message_enq
+ 
+Method: requests_0_message_notFull
+Ready signal: True
+Conflict-free: requests_0_id,
+	       requests_0_message_notFull,
+	       indications_0_id,
+	       indications_0_message_first,
+	       indications_0_message_deq,
+	       indications_0_message_notEmpty,
+	       readers_0_readReq_get,
+	       readers_0_readData_put,
+	       readers_1_readReq_get,
+	       readers_1_readData_put,
+	       writers_0_writeReq_get,
+	       writers_0_writeData_get,
+	       writers_0_writeDone_put,
+	       writers_1_writeReq_get,
+	       writers_1_writeData_get,
+	       writers_1_writeDone_put
+Sequenced before: requests_0_message_enq
+ 
+Method: indications_0_id
+Ready signal: True
+Conflict-free: requests_0_id,
+	       requests_0_message_enq,
+	       requests_0_message_notFull,
+	       indications_0_id,
+	       indications_0_message_first,
+	       indications_0_message_deq,
+	       indications_0_message_notEmpty,
+	       readers_0_readReq_get,
+	       readers_0_readData_put,
+	       readers_1_readReq_get,
+	       readers_1_readData_put,
+	       writers_0_writeReq_get,
+	       writers_0_writeData_get,
+	       writers_0_writeDone_put,
+	       writers_1_writeReq_get,
+	       writers_1_writeData_get,
+	       writers_1_writeDone_put
+ 
+Method: indications_0_message_first
+Ready signal: lMemcpyIndicationOutputNoc_fifoMsgSource.i_notEmpty
+Conflict-free: requests_0_id,
+	       requests_0_message_enq,
+	       requests_0_message_notFull,
+	       indications_0_id,
+	       indications_0_message_first,
+	       indications_0_message_notEmpty,
+	       readers_0_readReq_get,
+	       readers_0_readData_put,
+	       readers_1_readReq_get,
+	       readers_1_readData_put,
+	       writers_0_writeReq_get,
+	       writers_0_writeData_get,
+	       writers_0_writeDone_put,
+	       writers_1_writeReq_get,
+	       writers_1_writeData_get,
+	       writers_1_writeDone_put
+Sequenced before: indications_0_message_deq
+ 
+Method: indications_0_message_deq
+Ready signal: lMemcpyIndicationOutputNoc_fifoMsgSource.i_notEmpty
+Conflict-free: requests_0_id,
+	       requests_0_message_enq,
+	       requests_0_message_notFull,
+	       indications_0_id,
+	       readers_0_readReq_get,
+	       readers_0_readData_put,
+	       readers_1_readReq_get,
+	       readers_1_readData_put,
+	       writers_0_writeReq_get,
+	       writers_0_writeData_get,
+	       writers_0_writeDone_put,
+	       writers_1_writeReq_get,
+	       writers_1_writeData_get,
+	       writers_1_writeDone_put
+Sequenced after: indications_0_message_first, indications_0_message_notEmpty
+Conflicts: indications_0_message_deq
+ 
+Method: indications_0_message_notEmpty
+Ready signal: True
+Conflict-free: requests_0_id,
+	       requests_0_message_enq,
+	       requests_0_message_notFull,
+	       indications_0_id,
+	       indications_0_message_first,
+	       indications_0_message_notEmpty,
+	       readers_0_readReq_get,
+	       readers_0_readData_put,
+	       readers_1_readReq_get,
+	       readers_1_readData_put,
+	       writers_0_writeReq_get,
+	       writers_0_writeData_get,
+	       writers_0_writeDone_put,
+	       writers_1_writeReq_get,
+	       writers_1_writeData_get,
+	       writers_1_writeDone_put
+Sequenced before: indications_0_message_deq
+ 
+Method: readers_0_readReq_get
+Ready signal: lMemcpy_re_readChannels_0_dmaRequest.i_notEmpty
+Conflict-free: requests_0_id,
+	       requests_0_message_enq,
+	       requests_0_message_notFull,
+	       indications_0_id,
+	       indications_0_message_first,
+	       indications_0_message_deq,
+	       indications_0_message_notEmpty,
+	       readers_0_readData_put,
+	       readers_1_readReq_get,
+	       readers_1_readData_put,
+	       writers_0_writeReq_get,
+	       writers_0_writeData_get,
+	       writers_0_writeDone_put,
+	       writers_1_writeReq_get,
+	       writers_1_writeData_get,
+	       writers_1_writeDone_put
+Conflicts: readers_0_readReq_get
+ 
+Method: readers_0_readData_put
+Ready signal: lMemcpy_re_readDataFifo.i_notFull
+Conflict-free: requests_0_id,
+	       requests_0_message_enq,
+	       requests_0_message_notFull,
+	       indications_0_id,
+	       indications_0_message_first,
+	       indications_0_message_deq,
+	       indications_0_message_notEmpty,
+	       readers_0_readReq_get,
+	       readers_1_readReq_get,
+	       readers_1_readData_put,
+	       writers_0_writeReq_get,
+	       writers_0_writeData_get,
+	       writers_0_writeDone_put,
+	       writers_1_writeReq_get,
+	       writers_1_writeData_get,
+	       writers_1_writeDone_put
+Conflicts: readers_0_readData_put
+ 
+Method: readers_1_readReq_get
+Ready signal: False
+Conflict-free: requests_0_id,
+	       requests_0_message_enq,
+	       requests_0_message_notFull,
+	       indications_0_id,
+	       indications_0_message_first,
+	       indications_0_message_deq,
+	       indications_0_message_notEmpty,
+	       readers_0_readReq_get,
+	       readers_0_readData_put,
+	       readers_1_readReq_get,
+	       readers_1_readData_put,
+	       writers_0_writeReq_get,
+	       writers_0_writeData_get,
+	       writers_0_writeDone_put,
+	       writers_1_writeReq_get,
+	       writers_1_writeData_get,
+	       writers_1_writeDone_put
+ 
+Method: readers_1_readData_put
+Ready signal: False
+Conflict-free: requests_0_id,
+	       requests_0_message_enq,
+	       requests_0_message_notFull,
+	       indications_0_id,
+	       indications_0_message_first,
+	       indications_0_message_deq,
+	       indications_0_message_notEmpty,
+	       readers_0_readReq_get,
+	       readers_0_readData_put,
+	       readers_1_readReq_get,
+	       readers_1_readData_put,
+	       writers_0_writeReq_get,
+	       writers_0_writeData_get,
+	       writers_0_writeDone_put,
+	       writers_1_writeReq_get,
+	       writers_1_writeData_get,
+	       writers_1_writeDone_put
+ 
+Method: writers_0_writeReq_get
+Ready signal: lMemcpy_we_writeReqFifo.i_notEmpty
+Conflict-free: requests_0_id,
+	       requests_0_message_enq,
+	       requests_0_message_notFull,
+	       indications_0_id,
+	       indications_0_message_first,
+	       indications_0_message_deq,
+	       indications_0_message_notEmpty,
+	       readers_0_readReq_get,
+	       readers_0_readData_put,
+	       readers_1_readReq_get,
+	       readers_1_readData_put,
+	       writers_0_writeData_get,
+	       writers_0_writeDone_put,
+	       writers_1_writeReq_get,
+	       writers_1_writeData_get,
+	       writers_1_writeDone_put
+Conflicts: writers_0_writeReq_get
+ 
+Method: writers_0_writeData_get
+Ready signal: lMemcpy_we_writeDataFifo.i_notEmpty
+Conflict-free: requests_0_id,
+	       requests_0_message_enq,
+	       requests_0_message_notFull,
+	       indications_0_id,
+	       indications_0_message_first,
+	       indications_0_message_deq,
+	       indications_0_message_notEmpty,
+	       readers_0_readReq_get,
+	       readers_0_readData_put,
+	       readers_1_readReq_get,
+	       readers_1_readData_put,
+	       writers_0_writeReq_get,
+	       writers_0_writeDone_put,
+	       writers_1_writeReq_get,
+	       writers_1_writeData_get,
+	       writers_1_writeDone_put
+Conflicts: writers_0_writeData_get
+ 
+Method: writers_0_writeDone_put
+Ready signal: lMemcpy_we_writeDoneFifo.i_notFull
+Conflict-free: requests_0_id,
+	       requests_0_message_enq,
+	       requests_0_message_notFull,
+	       indications_0_id,
+	       indications_0_message_first,
+	       indications_0_message_deq,
+	       indications_0_message_notEmpty,
+	       readers_0_readReq_get,
+	       readers_0_readData_put,
+	       readers_1_readReq_get,
+	       readers_1_readData_put,
+	       writers_0_writeReq_get,
+	       writers_0_writeData_get,
+	       writers_1_writeReq_get,
+	       writers_1_writeData_get,
+	       writers_1_writeDone_put
+Conflicts: writers_0_writeDone_put
+ 
+Method: writers_1_writeReq_get
+Ready signal: False
+Conflict-free: requests_0_id,
+	       requests_0_message_enq,
+	       requests_0_message_notFull,
+	       indications_0_id,
+	       indications_0_message_first,
+	       indications_0_message_deq,
+	       indications_0_message_notEmpty,
+	       readers_0_readReq_get,
+	       readers_0_readData_put,
+	       readers_1_readReq_get,
+	       readers_1_readData_put,
+	       writers_0_writeReq_get,
+	       writers_0_writeData_get,
+	       writers_0_writeDone_put,
+	       writers_1_writeReq_get,
+	       writers_1_writeData_get,
+	       writers_1_writeDone_put
+ 
+Method: writers_1_writeData_get
+Ready signal: False
+Conflict-free: requests_0_id,
+	       requests_0_message_enq,
+	       requests_0_message_notFull,
+	       indications_0_id,
+	       indications_0_message_first,
+	       indications_0_message_deq,
+	       indications_0_message_notEmpty,
+	       readers_0_readReq_get,
+	       readers_0_readData_put,
+	       readers_1_readReq_get,
+	       readers_1_readData_put,
+	       writers_0_writeReq_get,
+	       writers_0_writeData_get,
+	       writers_0_writeDone_put,
+	       writers_1_writeReq_get,
+	       writers_1_writeData_get,
+	       writers_1_writeDone_put
+ 
+Method: writers_1_writeDone_put
+Ready signal: False
+Conflict-free: requests_0_id,
+	       requests_0_message_enq,
+	       requests_0_message_notFull,
+	       indications_0_id,
+	       indications_0_message_first,
+	       indications_0_message_deq,
+	       indications_0_message_notEmpty,
+	       readers_0_readReq_get,
+	       readers_0_readData_put,
+	       readers_1_readReq_get,
+	       readers_1_readData_put,
+	       writers_0_writeReq_get,
+	       writers_0_writeData_get,
+	       writers_0_writeDone_put,
+	       writers_1_writeReq_get,
+	       writers_1_writeData_get,
+	       writers_1_writeDone_put
+ 
+Rule schedule
+-------------
+Rule: lMemcpy_re_dataPipes_unfunnel
+Predicate: lMemcpy_re_readDataFifo.i_notEmpty &&
+	   lMemcpy_re_dataPipes_dataFifos_0.i_notFull
+Blocking rules: (none)
+ 
+Rule: lMemcpy_re_readChannels_0_clientAvail_react
+Predicate: True
+Blocking rules: (none)
+ 
+Rule: lMemcpy_re_readChannels_0_clientDataFifo_portA
+Predicate: True
+Blocking rules: (none)
+ 
+Rule: lMemcpy_re_readChannels_0_clientDataFifo_portB
+Predicate: True
+Blocking rules: (none)
+ 
+Rule: lMemcpy_re_readChannels_0_clientDataFifo_portB_read_data
+Predicate: True
+Blocking rules: (none)
+ 
+Rule: lMemcpy_re_readChannels_0_incCounter
+Predicate: True
+Blocking rules: (none)
+ 
+Rule: lMemcpy_re_readChannels_0_rule_cycles
+Predicate: True
+Blocking rules: (none)
+ 
+Rule: lMemcpy_re_readChannels_0_rule_startNew
+Predicate: lMemcpy_re_readChannels_0_clientRequest.i_notEmpty &&
+	   (! lMemcpy_re_readChannels_0_clientInFlight)
+Blocking rules: (none)
+ 
+Rule: lMemcpy_re_readChannels_0_rule_checkAvail
+Predicate: lMemcpy_re_readChannels_0_serverCheckAvail.i_notFull &&
+	   lMemcpy_re_readChannels_0_clientInFlight
+Blocking rules: (none)
+ 
+Rule: lMemcpy_re_readChannels_0_rule_requestServer
+Predicate: lMemcpy_re_readChannels_0_serverCheckAvail.i_notEmpty &&
+	   ((! lMemcpy_re_readChannels_0_serverCheckAvail.first[11]) ||
+	    (lMemcpy_re_readChannels_0_serverProcessing.i_notFull &&
+	     lMemcpy_re_readChannels_0_dmaRequest.i_notFull)) &&
+	   lMemcpy_re_readChannels_0_clientInFlight
+Blocking rules: (none)
+ 
+Rule: lMemcpy_re_readChannels_0_read_data_rule
+Predicate: (! ((lMemcpy_re_readChannels_0_clientDataFifo_rRdPtr.read +
+		11'd512) ==
+	       lMemcpy_re_readChannels_0_clientDataFifo_rWrPtr.read)) &&
+	   lMemcpy_re_dataPipes_dataFifos_0.i_notEmpty &&
+	   lMemcpy_re_readChannels_0_serverProcessing.i_notEmpty
+Blocking rules: (none)
+ 
+Rule: lMemcpy_we_writeChannels_clientAvail_react
+Predicate: True
+Blocking rules: (none)
+ 
+Rule: lMemcpy_we_writeChannels_dataBuffer_portA
+Predicate: True
+Blocking rules: (none)
+ 
+Rule: lMemcpy_we_writeChannels_dataBuffer_portB
+Predicate: True
+Blocking rules: (none)
+ 
+Rule: lMemcpy_we_writeChannels_dataBuffer_portB_read_data
+Predicate: True
+Blocking rules: (none)
+ 
+Rule: lMemcpy_we_writeChannels_rl_cycles
+Predicate: True
+Blocking rules: (none)
+ 
+Rule: lMemcpy_we_writeChannels_rlWriteReq
+Predicate: lMemcpy_we_writeChannels_clientCommand.i_notEmpty &&
+	   lMemcpy_we_writeChannels_inProgress.i_notFull &&
+	   lMemcpy_we_writeChannels_writeReqFifo.i_notFull
+Blocking rules: (none)
+ 
+Rule: lMemcpy_we_writeChannels_rlWriteData
+Predicate: (! (lMemcpy_we_writeChannels_dataBuffer_rRdPtr.read ==
+	       lMemcpy_we_writeChannels_dataBuffer_rWrPtr.read)) &&
+	   lMemcpy_we_writeChannels_inProgress.i_notEmpty &&
+	   lMemcpy_we_writeChannels_dataBuffer_wDataOut.whas &&
+	   lMemcpy_we_writeChannels_writeDataFifo.i_notFull &&
+	   ((! ((lMemcpy_we_writeChannels_respCnt + 10'd1) ==
+		lMemcpy_we_writeChannels_inProgress.first[16:7])) ||
+	    lMemcpy_we_writeChannels_serverDone.i_notFull)
+Blocking rules: (none)
+ 
+Rule: lMemcpy_we_writeChannels_rlWriteDone
+Predicate: lMemcpy_we_doneFifos_0.i_notEmpty &&
+	   lMemcpy_we_writeChannels_serverDone.i_notEmpty &&
+	   ((! lMemcpy_we_writeChannels_serverDone.first[0]) ||
+	    (lMemcpy_we_writeChannels_clientCyclesFifoStart.i_notEmpty &&
+	     lMemcpy_we_writeChannels_clientFinished.i_notFull))
+Blocking rules: (none)
+ 
+Rule: lMemcpy_we_rl_arbitration
+Predicate: lMemcpy_we_writeChannels_writeReqFifo.i_notEmpty &&
+	   lMemcpy_we_writeReqFifo.i_notFull && lMemcpy_we_channelQ.i_notFull
+Blocking rules: (none)
+ 
+Rule: lMemcpy_we_rl_writeData
+Predicate: lMemcpy_we_writeChannels_writeDataFifo.i_notEmpty &&
+	   lMemcpy_we_writeDataFifo.i_notFull &&
+	   ((! lMemcpy_we_writeChannels_writeDataFifo.first[0]) ||
+	    lMemcpy_we_channelQ.i_notEmpty)
+Blocking rules: (none)
+ 
+Rule: lMemcpy_we_rl_writeDone
+Predicate: lMemcpy_we_writeDoneFifo.i_notEmpty &&
+	   ((! (lMemcpy_we_writeDoneFifo.first == 6'd0)) ||
+	    lMemcpy_we_doneFifos_0.i_notFull)
+Blocking rules: (none)
+ 
+Rule: lMemcpy_buffer_portA
+Predicate: True
+Blocking rules: (none)
+ 
+Rule: lMemcpy_buffer_portB
+Predicate: True
+Blocking rules: (none)
+ 
+Rule: lMemcpy_buffer_portB_read_data
+Predicate: True
+Blocking rules: (none)
+ 
+Rule: lMemcpy_start_read
+Predicate: ((! ({22'd0, lMemcpy_burstLen[7:0], 2'd0} <= 32'd4096)) ||
+	    (! ({({lMemcpy_numWords[29:0], 2'd0} >> 32'd3)[28:0], 3'd0} ==
+		{lMemcpy_numWords[29:0], 2'd0})) ||
+	    lMemcpy_re_readChannels_0_clientRequest.i_notFull) &&
+	   (! (lMemcpy_rdIterCnt == 32'd0))
+Blocking rules: (none)
+ 
+Rule: lMemcpy_start_write
+Predicate: ((! ({22'd0, lMemcpy_burstLen[7:0], 2'd0} <= 32'd4096)) ||
+	    (! ({({lMemcpy_numWords[29:0], 2'd0} >> 32'd3)[28:0], 3'd0} ==
+		{lMemcpy_numWords[29:0], 2'd0})) ||
+	    (lMemcpy_numWords[29:0] == 30'd0) ||
+	    (lMemcpy_we_writeChannels_clientCommand.i_notFull &&
+	     lMemcpy_we_writeChannels_clientCyclesFifoStart.i_notFull)) &&
+	   (! (lMemcpy_wrIterCnt == 32'd0))
+Blocking rules: (none)
+ 
+Rule: lMemcpy_write_finish
+Predicate: lMemcpy_we_writeChannels_clientFinished.i_notEmpty &&
+	   ((! (lMemcpy_wrIterCnt == 32'd0)) ||
+	    lMemcpyIndicationOutput.RDY_ifc_done)
+Blocking rules: (none)
+ 
+Rule: lMemcpy_fill_buffer
+Predicate: (! (lMemcpy_re_readChannels_0_clientDataFifo_rRdPtr.read ==
+	       lMemcpy_re_readChannels_0_clientDataFifo_rWrPtr.read)) &&
+	   (! ((lMemcpy_buffer_rRdPtr.read + 10'd256) ==
+	       lMemcpy_buffer_rWrPtr.read)) &&
+	   lMemcpy_re_readChannels_0_clientDataFifo_wDataOut.whas
+Blocking rules: (none)
+ 
+Rule: lMemcpy_drain_buffer
+Predicate: (! (lMemcpy_buffer_rRdPtr.read == lMemcpy_buffer_rWrPtr.read)) &&
+	   (! ((lMemcpy_we_writeChannels_dataBuffer_rRdPtr.read + 11'd512) ==
+	       lMemcpy_we_writeChannels_dataBuffer_rWrPtr.read)) &&
+	   lMemcpy_buffer_wDataOut.whas
+Blocking rules: (none)
+ 
+Rule: lMemcpy_test
+Predicate: (! (lMemcpy_re_readChannels_0_clientDataFifo_rRdPtr.read ==
+	       lMemcpy_re_readChannels_0_clientDataFifo_rWrPtr.read)) &&
+	   lMemcpy_re_readChannels_0_clientDataFifo_wDataOut.whas
+Blocking rules: lMemcpy_fill_buffer
+ 
+Rule: handle_startCopy_request
+Predicate: lMemcpyIndicationOutput.RDY_ifc_started &&
+	   lMemcpyRequestInput.RDY_pipes_startCopy_PipeOut_first &&
+	   lMemcpyRequestInput.RDY_pipes_startCopy_PipeOut_deq
+Blocking rules: (none)
+ 
+Rule: lMemcpyIndicationOutputNoc_sendHeader
+Predicate: lMemcpyIndicationOutputNoc_fifoMsgSource.i_notFull &&
+	   (! lMemcpyIndicationOutputNoc_bpState) &&
+	   (lMemcpyIndicationOutput.portalIfc_indications_0_notEmpty ||
+	    lMemcpyIndicationOutput.portalIfc_indications_1_notEmpty)
+Blocking rules: (none)
+ 
+Rule: lMemcpyIndicationOutputNoc_sendMessage
+Predicate: lMemcpyIndicationOutputNoc_fifoMsgSource.i_notFull &&
+	   case lMemcpyIndicationOutputNoc_methodIdReg of
+	   8'd0 -> lMemcpyIndicationOutput.RDY_portalIfc_indications_0_deq
+	   8'd1 -> lMemcpyIndicationOutput.RDY_portalIfc_indications_1_deq
+	   _ -> 1'd1 &&
+	   case lMemcpyIndicationOutputNoc_methodIdReg of
+	   8'd0 -> lMemcpyIndicationOutput.RDY_portalIfc_indications_0_first
+	   8'd1 -> lMemcpyIndicationOutput.RDY_portalIfc_indications_1_first
+	   _ -> 1'd1 &&
+	   lMemcpyIndicationOutputNoc_bpState
+Blocking rules: (none)
+ 
+Rule: lMemcpyRequestInputNoc_receiveMessageHeader
+Predicate: lMemcpyRequestInputNoc_fifoMsgSink.i_notEmpty &&
+	   (! lMemcpyRequestInputNoc_bpState)
+Blocking rules: (none)
+ 
+Rule: lMemcpyRequestInputNoc_receiveMessage
+Predicate: lMemcpyRequestInputNoc_fifoMsgSink.i_notEmpty &&
+	   ((! (lMemcpyRequestInputNoc_methodIdReg == 8'd0)) ||
+	    lMemcpyRequestInput.RDY_portalIfc_requests_0_enq) &&
+	   lMemcpyRequestInputNoc_bpState
+Blocking rules: (none)
+ 
+Logical execution order: requests_0_id,
+			 requests_0_message_notFull,
+			 requests_0_message_enq,
+			 indications_0_id,
+			 indications_0_message_first,
+			 indications_0_message_notEmpty,
+			 indications_0_message_deq,
+			 readers_0_readReq_get,
+			 readers_0_readData_put,
+			 readers_1_readReq_get,
+			 readers_1_readData_put,
+			 writers_0_writeReq_get,
+			 writers_0_writeData_get,
+			 writers_0_writeDone_put,
+			 writers_1_writeReq_get,
+			 writers_1_writeData_get,
+			 writers_1_writeDone_put,
+			 lMemcpy_re_dataPipes_unfunnel,
+			 lMemcpy_re_readChannels_0_incCounter,
+			 lMemcpy_re_readChannels_0_rule_cycles,
+			 lMemcpy_re_readChannels_0_rule_startNew,
+			 lMemcpy_re_readChannels_0_rule_checkAvail,
+			 lMemcpy_re_readChannels_0_rule_requestServer,
+			 lMemcpy_re_readChannels_0_read_data_rule,
+			 lMemcpy_re_readChannels_0_clientDataFifo_portB_read_data,
+			 lMemcpy_fill_buffer,
+			 lMemcpy_start_read,
+			 lMemcpy_test,
+			 lMemcpy_re_readChannels_0_clientAvail_react,
+			 lMemcpy_re_readChannels_0_clientDataFifo_portA,
+			 lMemcpy_re_readChannels_0_clientDataFifo_portB,
+			 lMemcpy_we_rl_arbitration,
+			 lMemcpy_we_rl_writeData,
+			 lMemcpy_we_rl_writeDone,
+			 lMemcpy_we_writeChannels_rlWriteReq,
+			 lMemcpy_we_writeChannels_rlWriteDone,
+			 lMemcpy_we_writeChannels_clientAvail_react,
+			 lMemcpy_we_writeChannels_dataBuffer_portB_read_data,
+			 lMemcpy_we_writeChannels_rlWriteData,
+			 lMemcpy_we_writeChannels_dataBuffer_portB,
+			 lMemcpy_buffer_portB_read_data,
+			 lMemcpy_drain_buffer,
+			 lMemcpy_we_writeChannels_dataBuffer_portA,
+			 lMemcpy_buffer_portA,
+			 lMemcpy_buffer_portB,
+			 lMemcpyIndicationOutputNoc_sendHeader,
+			 lMemcpy_write_finish,
+			 lMemcpy_start_write,
+			 lMemcpy_we_writeChannels_rl_cycles,
+			 lMemcpyIndicationOutputNoc_sendMessage,
+			 lMemcpyRequestInputNoc_receiveMessageHeader,
+			 lMemcpyRequestInputNoc_receiveMessage,
+			 handle_startCopy_request
+
+=========================================

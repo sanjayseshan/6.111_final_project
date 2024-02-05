@@ -24,6 +24,7 @@ import FIFO::*;
 import Vector::*;
 import FIFOF :: * ;
 
+
 interface EchoIndication;
     method Action heard(Bit#(32) v);
     method Action heard2(Bit#(16) a, Bit#(16) b);
@@ -73,69 +74,8 @@ module mkrouterFIFOtest #(Integer depth, Bool g) (FIFOF#(a))
     schedule deq C deq;
     schedule enq C enq;
 endmodule   
-// interface Test#(type t);
-//     method Action enq;
-//     // method deq ();
-//     method  Action  first ;
-//     // method V_FULL_N notFull ();
-//     // method V_EMPTY_N notEmpty ();
-//     // method clear () enable (V_CLR);
-// endinterface
-// 
-// interface Get;
-//     method V_D_OUT get () enable(V_DEQ) ready(V_EMPTY_N);
-// endinterface
-// interface Put;
-//     method put(V_D_IN) enable(V_ENQ) ready(V_FULL_N);
-// endinterface
 
-// interface MyGetPut#(type t);
-//     interface Get#(t) g;
-//     interface Put#(t) p;
-// endinterface
 
-// import "BVI" test =
-// module test #(Integer depth, Bool g) (Test#(a))
-// import "BVI" test =
-// // module test #(Integer depth, Bool guard) (MyGetPut#(a))
-// module mkSizedFIFOtest #(Integer depth) (FIFOF#(a))
-//     provisos(Bits#(a, size_a));
-//    parameter V_P1WIDTH = valueOf(size_a);
-//     parameter V_P2DEPTH = depth;
-//     parameter V_P3CNTR_WIDTH = log2(depth+1);
-//     parameter V_GUARDED = Bit#(1)'(pack(guard));
-//     port V_CLR = 0 ;
-//     default_clock clk;
-//     default_reset rst_RST_N;
-//     input_clock clk (V_CLK) <- exposeCurrentClock;
-//     input_reset rst_RST_N (V_RST_N) clocked_by(clk) <- exposeCurrentReset;
-   
-//     // provisos(Bits#(a,size_a));
-//     // parameter V_P1WIDTH = valueOf(size_a);
-//     // parameter V_P2DEPTH = depth;
-//     // // parameter V_P3CNTR_WIDTH = log2(depth+1);
-//     // // parameter V_GUARDED = Bit#(1)'(pack(g));
-//     // default_clock clk;
-//     // default_reset rst_RST_N;
-//     // input_clock clk (V_CLK) <- exposeCurrentClock;
-//     // input_reset rst_RST_N (V_RST_N) clocked_by(clk) <- exposeCurrentReset;
-//     // method enq (V_D_IN) enable(V_ENQ);
-//     // // method deq () enable(V_DEQ) ready(V_EMPTY_N);
-//     // method V_D_OUT first;
-//     // schedule (first) SB (enq);
-//     // schedule (first) C (first);
-//     // // method V_FULL_N notFull ();
-//     // // method V_EMPTY_N notEmpty ();
-//     // // method clear () enable (V_CLR);
-//     // // schedule deq CF enq ;
-//     // // schedule enq CF (deq, first) ;
-//     // // schedule (first, notEmpty, notFull) CF (first,notEmpty, notFull) ;
-//     // // schedule (clear, deq, enq) SBR clear ;
-//     // // schedule first SB (clear, deq) ;
-//     // // schedule (notEmpty, notFull) SB (clear, deq, enq) ;
-//     // // schedule deq C deq;
-//     // schedule enq C enq;
-// endmodule
 
 module mkEcho#(EchoIndication indication)(Echo);
     FIFO#(Bit#(32)) delay <- mkSizedFIFO(8);

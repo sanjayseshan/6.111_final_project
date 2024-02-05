@@ -1,0 +1,30 @@
+=== Generated schedule for mkMemcpyIndicationInverter ===
+
+Method schedule
+---------------
+Method: ifc_started
+Ready signal: fifo_started.i_notFull
+Conflict-free: ifc_done, inverseIfc_started, inverseIfc_done
+Conflicts: ifc_started
+ 
+Method: ifc_done
+Ready signal: fifo_done.i_notFull
+Conflict-free: ifc_started, inverseIfc_started, inverseIfc_done
+Conflicts: ifc_done
+ 
+Method: inverseIfc_started
+Ready signal: fifo_started.i_notEmpty
+Conflict-free: ifc_started, ifc_done, inverseIfc_done
+Conflicts: inverseIfc_started
+ 
+Method: inverseIfc_done
+Ready signal: fifo_done.i_notEmpty
+Conflict-free: ifc_started, ifc_done, inverseIfc_started
+Conflicts: inverseIfc_done
+ 
+Logical execution order: ifc_started,
+			 ifc_done,
+			 inverseIfc_started,
+			 inverseIfc_done
+
+==========================================================

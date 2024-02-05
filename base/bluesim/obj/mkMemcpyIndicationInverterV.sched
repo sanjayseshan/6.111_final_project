@@ -1,0 +1,26 @@
+=== Generated schedule for mkMemcpyIndicationInverterV ===
+
+Method schedule
+---------------
+Method: ifc_started
+Ready signal: inv_started_inverter.RDY_mod_put
+Conflict-free: ifc_started, ifc_done, inverseIfc_started, inverseIfc_done
+ 
+Method: ifc_done
+Ready signal: inv_done_inverter.RDY_mod_put
+Conflict-free: ifc_started, ifc_done, inverseIfc_started, inverseIfc_done
+ 
+Method: inverseIfc_started
+Ready signal: inv_started_inverter.RDY_inverse_get
+Conflict-free: ifc_started, ifc_done, inverseIfc_started, inverseIfc_done
+ 
+Method: inverseIfc_done
+Ready signal: inv_done_inverter.RDY_inverse_get
+Conflict-free: ifc_started, ifc_done, inverseIfc_started, inverseIfc_done
+ 
+Logical execution order: ifc_started,
+			 ifc_done,
+			 inverseIfc_started,
+			 inverseIfc_done
+
+===========================================================
